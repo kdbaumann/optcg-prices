@@ -324,41 +324,59 @@
   }
 
   /* CARD IMAGE TOOLTIP */
-  #card-img-tooltip {
+  /* CARD THUMBNAIL IN TABLE */
+  .card-thumb {
+    width: 42px;
+    height: 58px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 4px;
+    display: block;
+    cursor: zoom-in;
+    border: 1px solid var(--border);
+    transition: border-color 0.15s, transform 0.15s;
+    flex-shrink: 0;
+  }
+  .card-thumb:hover {
+    border-color: var(--gold);
+    transform: scale(1.08);
+  }
+  .card-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .card-name-text { flex: 1; }
+
+  /* FULL SIZE POPUP */
+  #card-img-popup {
     position: fixed;
     z-index: 9999;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.15s ease;
-    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.7));
+    transition: opacity 0.18s ease;
+    filter: drop-shadow(0 12px 32px rgba(0,0,0,0.85));
   }
-  #card-img-tooltip.visible { opacity: 1; }
-  #card-img-tooltip img {
-    width: 180px;
-    border-radius: 8px;
+  #card-img-popup.visible { opacity: 1; }
+  #card-img-popup img {
+    width: 220px;
+    border-radius: 10px;
     display: block;
+    border: 2px solid var(--gold);
   }
-  #card-img-tooltip .img-label {
+  #card-img-popup .pop-label {
     text-align: center;
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.65rem;
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.06em;
     color: var(--gold);
-    background: rgba(8,8,16,0.9);
-    padding: 3px 6px;
-    border-radius: 0 0 6px 6px;
-    margin-top: -2px;
+    background: rgba(8,8,16,0.95);
+    padding: 4px 8px;
+    border-radius: 0 0 8px 8px;
+    border: 2px solid var(--gold);
+    border-top: none;
   }
-  /* Subtle camera icon on rows that have images */
-  tr[data-img-id] .card-name::after {
-    content: ' 🖼';
-    font-size: 0.6rem;
-    opacity: 0.4;
-    vertical-align: middle;
-  }
-  tr[data-img-id]:hover .card-name::after { opacity: 0.9; }
-  tr[data-img-id] { cursor: default; }
   .verdict-fire { background: #7f1d1d; color: #fca5a5; }
   .verdict-strong { background: #1e3a1e; color: #86efac; }
   .verdict-ok { background: #1c2a3a; color: #93c5fd; }
@@ -2545,10 +2563,10 @@ async function refreshPrices() {
   }
 }
 </script>
-<!-- CARD IMAGE TOOLTIP -->
-<div id="card-img-tooltip">
-  <img id="card-img-el" src="" alt="" loading="lazy" onerror="document.getElementById('card-img-tooltip').classList.remove('visible')">
-  <div class="img-label" id="card-img-label"></div>
+<!-- CARD IMAGE POPUP -->
+<div id="card-img-popup">
+  <img id="popup-img" src="" alt="">
+  <div class="pop-label" id="popup-label"></div>
 </div>
 
 <script>
@@ -2607,71 +2625,123 @@ const CARD_IMAGES = {
   "prb02_sanji_manga":  "https://en.onepiece-cardgame.com/images/cardlist/card/OP06-119_p1.png",
 };
 
-const tooltip    = document.getElementById('card-img-tooltip');
-const tooltipImg = document.getElementById('card-img-el');
-const tooltipLbl = document.getElementById('card-img-label');
+// ─── INJECT THUMBNAILS INTO ROWS ─────────────────────────────────────────────
+function injectThumbnails() {
+  document.querySelectorAll('tr[data-img-id]').forEach(row => {
+    const imgId = row.dataset.imgId;
+    const url = CARD_IMAGES[imgId];
+    if (!url) return;
 
-let hideTimer = null;
+    // Find the second td (card name cell)
+    const nameTd = row.querySelector('td:nth-child(2)');
+    if (!nameTd || nameTd.querySelector('.card-thumb')) return; // already done
 
-function showTooltip(imgId, cardName, x, y) {
+    // Wrap existing content in a flex container with thumbnail
+    const existingHTML = nameTd.innerHTML;
+    const cardName = nameTd.querySelector('.card-name')?.textContent?.trim() || '';
+
+    nameTd.innerHTML = `
+      <div class="card-name-cell">
+        <img class="card-thumb"
+             src="${url}"
+             alt="${cardName}"
+             loading="lazy"
+             data-img-id="${imgId}"
+             data-card-name="${cardName.replace(/"/g,'&quot;')}"
+             onerror="this.style.display='none'">
+        <div class="card-name-text">${existingHTML}</div>
+      </div>`;
+  });
+}
+
+// ─── POPUP SYSTEM (attached to thumbnails, very stable) ───────────────────────
+const popup     = document.getElementById('card-img-popup');
+const popupImg  = document.getElementById('popup-img');
+const popupLbl  = document.getElementById('popup-label');
+let popupTimer  = null;
+
+function showPopup(url, label, thumb) {
+  clearTimeout(popupTimer);
+  popupImg.src = url;
+  popupLbl.textContent = label;
+  popup.classList.add('visible');
+  positionPopup(thumb);
+}
+
+function hidePopup() {
+  popupTimer = setTimeout(() => popup.classList.remove('visible'), 200);
+}
+
+function positionPopup(thumb) {
+  const PW = 224, PH = 320;
+  const rect = thumb.getBoundingClientRect();
+  const vw = window.innerWidth, vh = window.innerHeight;
+
+  // Try to show to the right of thumbnail first
+  let left = rect.right + 10;
+  let top  = rect.top + (rect.height / 2) - (PH / 2);
+
+  // Flip left if no room on right
+  if (left + PW > vw - 8) left = rect.left - PW - 10;
+  // Clamp vertically
+  if (top < 8) top = 8;
+  if (top + PH > vh - 8) top = vh - PH - 8;
+
+  popup.style.left = left + 'px';
+  popup.style.top  = top + 'px';
+}
+
+// Wire up events on thumbnails using event delegation — very stable
+document.addEventListener('mouseenter', e => {
+  if (!e.target.classList?.contains('card-thumb')) return;
+  const imgId = e.target.dataset.imgId;
   const url = CARD_IMAGES[imgId];
   if (!url) return;
-  clearTimeout(hideTimer);
-  tooltipImg.src = url;
-  tooltipLbl.textContent = cardName;
-  positionTooltip(x, y);
-  tooltip.classList.add('visible');
-}
+  clearTimeout(popupTimer);
+  showPopup(url, e.target.dataset.cardName, e.target);
+}, true); // capture phase
 
-function positionTooltip(x, y) {
-  const TW = 180, TH = 270;
-  const vw = window.innerWidth, vh = window.innerHeight;
-  let left = x + 16;
-  let top  = y - TH / 2;
-  if (left + TW > vw - 10) left = x - TW - 16;
-  if (top < 8) top = 8;
-  if (top + TH > vh - 8) top = vh - TH - 8;
-  tooltip.style.left = left + 'px';
-  tooltip.style.top  = top + 'px';
-}
+document.addEventListener('mouseleave', e => {
+  if (!e.target.classList?.contains('card-thumb')) return;
+  hidePopup();
+}, true);
 
-function hideTooltip() {
-  hideTimer = setTimeout(() => tooltip.classList.remove('visible'), 120);
-}
+// Keep popup alive when hovering over it
+popup.addEventListener('mouseenter', () => clearTimeout(popupTimer));
+popup.addEventListener('mouseleave', hidePopup);
 
-// Wire up hover on all tagged rows — desktop
-document.addEventListener('mouseover', e => {
-  const row = e.target.closest('tr[data-img-id]');
-  if (!row) { hideTooltip(); return; }
-  const imgId = row.dataset.imgId;
-  const name  = row.querySelector('.card-name')?.textContent.replace('🖼','').trim() || imgId;
-  showTooltip(imgId, name, e.clientX, e.clientY);
-});
-
-document.addEventListener('mousemove', e => {
-  if (tooltip.classList.contains('visible')) positionTooltip(e.clientX, e.clientY);
-});
-
-document.addEventListener('mouseout', e => {
-  const row = e.target.closest('tr[data-img-id]');
-  if (row && !row.contains(e.relatedTarget)) hideTooltip();
-});
-
-// Mobile: tap to toggle
+// Mobile: tap thumbnail to toggle popup
 document.addEventListener('click', e => {
-  const row = e.target.closest('tr[data-img-id]');
-  if (!row) return;
+  if (!e.target.classList?.contains('card-thumb')) return;
   if (window.matchMedia('(hover: none)').matches) {
-    const imgId = row.dataset.imgId;
-    const name  = row.querySelector('.card-name')?.textContent.replace('🖼','').trim() || imgId;
-    const rect  = row.getBoundingClientRect();
-    if (tooltip.classList.contains('visible') && tooltipImg.src.includes(imgId.replace(/_/g,''))) {
-      hideTooltip();
+    e.stopPropagation();
+    if (popup.classList.contains('visible') &&
+        popupImg.src === CARD_IMAGES[e.target.dataset.imgId]) {
+      popup.classList.remove('visible');
     } else {
-      showTooltip(imgId, name, rect.right, rect.top + rect.height / 2);
+      showPopup(CARD_IMAGES[e.target.dataset.imgId],
+                e.target.dataset.cardName, e.target);
     }
   }
 });
+
+// Dismiss popup on mobile tap elsewhere
+document.addEventListener('click', e => {
+  if (window.matchMedia('(hover: none)').matches &&
+      !e.target.classList?.contains('card-thumb')) {
+    popup.classList.remove('visible');
+  }
+});
+
+// Run after DOM is ready, and re-run whenever a new set tab is shown
+window.addEventListener('DOMContentLoaded', injectThumbnails);
+
+// Patch showSet to re-inject after tab switch (for lazy-loaded sets)
+const _origShowSet = window.showSet;
+window.showSet = function(id, btn) {
+  _origShowSet(id, btn);
+  setTimeout(injectThumbnails, 50);
+};
 </script>
 </body>
 </html>
