@@ -1,0 +1,12 @@
+[build]
+  publish = "public"
+  command = "echo 'No build step needed'"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Run price refresh every day at 6am UTC (midnight US Central, 9pm US Pacific)
+[[scheduled-functions]]
+  name = "refresh-prices"
+  cron = "0 6 * * *"
