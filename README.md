@@ -75,7 +75,32 @@ optcg-site/
 2. To test manually: Functions → refresh-prices → Trigger function
 3. Check that `public/prices.json` gets updated (you'll see it in the deploy log)
 
-## Customizing the Price List
+## Image Download Scripts
+
+Two scripts handle card images:
+
+**`scripts/download-all-images.mjs`** — Complete downloader (used by Netlify build)
+- Scrapes every set page from OPCardlist to discover all image codes automatically
+- Downloads every card image: base cards, all parallels, all variants
+- ~3,200+ images across all sets when complete
+- Skips already-cached images on re-runs (fast incremental builds)
+
+```bash
+node scripts/download-all-images.mjs              # download everything new
+node scripts/download-all-images.mjs --refresh    # re-download all
+node scripts/download-all-images.mjs --sets=op-13,op-14  # specific sets only
+```
+
+**`scripts/download-images.mjs`** — Curated list of ~208 chase cards
+- Manually maintained list of the most valuable cards only
+- Faster to run, useful for targeted updates
+- Kept as backup / reference for the specific cards the price guide tracks
+
+**To add a new set** when it releases:
+1. Add it to the `ALL_SETS` array in `download-all-images.mjs`
+2. Push to GitHub — Netlify build runs the script automatically
+
+
 
 To add or remove cards from daily tracking, edit `PRICE_TARGETS` in:
 - `netlify/functions/refresh-prices.mjs` (what Claude fetches)
