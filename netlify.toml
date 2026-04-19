@@ -6,7 +6,12 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
-# Run price refresh every day at 6am UTC (midnight US Central, 9pm US Pacific)
+# Prices refresh every day at 6am UTC (midnight US Central)
 [[scheduled-functions]]
   name = "refresh-prices"
   cron = "0 6 * * *"
+
+# Images sync every Sunday at 4am UTC — checks for new sets + re-downloads stale images
+[[scheduled-functions]]
+  name = "sync-images"
+  cron = "0 4 * * 0"
