@@ -79,7 +79,10 @@ const ALL_SETS = [
   { slug: "op-12",        name: "OP-12 Legacy of the Master",        released: "2025-08-22", cards: 155  },
   { slug: "op-13",        name: "OP-13 Carrying On His Will",        released: "2025-11-07", cards: 175  },
   { slug: "op14-eb04",    name: "OP-14/EB-04 The Azure Sea's Seven", released: "2026-01-31", cards: 199  },
-  { slug: "op-15",        name: "OP-15 Adventure on KAMI's Island",  released: "2026-04-03", cards: 195  },
+  // NOTE: OP-15 released April 2026 — OPCardlist may not have indexed it yet.
+  // Try "op-15" first; the scraper will gracefully skip if 404.
+  // Bandai also bundles it as "OP15-EB04" internally. Images still available via Bandai CDN.
+  { slug: "op-15",        name: "OP-15 Adventure on KAMI's Island",  released: "2026-04-03", cards: 195, altSlugs: ["op15", "op15-eb05"] },
   // ── ADD OP-16 HERE when it releases ──────────────────────────
   // { slug: "op-16",     name: "OP-16 [SET NAME]",                  released: "2026-XX-XX", cards: 0   },
 
@@ -92,7 +95,7 @@ const ALL_SETS = [
 
   // ── Premium Boosters ───────────────────────────────────────────
   { slug: "prb-01",       name: "PRB-01 Card The Best",              released: "2024-07-27", cards: 319  },
-  { slug: "prb-02",       name: "PRB-02 Card The Best Vol.2",        released: "2025-10-03", cards: 0    },
+  { slug: "prb-02",       name: "PRB-02 Card The Best Vol.2",        released: "2025-10-03", cards: 209, altSlugs: ["prb02"] },
   // ── ADD PRB-03 HERE when it releases ─────────────────────────
   // { slug: "prb-03",    name: "PRB-03 [SET NAME]",                  released: "2026-XX-XX", cards: 0   },
 
@@ -347,15 +350,26 @@ async function main() {
   const allCodes = new Set();
 
   for (const set of setsToSync) {
-    const url = `${OPCARDLIST}/${set.slug}`;
+    const slugsToTry = [set.slug, ...(set.altSlugs || [])];
+    let fetched = false;
     process.stdout.write(`  Fetching ${(set.name || set.slug).padEnd(44)} `);
-    try {
-      const html  = await fetchText(url);
-      const codes = extractImageCodes(html);
-      codes.forEach(c => allCodes.add(c));
-      process.stdout.write(`→ ${String(codes.length).padStart(3)} images\n`);
-    } catch (err) {
-      process.stdout.write(`→ FAILED: ${err.message}\n`);
+    for (const slug of slugsToTry) {
+      const url = `${OPCARDLIST}/${slug}`;
+      try {
+        const html  = await fetchText(url);
+        const codes = extractImageCodes(html);
+        codes.forEach(c => allCodes.add(c));
+        const note = slug !== set.slug ? ` (via ${slug})` : "";
+        process.stdout.write(`→ ${String(codes.length).padStart(3)} images${note}\n`);
+        fetched = true;
+        break;
+      } catch (err) {
+        if (slug === slugsToTry[slugsToTry.length - 1]) {
+          // All slugs failed — log and continue without crashing
+          process.stdout.write(`→ SKIPPED: not yet indexed on OPCardlist (${err.message})\n`);
+        }
+        // else: try next slug silently
+      }
     }
     await sleep(PAGE_DELAY);
   }
