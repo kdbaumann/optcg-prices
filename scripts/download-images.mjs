@@ -87,6 +87,8 @@ const CARD_CODES = [
   "OP03-099_p1",   // Katakuri SEC parallel
   "OP03-112_p4",   // Pudding SP (OP-08)
   "OP03-114_p2",   // Big Mom Manga Alt Art SP
+  "OP03-122_p1",   // Sogeking SEC base
+  "OP03-122_p2",   // Sogeking Manga Alternate Art ★★ GRAIL (OP-03 original)
   "OP03-122_r1",   // Sogeking Comic Parallel PRB-01
   "ST01-012_p3",   // Luffy Gold Sig SP (OP-03) ★ CHASE
   "ST01-012_p5",   // Luffy Gold Stamped Signature SP (OP-05) ★★★ GRAIL
@@ -301,6 +303,8 @@ const CARD_CODES = [
   "EB01-006_p1",   // Chopper SR base parallel
   "EB01-006_p2",   // Chopper Manga Alt Art ★★★ GRAIL ($2,000-$3,250)
   "EB01-006_r1",   // Chopper Comic Parallel PRB-01 ★★★ GRAIL ($3,500-$4,500)
+  "EB04-044_p1",   // Koby SR base parallel (EB-04 Egghead Crisis)
+  "EB04-044_p2",   // Koby Manga Alternate Art ★ (EB-04 chase card, JP ¥90k-¥100k)
   "EB01-012_p1",   // Cavendish parallel
   "EB01-013_p1",   // Hiyori parallel
   "EB01-040_p1",   // Kyros parallel

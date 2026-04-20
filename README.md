@@ -75,7 +75,40 @@ optcg-site/
 2. To test manually: Functions → refresh-prices → Trigger function
 3. Check that `public/prices.json` gets updated (you'll see it in the deploy log)
 
-## Image Download Scripts
+## Auto New Set Detection & Tab Generation
+
+When a new set (e.g. OP-16) releases, the system handles it **fully automatically**:
+
+```
+Daily at 6am UTC
+      │
+      ├─ Step 1: Refresh prices for all tracked cards → prices.json
+      │
+      ├─ Step 2: Fetch OPCardlist homepage, scan for new set slugs
+      │          Compare against KNOWN_SET_IDS in refresh-prices.mjs
+      │
+      └─ Step 3: For each new set found:
+                 ├─ Call Claude + web_search to research the set
+                 │   (top 10 cards, prices, release date, box EV, card numbers)
+                 ├─ Generate HTML: nav button + full set section with card table
+                 ├─ Patch index.html surgically (no existing content touched)
+                 └─ Write auto-sets-state.json (tracks what was processed)
+```
+
+**What gets auto-generated:**
+- Nav button in the correct position (OP sets before SPECIAL, EB/PRB in extra group)
+- Full set section with top 10 cards, prices, thumbnails, rarity badges
+- New entry warning banner for sets < 6 weeks old
+- Version badge update with today's date and new set name
+
+**What still requires a manual update after auto-generation:**
+- Adding the set to `KNOWN_SET_IDS` in `refresh-prices.mjs` (so it's not re-detected)
+- Adding the set to `ALL_SETS` in `download-all-images.mjs` (for weekly image sync)
+- Reviewing and correcting card data/prices after 4-6 weeks when market settles
+
+**State file:** `public/auto-sets-state.json` — tracks processed sets, failed attempts, and the price targets added for each new set.
+
+
 
 Two scripts handle card images:
 
