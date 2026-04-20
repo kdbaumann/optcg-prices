@@ -96,62 +96,6 @@ If prices are settling (new release), note that in variants and use is_new=true.
 If a card price is unavailable, use "TBD — check TCGPlayer".`;
 }
 
-  return `You are a One Piece TCG English market expert. Research the set ${setCode} and return structured data.
-
-Search opcardlist.com/${setCode.toLowerCase().replace("-","").replace(/op(\d+).*/,"op-$1")} and related pages to find:
-1. Full set name
-2. English release date
-3. Total card count
-4. Top 10 most valuable EN cards (name, card number, rarity, current EN price using median/last sold)
-5. Box EV (Expected Value) if available
-6. Any special chase cards (Manga Rares, SP Gold/Silver, SAA, Demon Packs etc.)
-7. Key new mechanics or notable features of the set
-
-Return ONLY valid JSON — no markdown, no explanation:
-{
-  "set_code": "${setCode}",
-  "set_id": "${setCodeToId(setCode)}",
-  "name": "Full Set Name",
-  "release_date": "YYYY-MM-DD",
-  "card_count": 154,
-  "box_ev": "$350",
-  "box_msrp": "$119.76",
-  "box_ev_pct": "292% of MSRP",
-  "is_new": true,
-  "notes": "Brief note about what makes this set notable",
-  "top_cards": [
-    {
-      "rank": 1,
-      "name": "Card Name",
-      "variant": "Manga Alternate Art (SEC) · Card details",
-      "card_num": "XXXX-NNN",
-      "rarity_badge_class": "r-sec",
-      "rarity_label": "SEC MANGA",
-      "price": "$1,234",
-      "price_class": "high",
-      "bandai_code": "XXXX-NNN_p2"
-    }
-  ],
-  "price_targets": [
-    {
-      "id": "${setCodeToId(setCode)}_chasecard_name",
-      "label": "Card Name Description",
-      "set": "${setCode}",
-      "card": "XXXX-NNN card description"
-    }
-  ],
-  "chase_stat": "$1,234",
-  "chase_label": "Chase Card (Card Name)"
-}
-
-RARITY badge classes: r-sec (Secret Rare / Manga), r-sp (SP Gold/Silver/Special), r-sr (Super Rare), r-r (Rare), r-par (Parallel)
-PRICE classes: mega (>$2000), high ($500-$2000), mid ($50-$500)
-BANDAI codes follow pattern: SETNUM-CARDNUM_pN where pN is variant (p1=base parallel, p2=manga alt, p3=red SAA etc)
-
-If the set has just released and prices are unsettled, note that in each price and set is_new=true.
-If prices are unavailable, use "TBD — check TCGPlayer" as the price value.`;
-}
-
 // ─── HTML Generator ─────────────────────────────────────────────────────────
 function generateNavButton(data, isNew = false) {
   const id      = data.set_id;
