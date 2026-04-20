@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONE PIECE TCG — Tournament & Prize Card Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #080810;
+  --bg2:      #0d0d1a;
+  --bg3:      #121225;
+  --surface:  #1a1a2e;
+  --border:   #2a2a4a;
+  --gold:     #f0b429;
+  --gold2:    #ffd966;
+  --red:      #e63946;
+  --white:    #f0eff4;
+  --muted:    #6b6b8a;
+  --green:    #2dd4bf;
+  --purple:   #a78bfa;
+
+  /* Event colors */
+  --tc-green:  #22c55e;
+  --cs-purple: #7c3aed;
+  --fb-orange: #f97316;
+  --sb-blue:   #3b82f6;
+  --ser-gold:  #eab308;
+  --wc-red:    #ef4444;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── TOP BAR ─────────────────────────────────────────────────────────────── */
+.topbar {
+  background: linear-gradient(90deg, #080810, #12082a, #080810);
+  border-bottom: 2px solid var(--gold);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.logo span { color: var(--red); }
+.back-link {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 4px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.back-link:hover { color: var(--gold); border-color: var(--gold); }
+.topbar-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+/* ── SIDE NAV ─────────────────────────────────────────────────────────────── */
+.layout {
+  display: flex;
+  min-height: calc(100vh - 52px);
+}
+.sidenav {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  padding: 16px 0;
+  position: sticky;
+  top: 52px;
+  height: calc(100vh - 52px);
+  overflow-y: auto;
+}
+.nav-section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  padding: 12px 16px 4px;
+}
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 16px;
+  background: none;
+  border: none;
+  border-left: 3px solid transparent;
+  color: #8888aa;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-transform: uppercase;
+}
+.nav-btn:hover { color: var(--white); background: rgba(255,255,255,0.04); }
+.nav-btn.active { color: var(--white); border-left-color: var(--gold); background: rgba(240,180,41,0.08); }
+.nav-btn .nav-icon { font-size: 1rem; width: 20px; flex-shrink: 0; }
+.nav-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex-shrink: 0; margin-left: auto;
+}
+
+/* ── MAIN CONTENT ─────────────────────────────────────────────────────────── */
+.main {
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+}
+.page {
+  display: none;
+  padding: 24px;
+  max-width: 1100px;
+  animation: fadeIn 0.2s ease;
+}
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ── PAGE HERO ────────────────────────────────────────────────────────────── */
+.page-hero {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--bg2), var(--bg3));
+  position: relative;
+  overflow: hidden;
+}
+.page-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--accent, var(--gold));
+}
+.hero-icon {
+  font-size: 3rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.hero-text h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.05em;
+  color: var(--accent, var(--gold));
+  line-height: 1.1;
+}
+.hero-text .subtitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.hero-text p {
+  font-size: 0.8rem;
+  color: #9999bb;
+  margin-top: 10px;
+  max-width: 600px;
+  line-height: 1.7;
+}
+.hero-stats {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.stat {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 14px;
+  text-align: center;
+  min-width: 120px;
+}
+.stat-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  color: var(--accent, var(--gold));
+  line-height: 1;
+}
+.stat-lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ── SECTION HEADERS ──────────────────────────────────────────────────────── */
+.section-header {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent, var(--gold));
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin: 24px 0 14px;
+}
+
+/* ── PRIZE STRUCTURE ──────────────────────────────────────────────────────── */
+.prize-tiers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.tier {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 10px 14px;
+  transition: border-color 0.15s;
+}
+.tier:hover { border-color: var(--accent, var(--gold)); }
+.tier-place {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+.tier-badge {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.tier-desc {
+  font-size: 0.75rem;
+  color: #8888aa;
+  flex: 1;
+}
+.tier-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 0.85rem;
+  color: var(--green);
+  white-space: nowrap;
+}
+
+/* Badge colors */
+.badge-participation { background: #1e293b; color: #94a3b8; }
+.badge-top64         { background: #0f2a0f; color: #4ade80; }
+.badge-top16         { background: #1a2a0a; color: #86efac; }
+.badge-top8          { background: #2d1a00; color: #fbbf24; }
+.badge-top4          { background: #3d1500; color: #fb923c; }
+.badge-winner        { background: #3d0000; color: #f87171; }
+.badge-champion      { background: #2a1a00; color: #ffd700; border: 1px solid #ffd700; }
+
+/* ── PACK GALLERY ─────────────────────────────────────────────────────────── */
+.pack-section {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.pack-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pack-img {
+  width: 80px;
+  height: 112px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  cursor: zoom-in;
+  transition: transform 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.pack-img:hover { transform: scale(1.08); border-color: var(--accent, var(--gold)); }
+.pack-cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
+}
+.pack-card-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 80px;
+}
+.pack-card-item .card-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+}
+.pack-card-item .card-num {
+  font-size: 0.55rem;
+  color: #555577;
+  font-family: monospace;
+}
+.foil-badge {
+  display: inline-block;
+  font-size: 0.5rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  padding: 1px 5px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+.foil-f  { background: #2a1a00; color: #fbbf24; }
+.foil-n  { background: #0f1a2a; color: #60a5fa; }
+.foil-sr { background: #1a0a30; color: #c084fc; }
+
+/* ── CARD TABLE ───────────────────────────────────────────────────────────── */
+table.prize-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  margin-bottom: 16px;
+}
+.prize-table th {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.prize-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(42,42,74,0.6);
+  vertical-align: middle;
+}
+.prize-table tr:hover td { background: rgba(255,255,255,0.02); }
+.price-hi  { color: #fbbf24; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; }
+.price-med { color: #4ade80; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; }
+.price-lo  { color: #60a5fa; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; }
+
+/* Card thumbnail inline */
+.thumb-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.thumb-sm {
+  width: 36px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  flex-shrink: 0;
+}
+.card-name-col { font-weight: 600; color: var(--white); }
+.card-sub      { font-size: 0.65rem; color: var(--muted); margin-top: 1px; }
+
+/* event type chip */
+.etype {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.etype-tc  { background: #0f2a0f; color: #4ade80; }
+.etype-cs  { background: #1a0a30; color: #c084fc; }
+.etype-fb  { background: #2a1000; color: #fb923c; }
+.etype-sb  { background: #0a1a2a; color: #60a5fa; }
+.etype-ser { background: #2a1a00; color: #ffd700; }
+.etype-wc  { background: #2a0000; color: #f87171; }
+.etype-oth { background: #1a1a2a; color: #94a3b8; }
+
+/* ── INFO BOXES ───────────────────────────────────────────────────────────── */
+.info-box {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent, var(--gold));
+  border-radius: 0 7px 7px 0;
+  padding: 12px 14px;
+  font-size: 0.75rem;
+  color: #9999bb;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.info-box strong { color: var(--white); }
+.warn-box {
+  background: rgba(234,179,8,0.08);
+  border: 1px solid rgba(234,179,8,0.3);
+  border-radius: 7px;
+  padding: 10px 14px;
+  font-size: 0.74rem;
+  color: #fde68a;
+  margin-bottom: 16px;
+}
+
+/* ── TOP 10 TABLE ─────────────────────────────────────────────────────────── */
+.rank-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  color: var(--muted);
+  text-align: center;
+  width: 40px;
+}
+.rank-num.gold   { color: #ffd700; }
+.rank-num.silver { color: #c0c0c0; }
+.rank-num.bronze { color: #cd7f32; }
+
+/* ── RESPONSIVE ───────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .sidenav { display: none; }
+  .page { padding: 14px; }
+  .page-hero { flex-direction: column; }
+  .hero-stats { flex-direction: row; margin-left: 0; }
+}
+
+/* ── POPUP ────────────────────────────────────────────────────────────────── */
+#popup-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+}
+#popup-overlay.show { display: flex; }
+#popup-overlay img {
+  max-width: 280px;
+  border-radius: 10px;
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 60px rgba(240,180,41,0.4);
+}
+#popup-overlay .close-btn {
+  position: absolute; top: 20px; right: 24px;
+  font-size: 2rem; color: var(--white); cursor: pointer; line-height: 1;
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="logo">ONE PIECE<span>TCG</span></div>
+  <div class="topbar-title">Tournament & Prize Card Guide</div>
+  <a href="index.html" class="back-link">← Price Guide</a>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDE NAV -->
+  <nav class="sidenav">
+    <div class="nav-section-label">Overview</div>
+    <button class="nav-btn active" onclick="showPage('top10',this)">
+      <span class="nav-icon">🏆</span> Top 10 Prize Cards
+      <span class="nav-dot" style="background:#ffd700"></span>
+    </button>
+    <button class="nav-btn" onclick="showPage('overview',this)">
+      <span class="nav-icon">📋</span> How It Works
+    </button>
+
+    <div class="nav-section-label">English Events</div>
+    <button class="nav-btn" onclick="showPage('treasure-cup',this)">
+      <span class="nav-icon">💎</span> Treasure Cup
+      <span class="nav-dot" style="background:#22c55e"></span>
+    </button>
+    <button class="nav-btn" onclick="showPage('championship',this)">
+      <span class="nav-icon">🏅</span> Championship (CS)
+      <span class="nav-dot" style="background:#a78bfa"></span>
+    </button>
+    <button class="nav-btn" onclick="showPage('store-tournament',this)">
+      <span class="nav-icon">🎯</span> Store Tournament
+      <span class="nav-dot" style="background:#3b82f6"></span>
+    </button>
+
+    <div class="nav-section-label">Japan / Global</div>
+    <button class="nav-btn" onclick="showPage('flagship',this)">
+      <span class="nav-icon">⚔️</span> Flagship Battle
+      <span class="nav-dot" style="background:#f97316"></span>
+    </button>
+    <button class="nav-btn" onclick="showPage('standard-battle',this)">
+      <span class="nav-icon">🎲</span> Standard Battle
+      <span class="nav-dot" style="background:#3b82f6"></span>
+    </button>
+    <button class="nav-btn" onclick="showPage('3on3',this)">
+      <span class="nav-icon">👥</span> 3-on-3 / 8 Packs
+      <span class="nav-dot" style="background:#8b5cf6"></span>
+    </button>
+
+    <div class="nav-section-label">Special</div>
+    <button class="nav-btn" onclick="showPage('serial',this)">
+      <span class="nav-icon">🔢</span> Serial Number Cards
+      <span class="nav-dot" style="background:#eab308"></span>
+    </button>
+    <button class="nav-btn" onclick="showPage('world-finals',this)">
+      <span class="nav-icon">🌍</span> World Finals Trophies
+      <span class="nav-dot" style="background:#ef4444"></span>
+    </button>
+    <button class="nav-btn" onclick="showPage('packs-index',this)">
+      <span class="nav-icon">📦</span> All Packs Index
+    </button>
+
+    <div class="nav-section-label">Reference</div>
+    <button class="nav-btn" onclick="showPage('en-jp-diff',this)">
+      <span class="nav-icon">🆚</span> EN vs JP Cards
+    </button>
+    <button class="nav-btn" onclick="showPage('collector-tips',this)">
+      <span class="nav-icon">🔍</span> Collector Tips
+    </button>
+  </nav>
+
+  <!-- PAGES -->
+  <main class="main">
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE: TOP 10
+    ══════════════════════════════════════════════════════════ -->
+    <div class="page active" id="page-top10">
+      <div class="page-hero" style="--accent:var(--gold)">
+        <div class="hero-icon">🏆</div>
+        <div class="hero-text">
+          <h1>Top 10 Most Valuable Prize Cards</h1>
+          <div class="subtitle">English & Japanese · All Events · Raw & Graded</div>
+          <p>Tournament prize cards are among the rarest cards in the game — never pulled from packs, only earned through competitive play. These are the ones that matter most to collectors.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-val">$21,600</div><div class="stat-lbl">PSA 10 Record</div></div>
+          <div class="stat"><div class="stat-val">~256</div><div class="stat-lbl">Rarest EN copies</div></div>
+        </div>
+      </div>
+
+      <table class="prize-table">
+        <thead><tr>
+          <th>#</th><th>Card</th><th>Event</th><th>Region</th><th>Placement</th><th>~Copies</th><th>EN Raw</th><th>PSA 10</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td class="rank-num gold">1</td>
+            <td><div class="thumb-cell">
+              <img class="thumb-sm" src="/images/cards/ST01-013_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST01-013_p1.png" alt="Zoro" onerror="this.src=this.dataset.fallback">
+              <div><div class="card-name-col">Roronoa Zoro</div><div class="card-sub">ST01-013 · Treasure Cup 2023 (1st wave) · Top 8</div></div>
+            </div></td>
+            <td><span class="etype etype-tc">Treasure Cup</span></td>
+            <td>🇺🇸🌏 EN</td><td>Top 8</td><td>~256</td>
+            <td class="price-hi">$3,000–$5,800</td>
+            <td class="price-hi">$21,600 ✓</td>
+          </tr>
+          <tr>
+            <td class="rank-num silver">2</td>
+            <td><div class="thumb-cell">
+              <img class="thumb-sm" src="/images/cards/ST04-003_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST04-003_p2.png" alt="Kaido" onerror="this.src=this.dataset.fallback">
+              <div><div class="card-name-col">Kaido</div><div class="card-sub">CS 2023 Finals · 2nd Place Trophy</div></div>
+            </div></td>
+            <td><span class="etype etype-wc">CS Finals</span></td>
+            <td>🇯🇵 JP</td><td>2nd Place</td><td>&lt;50</td>
+            <td class="price-hi">$8,000–$12,000</td>
+            <td class="price-hi">$17,998 ✓</td>
+          </tr>
+          <tr>
+            <td class="rank-num bronze">3</td>
+            <td><div class="thumb-cell">
+              <img class="thumb-sm" src="/images/cards/OP04-039_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP04-039_p2.png" alt="Rebecca" onerror="this.src=this.dataset.fallback">
+              <div><div class="card-name-col">Rebecca</div><div class="card-sub">CS 2024 Finals · Top Prize</div></div>
+            </div></td>
+            <td><span class="etype etype-wc">CS Finals</span></td>
+            <td>🇯🇵 JP</td><td>Top Prize</td><td>&lt;50</td>
+            <td class="price-hi">$7,000–$10,000</td>
+            <td class="price-hi">$17,000 ✓ BGS 10</td>
+          </tr>
+          <tr>
+            <td class="rank-num">4</td>
+            <td><div class="thumb-cell">
+              <img class="thumb-sm" src="/images/cards/ST01-001_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST01-001_p1.png" alt="Luffy" onerror="this.src=this.dataset.fallback">
+              <div><div class="card-name-col">Monkey D. Luffy</div><div class="card-sub">ST01-001 · Serial Number · Pre-Release 2022</div></div>
+            </div></td>
+            <td><span class="etype etype-ser">Serial #</span></td>
+            <td>🇯🇵🇺🇸</td><td>1st / Top 8</td><td>&lt;500</td>
+            <td class="price-hi">$5,000–$6,000</td>
+            <td class="price-hi">$10,000+ est.</td>
+          </tr>
+          <tr>
+            <td class="rank-num">5</td>
+            <td><div class="thumb-cell">
+              <img class="thumb-sm" src="/images/cards/OP01-114_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP01-114_p1.png" alt="X Drake" onerror="this.src=this.dataset.fallback">
+              <div><div class="card-name-col">X. Drake</div><div class="card-sub">CS 23-24 Finals · Winner / Finalist / Top Player</div></div>
+            </div></td>
+            <td><span class="etype etype-wc">CS Finals</span></td>
+            <td>🇯🇵 JP</td><td>1st–Top Player</td><td>&lt;30</td>
+            <td class="price-hi">$4,000–$8,000</td>
+            <td class="price-med">TBD</td>
+          </tr>
+          <tr>
+            <td class="rank-num">6</td>
+            <td><div class="thumb-cell">
+              <img class="thumb-sm" src="/images/cards/ST01-013_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST01-013_p2.png" alt="Zoro" onerror="this.src=this.dataset.fallback">
+              <div><div class="card-name-col">Roronoa Zoro</div><div class="card-sub">ST01-013 · 3-on-3 Cup Participant Promo</div></div>
+            </div></td>
+            <td><span class="etype etype-oth">3-on-3 Cup</span></td>
+            <td>🇯🇵 JP</td><td>Participant</td><td>~1,500</td>
+            <td class="price-med">$600–$1,200</td>
+            <td class="price-med">$2,500+ est.</td>
+          </tr>
+          <tr>
+            <td class="rank-num">7</td>
+            <td><div class="thumb-cell">
+              <img class="thumb-sm" src="/images/cards/ST01-001_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST01-001_p2.png" alt="Luffy" onerror="this.src=this.dataset.fallback">
+              <div><div class="card-name-col">Monkey D. Luffy</div><div class="card-sub">ST01-001 · Pre-Release Winner Stamp (non-serial)</div></div>
+            </div></td>
+            <td><span class="etype etype-ser">Winner</span></td>
+            <td>🇺🇸🇯🇵</td><td>1st Place</td><td>~200</td>
+            <td class="price-med">≈$1,595</td>
+            <td class="price-med">$4,000+ est.</td>
+          </tr>
+          <tr>
+            <td class="rank-num">8</td>
+            <td><div class="thumb-cell">
+              <img class="thumb-sm" src="/images/cards/OP02-099_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP02-099_p2.png" alt="Sakazuki" onerror="this.src=this.dataset.fallback">
+              <div><div class="card-name-col">Sakazuki (Akainu)</div><div class="card-sub">Championship 2023 · Regional Top 16</div></div>
+            </div></td>
+            <td><span class="etype etype-cs">Championship</span></td>
+            <td>🇺🇸 EN</td><td>Top 16</td><td>~400</td>
+            <td class="price-med">$1,300–$1,600</td>
+            <td class="price-med">$3,500+ est.</td>
+          </tr>
+          <tr>
+            <td class="rank-num">9</td>
+            <td><div class="thumb-cell">
+              <img class="thumb-sm" src="/images/cards/OP02-002_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP02-002_p2.png" alt="Garp" onerror="this.src=this.dataset.fallback">
+              <div><div class="card-name-col">Monkey D. Garp</div><div class="card-sub">Treasure Cup Feb 2024 · Top 16</div></div>
+            </div></td>
+            <td><span class="etype etype-tc">Treasure Cup</span></td>
+            <td>🇺🇸 EN</td><td>Top 16</td><td>~500</td>
+            <td class="price-med">≈$1,500+</td>
+            <td class="price-med">$3,000+ est.</td>
+          </tr>
+          <tr>
+            <td class="rank-num">10</td>
+            <td><div class="thumb-cell">
+              <img class="thumb-sm" src="/images/cards/OP02-096_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP02-096_p2.png" alt="Kuzan" onerror="this.src=this.dataset.fallback">
+              <div><div class="card-name-col">Kuzan (Aokiji)</div><div class="card-sub">Championship 2023 · Regional Top 16</div></div>
+            </div></td>
+            <td><span class="etype etype-cs">Championship</span></td>
+            <td>🇺🇸 EN</td><td>Top 16</td><td>~400</td>
+            <td class="price-med">$1,000–$1,200</td>
+            <td class="price-hi">$5,450 ✓ PSA 10</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="warn-box">⚠️ Prize cards are <strong>never reprinted by Bandai</strong>. Once an event season ends, that card exits supply permanently. All prices are EN market estimates — verify on eBay Sold Listings or PriceCharting before transacting.</div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE: OVERVIEW
+    ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-overview">
+      <div class="page-hero" style="--accent:#94a3b8">
+        <div class="hero-icon">📋</div>
+        <div class="hero-text">
+          <h1>How the Tournament Ecosystem Works</h1>
+          <div class="subtitle">All event types · Prize structure · Season calendar</div>
+          <p>One Piece TCG runs a multi-tier competitive season globally, with separate prize cards at each level. Understanding the structure is essential for collectors — the same card can be worth vastly different amounts depending on which event stamp it carries.</p>
+        </div>
+      </div>
+
+      <div class="section-header">The Competitive Pyramid</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
+        <div class="info-box" style="--accent:#ef4444">
+          <strong>🌍 World Championship / CS Finals (Top)</strong><br>
+          The pinnacle. Trophy cards have &lt;10 copies for 1st place. Never available through any other means. Prices: $5,000–$18,000+.
+        </div>
+        <div class="info-box" style="--accent:#7c3aed">
+          <strong>🏅 Championship Regionals (2nd Tier)</strong><br>
+          Large open events. Prize cards distributed to Top 8/16/64 per region. EN Regionals produce the most valuable "accessible" promos. Prices: $400–$8,000.
+        </div>
+        <div class="info-box" style="--accent:#22c55e">
+          <strong>💎 Treasure Cup (EN Flagship Large Event)</strong><br>
+          Premier EN event. Top 8 Treasure Cup cards have the lowest EN print runs of any obtainable promo (~256 copies/wave). Prices: $100–$6,000.
+        </div>
+        <div class="info-box" style="--accent:#f97316">
+          <strong>⚔️ Flagship Battle (JP/AP Store Events)</strong><br>
+          Monthly store-level. Winner promos printed in moderate quantities. Prices: $50–$700 typically. Exception: early 2023 waves higher.
+        </div>
+        <div class="info-box" style="--accent:#3b82f6">
+          <strong>🎯 Store Tournament / Standard Battle (Base Tier)</strong><br>
+          Weekly local events. Tournament Packs given to all participants. Winner Packs to first place. Most cards: $5–$150.
+        </div>
+        <div class="info-box" style="--accent:#eab308">
+          <strong>🔢 Serial Number Cards (Historical)</strong><br>
+          Distributed only at the 2022 pre-release era. Unique numbered prints. The true grails of OPTCG. Never issued again after 2022.
+        </div>
+      </div>
+
+      <div class="section-header">Season Calendar (EN)</div>
+      <table class="prize-table">
+        <thead><tr><th>Period</th><th>Event</th><th>Prize Tier</th><th>Current Status</th></tr></thead>
+        <tbody>
+          <tr><td>Oct–Dec annually</td><td>Championship Regionals Season 1</td><td>Top 8 / Top 16 / Top 64 prize cards</td><td style="color:#4ade80">Active (CS 25-26)</td></tr>
+          <tr><td>Jan–Mar annually</td><td>Championship Regionals Season 2</td><td>Top 8 / Top 16 / Top 64 prize cards</td><td style="color:#4ade80">Active (CS 25-26)</td></tr>
+          <tr><td>Aug/Sep annually</td><td>CS Finals (Paris / Dallas)</td><td>Trophy cards, Finalist sets, Top Player packs</td><td style="color:#4ade80">CS 25-26 Finals</td></tr>
+          <tr><td>May annually</td><td>Treasure Cup</td><td>Top 8 / Top 16 / Top 64 / Participation packs</td><td style="color:#4ade80">Active</td></tr>
+          <tr><td>Aug annually</td><td>Treasure Cup (2nd wave)</td><td>New card set each wave</td><td style="color:#4ade80">Active</td></tr>
+          <tr><td>Nov annually</td><td>Store Treasure Cup</td><td>Store-level TC format</td><td style="color:#4ade80">Active</td></tr>
+          <tr><td>Every 3 months</td><td>Store Tournament</td><td>Tournament Pack (participation) / Winner Pack</td><td style="color:#4ade80">Ongoing</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE: TREASURE CUP
+    ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-treasure-cup">
+      <div class="page-hero" style="--accent:var(--tc-green)">
+        <div class="hero-icon">💎</div>
+        <div class="hero-text">
+          <h1>Treasure Cup</h1>
+          <div class="subtitle">Premier English Large-Scale Tournament · 2–3× per year · NA, EU, Oceania, LatAm</div>
+          <p>The Treasure Cup is the most important event for EN prize card collectors. Top 8 cards have approximately 256 copies globally per wave — the lowest EN print run of any promo obtainable through normal tournament play. The 2023 Zoro PSA 10 sold for $21,600.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-val">$21,600</div><div class="stat-lbl">PSA 10 Record</div></div>
+          <div class="stat"><div class="stat-val">~256</div><div class="stat-lbl">Top 8 copies/wave</div></div>
+        </div>
+      </div>
+
+      <div class="section-header">Prize Structure</div>
+      <div class="prize-tiers">
+        <div class="tier">
+          <div class="tier-place">All Players</div>
+          <div class="tier-badge badge-participation">Participation</div>
+          <div class="tier-desc">Event Pack Vol.X (4 cards, 1 drawn at random from the set) + DON!! special card (recent waves)</div>
+          <div class="tier-value">$5–$40</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place">Top 128–256</div>
+          <div class="tier-badge badge-top64">Top Cut</div>
+          <div class="tier-desc">Additional Event Pack Vol.X · Exact threshold varies by tournament size (Top 64 for smaller, Top 128/256 for 512+ players)</div>
+          <div class="tier-value">$5–$40 extra</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place">Top 64</div>
+          <div class="tier-badge badge-top64">Top 64</div>
+          <div class="tier-desc">Parallel Art promo card (foil stamped) — unique to this placement tier. Card identity announced close to event.</div>
+          <div class="tier-value">$80–$400</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place">Top 16</div>
+          <div class="tier-badge badge-top16">Top 16</div>
+          <div class="tier-desc">Upgraded Parallel Art promo card — same character as Top 64 or a separate card, higher foil treatment</div>
+          <div class="tier-value">$200–$1,500+</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place" style="color:#ffd700">Top 8 ★</div>
+          <div class="tier-badge badge-top8">Top 8</div>
+          <div class="tier-desc">The main chase prize. Alternate art foil-stamped promo. ~256 copies globally per wave. This is the record-setter.</div>
+          <div class="tier-value" style="color:#ffd700">$600–$6,000</div>
+        </div>
+      </div>
+
+      <div class="section-header">Known Prize Cards by Wave</div>
+      <table class="prize-table">
+        <thead><tr><th>Wave</th><th>Card</th><th>Card #</th><th>Tier</th><th>EN Raw Est.</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr>
+            <td style="white-space:nowrap">TC 2023 Wave 1</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/ST01-013_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST01-013_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Roronoa Zoro</div><div class="card-sub">ST01-013 Alt Art — Treasure Cup</div></div></div></td>
+            <td>ST01-013</td><td><span class="tier-badge badge-top8">Top 8</span></td>
+            <td class="price-hi">$3,000–$5,800</td>
+            <td style="font-size:0.7rem;color:var(--muted)">PSA 10: $21,600. Rarest EN TC card.</td>
+          </tr>
+          <tr>
+            <td>TC 2023 Wave 1</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/ST06-012_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST06-012_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Monkey D. Garp</div><div class="card-sub">ST06-012 — Treasure Cup</div></div></div></td>
+            <td>ST06-012</td><td><span class="tier-badge badge-top16">Top 16</span></td>
+            <td class="price-med">$500–$800</td>
+            <td style="font-size:0.7rem;color:var(--muted)">Competitive staple — extra value</td>
+          </tr>
+          <tr>
+            <td>TC 2023 Wave 1</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/EB01-006_p3.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB01-006_p3.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Tony Tony Chopper</div><div class="card-sub">OP02-098 / EB01-006 variant</div></div></div></td>
+            <td>OP02-098</td><td><span class="tier-badge badge-top64">Top 64</span></td>
+            <td class="price-med">$249–$350</td>
+            <td style="font-size:0.7rem;color:var(--muted)">Original Chopper TC — strong demand</td>
+          </tr>
+          <tr>
+            <td>TC 2023 Wave 2</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP01-025_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP01-025_p2.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Roronoa Zoro</div><div class="card-sub">OP01-025 Alt Art — Treasure Cup 2nd wave</div></div></div></td>
+            <td>OP01-025</td><td><span class="tier-badge badge-top8">Top 8</span></td>
+            <td class="price-med">$1,200–$1,500</td>
+            <td style="font-size:0.7rem;color:var(--muted)">Different card art from Wave 1</td>
+          </tr>
+          <tr>
+            <td>TC Feb 2024</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP02-002_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP02-002_p2.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Monkey D. Garp</div><div class="card-sub">OP02-002 — Treasure Cup Feb 2024</div></div></div></td>
+            <td>OP02-002</td><td><span class="tier-badge badge-top16">Top 16</span></td>
+            <td class="price-med">≈$1,500+</td>
+            <td style="font-size:0.7rem;color:var(--muted)">Strong demand wave</td>
+          </tr>
+          <tr>
+            <td>TC Nov/Dec 2024</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/EB01-006_p3.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB01-006_p3.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Tony Tony Chopper</div><div class="card-sub">EB01-006 — Treasure Cup 2024</div></div></div></td>
+            <td>EB01-006</td><td><span class="tier-badge badge-top64">Top 64</span></td>
+            <td class="price-med">$700–$900</td>
+            <td style="font-size:0.7rem;color:var(--muted)">Chopper demand drives strong value at Top 64</td>
+          </tr>
+          <tr>
+            <td>TC Mar 2026</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP13-118_p4.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-118_p4.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Monkey D. Luffy</div><div class="card-sub">OP13-118 — Treasure Cup March 2026</div></div></div></td>
+            <td>OP13-118</td><td><span class="tier-badge badge-top8">Top 8</span></td>
+            <td class="price-med">$600–$800</td>
+            <td style="font-size:0.7rem;color:var(--muted)">Newest TC promo — prices still settling</td>
+          </tr>
+          <tr>
+            <td>TC Mar 2026</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP13-119_p3.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-119_p3.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Portgas D. Ace</div><div class="card-sub">OP13-119 — Treasure Cup March 2026</div></div></div></td>
+            <td>OP13-119</td><td><span class="tier-badge badge-top16">Top 16</span></td>
+            <td class="price-med">$200–$400</td>
+            <td style="font-size:0.7rem;color:var(--muted)">Mar 2026 Top 16</td>
+          </tr>
+          <tr>
+            <td>TC Mar 2026</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP13-016_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-016_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Monkey D. Garp</div><div class="card-sub">OP13-016 — Treasure Cup March 2026</div></div></div></td>
+            <td>OP13-016</td><td><span class="tier-badge badge-top64">Top 64</span></td>
+            <td class="price-lo">$80–$150</td>
+            <td style="font-size:0.7rem;color:var(--muted)">Most recent accessible TC promo</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="section-header">Event Pack Gallery — Cards Given to All Participants</div>
+
+      <div class="pack-section">
+        <div class="pack-title">📦 Event Pack Vol.1 · Feb 2023 · 5 cards · P-028 to P-032</div>
+        <div class="pack-cards-grid">
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-028_EN.webp" alt="P-028" onerror="this.style.background='#1e293b'" onclick="showPopup(this)"><div class="card-name">Portgas D. Ace</div><div class="card-num">P-028</div><span class="foil-badge foil-f">Foil</span></div>
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-029_EN.webp" alt="P-029" onerror="this.style.background='#1e293b'" onclick="showPopup(this)"><div class="card-name">Monkey D. Luffy</div><div class="card-num">P-029</div><span class="foil-badge foil-f">Foil</span></div>
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-030_EN.webp" alt="P-030" onerror="this.style.background='#1e293b'" onclick="showPopup(this)"><div class="card-name">Sanji</div><div class="card-num">P-030</div><span class="foil-badge foil-f">Foil</span></div>
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-031_EN.webp" alt="P-031" onerror="this.style.background='#1e293b'" onclick="showPopup(this)"><div class="card-name">Nami</div><div class="card-num">P-031</div><span class="foil-badge foil-f">Foil</span></div>
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-032_EN.webp" alt="P-032" onerror="this.style.background='#1e293b'" onclick="showPopup(this)"><div class="card-name">Roronoa Zoro</div><div class="card-num">P-032</div><span class="foil-badge foil-f">Foil</span></div>
+        </div>
+      </div>
+
+      <div class="pack-section">
+        <div class="pack-title">📦 Event Pack Vol.7 · Jul–Sep 2025 · Charlotte Smoothie · P-series</div>
+        <div class="pack-cards-grid">
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-132_EN.webp" alt="Event Pack 7" onerror="this.style.background='#1e293b'" onclick="showPopup(this)"><div class="card-name">Charlotte Smoothie</div><div class="card-num">EP Vol.7</div><span class="foil-badge foil-f">Foil</span></div>
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-133_EN.webp" alt="Event Pack 7b" onerror="this.style.background='#1e293b'" onclick="showPopup(this)"><div class="card-name">Koby</div><div class="card-num">EP Vol.7</div><span class="foil-badge foil-f">Foil</span></div>
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-134_EN.webp" alt="Event Pack 7c" onerror="this.style.background='#1e293b'" onclick="showPopup(this)"><div class="card-name">Eustass Kid</div><div class="card-num">EP Vol.7</div><span class="foil-badge foil-f">Foil</span></div>
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-135_EN.webp" alt="Event Pack 7d" onerror="this.style.background='#1e293b'" onclick="showPopup(this)"><div class="card-name">Trafalgar Law</div><div class="card-num">EP Vol.7</div><span class="foil-badge foil-f">Foil</span></div>
+        </div>
+      </div>
+
+      <div class="info-box" style="--accent:var(--tc-green)">
+        <strong>How Event Packs work:</strong> Each Event Pack contains 4 cards. You receive 1 randomly selected card from the pack's set. The foil versions (F) are given to higher-placement finishers; non-foil (N) versions go to all participants at some events. Event Packs change every Treasure Cup wave — older Event Pack cards from earlier volumes can appreciate significantly once that pack is no longer distributed.
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE: CHAMPIONSHIP
+    ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-championship">
+      <div class="page-hero" style="--accent:var(--cs-purple)">
+        <div class="hero-icon">🏅</div>
+        <div class="hero-text">
+          <h1>Championship (CS)</h1>
+          <div class="subtitle">Annual Season · Regionals → Finals → World · EN + JP + All Regions</div>
+          <p>The Championship is the annual competitive season for OPTCG. It runs in two stages — Offline Regionals (open events at stores and large venues) and CS Finals (national/world level). Prize cards at each tier are distinct. CS Finals trophy cards have sub-10 copies for 1st place and represent the ultimate grails.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-val">$17,998</div><div class="stat-lbl">CS Finals Record</div></div>
+          <div class="stat"><div class="stat-val">&lt;10</div><div class="stat-lbl">1st Place copies</div></div>
+        </div>
+      </div>
+
+      <div class="section-header">Season Structure</div>
+      <div class="prize-tiers">
+        <div class="tier">
+          <div class="tier-place">Regionals — All Players</div>
+          <div class="tier-badge badge-participation">Participation</div>
+          <div class="tier-desc">Offline Regional Participation Pack (4 cards) — given at check-in</div>
+          <div class="tier-value">$5–$20</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place">Regionals — Top 64</div>
+          <div class="tier-badge badge-top64">Top 64</div>
+          <div class="tier-desc">Stamped promo card — foil alternate of a character from the current set era</div>
+          <div class="tier-value">$80–$400</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place">Regionals — Top 16</div>
+          <div class="tier-badge badge-top16">Top 16</div>
+          <div class="tier-desc">Upgraded stamped promo — more prestigious character or higher foil quality</div>
+          <div class="tier-value">$300–$1,600</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place">Regionals — Top 8</div>
+          <div class="tier-badge badge-top8">Top 8</div>
+          <div class="tier-desc">Premium stamped promo card — highest print of the regional tier</div>
+          <div class="tier-value">$500–$2,000</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place">CS Finals — Participation</div>
+          <div class="tier-badge badge-participation">Finals</div>
+          <div class="tier-desc">CS Finals Event Pack + Celebration Pack — given to all Finals attendees</div>
+          <div class="tier-value">$30–$100</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place">CS Finals — Top 8</div>
+          <div class="tier-badge badge-top8">Top 8</div>
+          <div class="tier-desc">Jumbo version of a current meta card + Top Player Pack</div>
+          <div class="tier-value">$500–$2,000</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place" style="color:#ffd700">CS Finals — 1st/2nd/3rd ★</div>
+          <div class="tier-badge badge-champion">Trophy</div>
+          <div class="tier-desc">Trophy card — unique artwork, serialized or stamped. &lt;10 copies for 1st place. The rarest obtainable cards in the game.</div>
+          <div class="tier-value" style="color:#ffd700">$5,000–$18,000+</div>
+        </div>
+      </div>
+
+      <div class="section-header">CS Prize Cards by Season</div>
+      <table class="prize-table">
+        <thead><tr><th>Season</th><th>Card</th><th>Card #</th><th>Placement</th><th>Region</th><th>EN Raw Est.</th></tr></thead>
+        <tbody>
+          <tr><td>CS 2023 Regionals</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP02-099_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP02-099_p2.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Sakazuki (Akainu)</div></div></div></td><td>OP02-099</td><td><span class="tier-badge badge-top16">Top 16</span></td><td>🇺🇸 EN</td><td class="price-med">$1,300–$1,600</td></tr>
+          <tr><td>CS 2023 Regionals</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP02-096_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP02-096_p2.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Kuzan (Aokiji)</div></div></div></td><td>OP02-096</td><td><span class="tier-badge badge-top16">Top 16</span></td><td>🇺🇸 EN</td><td class="price-med">$1,000–$1,200</td></tr>
+          <tr><td>CS 2023 Regionals</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP02-097_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP02-097_p2.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Borsalino (Kizaru)</div></div></div></td><td>OP02-097</td><td><span class="tier-badge badge-top16">Top 16</span></td><td>🇺🇸 EN</td><td class="price-med">$400–$600</td></tr>
+          <tr><td>CS 23-24 Finals</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP01-114_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP01-114_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">X. Drake</div><div class="card-sub">Winner / Finalist / Top Player versions</div></div></div></td><td>OP01-114</td><td><span class="tier-badge badge-champion">Trophy</span></td><td>🇯🇵 JP</td><td class="price-hi">$4,000–$8,000</td></tr>
+          <tr><td>CS 24-25 Finals</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP07-109_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP07-109_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Monkey D. Luffy</div><div class="card-sub">OP07-109 Serial Number card</div></div></div></td><td>OP07-109</td><td><span class="tier-badge badge-champion">Serial</span></td><td>🇯🇵 JP</td><td class="price-hi">$2,000–$4,000</td></tr>
+          <tr><td>CS 25-26 Regionals S1</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP09-065_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-065_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Sanji</div></div></div></td><td>OP09-065</td><td><span class="tier-badge badge-top8">Top 8</span></td><td>🇺🇸 EN</td><td class="price-med">$300–$600</td></tr>
+          <tr><td>CS 25-26 Regionals S1</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP09-076_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-076_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Roronoa Zoro</div></div></div></td><td>OP09-076</td><td><span class="tier-badge badge-top16">Top 16</span></td><td>🇺🇸 EN</td><td class="price-med">$150–$300</td></tr>
+          <tr><td>CS 25-26 Regionals S1</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP09-050_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-050_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Nami</div></div></div></td><td>OP09-050</td><td><span class="tier-badge badge-top64">Top 64</span></td><td>🇺🇸 EN</td><td class="price-lo">$80–$150</td></tr>
+          <tr><td>CS 25-26 Finals S1</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/ST21-015_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST21-015_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Roronoa Zoro</div><div class="card-sub">ST21-015 — CS 25-26 Finals 1st Place Trophy</div></div></div></td><td>ST21-015</td><td><span class="tier-badge badge-champion">1st Trophy</span></td><td>🇯🇵 JP</td><td class="price-hi">$2,500+</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-header">Regional Participation Packs (given to all Regionals players)</div>
+      <div class="pack-section">
+        <div class="pack-title">📦 Offline Regional Participation Pack — 4 cards per pack, 1 drawn at random</div>
+        <div class="info-box" style="--accent:var(--cs-purple)">
+          Regional Participation Packs are distributed to every player who shows up to an Offline Regional Championship event. The pack contains 4 foil promo cards — you receive 1 at random. These packs rotate each Regional season. The individual cards have modest secondary market value ($10–$60) since print runs are relatively high. However, the <strong>Winner Packs</strong> given to 1st place at store-level events within the Championship system can reach $100–$400 for popular characters.
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE: STORE TOURNAMENT
+    ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-store-tournament">
+      <div class="page-hero" style="--accent:var(--sb-blue)">
+        <div class="hero-icon">🎯</div>
+        <div class="hero-text">
+          <h1>Store Tournament</h1>
+          <div class="subtitle">Recurring Local Events · Every 3 months · EN + JP + All Regions</div>
+          <p>Store Tournaments are the bread-and-butter of organized play. Official kits are distributed to registered stores every 3 months, containing Tournament Packs (4-card participation packs) and Winner Packs (foil versions for 1st place). These are how most players first acquire promo cards.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-val">Every 3mo</div><div class="stat-lbl">New kit released</div></div>
+          <div class="stat"><div class="stat-val">$5–$150</div><div class="stat-lbl">Typical card value</div></div>
+        </div>
+      </div>
+
+      <div class="section-header">Prize Structure</div>
+      <div class="prize-tiers">
+        <div class="tier">
+          <div class="tier-place">Participation</div>
+          <div class="tier-badge badge-participation">All Players</div>
+          <div class="tier-desc">Tournament Pack Vol.X — 1 random card from the set of 4. Non-foil version (N).</div>
+          <div class="tier-value">$2–$30</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place">1st Place</div>
+          <div class="tier-badge badge-winner">Winner</div>
+          <div class="tier-desc">Winner Pack Vol.X — 1 random foil (F) version of the same 4-card set. Foil treatment makes this the valuable version.</div>
+          <div class="tier-value">$10–$150</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place">Judge</div>
+          <div class="tier-badge badge-participation">Judge Pack</div>
+          <div class="tier-desc">Judge Pack Vol.X — Judges receive a separate pack with 12 different foil promo cards. Only given to certified event judges.</div>
+          <div class="tier-value">Varies</div>
+        </div>
+      </div>
+
+      <div class="section-header">Tournament Pack History — Cards per Volume</div>
+
+      <div class="pack-section">
+        <div class="pack-title">📦 Tournament Pack Vol.1 · Dec 2022 · P-006 to P-010 (N) + Foil versions (F)</div>
+        <div class="pack-cards-grid">
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-006_EN.webp" alt="P-006" onclick="showPopup(this)" onerror="this.style.background='#1e293b'"><div class="card-name">Monkey D. Luffy</div><div class="card-num">P-006</div><span class="foil-badge foil-n">N/F</span></div>
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-007_EN.webp" alt="P-007" onclick="showPopup(this)" onerror="this.style.background='#1e293b'"><div class="card-name">Monkey D. Luffy</div><div class="card-num">P-007</div><span class="foil-badge foil-n">N/F</span></div>
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-008_EN.webp" alt="P-008" onclick="showPopup(this)" onerror="this.style.background='#1e293b'"><div class="card-name">Yamato</div><div class="card-num">P-008</div><span class="foil-badge foil-n">N/F</span></div>
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-009_EN.webp" alt="P-009" onclick="showPopup(this)" onerror="this.style.background='#1e293b'"><div class="card-name">Kaido</div><div class="card-num">P-009</div><span class="foil-badge foil-n">N/F</span></div>
+          <div class="pack-card-item"><img class="pack-img" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/P/P-010_EN.webp" alt="P-010" onclick="showPopup(this)" onerror="this.style.background='#1e293b'"><div class="card-name">Kaido</div><div class="card-num">P-010</div><span class="foil-badge foil-n">N/F</span></div>
+        </div>
+      </div>
+
+      <div class="pack-section">
+        <div class="pack-title">📦 Tournament Pack Vol.5 (Winner Pack Vol.5) · Nov 2023 · Alt Art set · Notable: Luffy, Kaido, Crocodile Alt Arts</div>
+        <div class="info-box" style="--accent:var(--sb-blue)">
+          Tournament Pack Vol.5 introduced <strong>Alternate Art cards</strong> for the first time in the Store Tournament series — making the Winner Pack foil versions significantly more valuable than previous volumes. The Luffy Alternate Art (ST01-012 variant) Winner Pack reached $200–$400. This set was the first time store tournament winners received a card collectors genuinely wanted.
+        </div>
+      </div>
+
+      <div class="pack-section">
+        <div class="pack-title">📦 Winner Pack 2025 Vol.1 · 4 cards · Kaku foil · Charlotte Pudding foil</div>
+        <div class="info-box" style="--accent:var(--sb-blue)">
+          From 2025, Bandai renamed the packs to "Tournament Pack 2025 Vol.X" and "Winner Pack 2025 Vol.X" to match the season year. The structure remains the same. Charlotte Pudding (OP08-067) from Winner Pack 2025 Vol.1 is currently the most valuable recent store winner promo at ~$80–$150.
+        </div>
+      </div>
+
+      <div class="section-header">Complete Volume Reference</div>
+      <table class="prize-table">
+        <thead><tr><th>Volume</th><th>Period</th><th>Notable Cards</th><th>Winner Foil Value</th></tr></thead>
+        <tbody>
+          <tr><td>Tournament Pack Vol.1</td><td>Dec 2022</td><td>Monkey D. Luffy (×2), Yamato, Kaido (×2)</td><td class="price-lo">$10–$50</td></tr>
+          <tr><td>Tournament Pack Vol.2</td><td>Mar 2023</td><td>Black Maria, Trafalgar Law, DON!! cards, Roronoa Zoro Winner</td><td class="price-lo">$20–$80</td></tr>
+          <tr><td>Tournament Pack Vol.3</td><td>Jun 2023</td><td>Who's-Who Winner, Jewelry Bonney Winner, Nami, Robin</td><td class="price-lo">$20–$80</td></tr>
+          <tr><td>Tournament Pack Vol.4</td><td>Sep 2023</td><td>Brook (N/F), Perona, Vinsmoke Judge</td><td class="price-lo">$15–$60</td></tr>
+          <tr><td>Tournament Pack Vol.5 ★</td><td>Nov 2023</td><td><strong>Monkey D. Luffy Alt Art</strong>, Kaido Alt Art, Crocodile Alt Art (Winner Pack)</td><td class="price-med">$100–$400</td></tr>
+          <tr><td>Tournament Pack Vol.6</td><td>Feb 2024</td><td>Kaya (N), Winner Kaya foil</td><td class="price-lo">$20–$80</td></tr>
+          <tr><td>Tournament Pack Vol.7</td><td>Jun 2024</td><td>Bepo Winner, Trafalgar Law Winner, Jinbe Event Pack 1</td><td class="price-lo">$30–$100</td></tr>
+          <tr><td>2024 Oct–Dec Pack</td><td>Oct 2024</td><td>Seasonal rotation</td><td class="price-lo">$20–$80</td></tr>
+          <tr><td>Winner Pack 2025 Vol.1</td><td>Jan 2025</td><td>Kaku foil, Charlotte Pudding foil</td><td class="price-lo">$40–$150</td></tr>
+          <tr><td>Winner Pack 2025 Vol.2</td><td>Apr 2025</td><td>Wyper foil Winner</td><td class="price-lo">$30–$100</td></tr>
+          <tr><td>Winner Pack 2025 Vol.3</td><td>Jul 2025</td><td>Jinbe foil, Tony Chopper event</td><td class="price-lo">$30–$100</td></tr>
+          <tr><td>Winner Pack 2025 Vol.4</td><td>Oct 2025</td><td>"Because the Side of Justice Will Be..." event foil</td><td class="price-lo">$20–$80</td></tr>
+          <tr><td>Tournament Pack 2026 Vol.2</td><td>Apr 2026</td><td>12 cards — latest wave</td><td class="price-lo">$20–$80</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE: FLAGSHIP BATTLE
+    ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-flagship">
+      <div class="page-hero" style="--accent:var(--fb-orange)">
+        <div class="hero-icon">⚔️</div>
+        <div class="hero-text">
+          <h1>Flagship Battle</h1>
+          <div class="subtitle">Store-Level Monthly Events · JP / Asia-Pacific dominant · EN events also run</div>
+          <p>Flagship Battles are store-scale competitive events run monthly or bi-monthly. They're the most frequent way Japanese players can earn exclusive prize cards. Winner promos ("Winner's Memento") are stamped foil versions exclusive to 1st place. Top 8 players receive a "Top 8 Souvenir" — a separate, less exclusive card.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-val">Monthly</div><div class="stat-lbl">Frequency</div></div>
+          <div class="stat"><div class="stat-val">$50–$700</div><div class="stat-lbl">Winner promo value</div></div>
+        </div>
+      </div>
+
+      <div class="section-header">Prize Structure</div>
+      <div class="prize-tiers">
+        <div class="tier">
+          <div class="tier-place">Top 8</div>
+          <div class="tier-badge badge-top8">Top 8 Souvenir</div>
+          <div class="tier-desc">Foil promo card — "Flagship Battle Top 8 Commemorative Item." Lower exclusivity than Winner (many more copies since 8 per event).</div>
+          <div class="tier-value">$30–$300</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place" style="color:#fb923c">1st Place ★</div>
+          <div class="tier-badge badge-winner">Winner's Memento</div>
+          <div class="tier-desc">The Flagship winner promo — exclusive to 1st place per event. Higher foil treatment. Only 1 per event, but many events run simultaneously globally.</div>
+          <div class="tier-value" style="color:#fb923c">$50–$700</div>
+        </div>
+      </div>
+
+      <div class="section-header">Known Flagship Winner Promos</div>
+      <table class="prize-table">
+        <thead><tr><th>Period</th><th>Winner Card</th><th>Card #</th><th>Top 8 Card</th><th>Region</th><th>Winner Raw</th></tr></thead>
+        <tbody>
+          <tr><td>Feb–Jun 2023</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP01-025_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP01-025_p1.png" onerror="this.src=this.dataset.fallback"><div class="card-name-col">Roronoa Zoro (SR)</div></div></td><td>OP01-025</td><td>—</td><td>🇯🇵🌏</td><td class="price-med">$300–$600</td></tr>
+          <tr><td>2024</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP07-119_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP07-119_p1.png" onerror="this.src=this.dataset.fallback"><div class="card-name-col">Portgas D. Ace (SR-P)</div></div></td><td>OP07-119</td><td>Serial # Top 8 version also</td><td>🇯🇵🌏</td><td class="price-med">$400–$700</td></tr>
+          <tr><td>Feb–Mar 2024</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP06-069_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP06-069_p1.png" onerror="this.src=this.dataset.fallback"><div class="card-name-col">Vinsmoke Reiju (SR)</div></div></td><td>OP06-069</td><td>Cavendish EB01-012</td><td>🇯🇵🌏</td><td class="price-med">$150–$350</td></tr>
+          <tr><td>Feb–Mar 2025</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP09-069_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-069_p1.png" onerror="this.src=this.dataset.fallback"><div class="card-name-col">Trafalgar Law (R)</div></div></td><td>OP09-069</td><td>Charlotte Pudding OP08-067</td><td>🇯🇵🌏</td><td class="price-lo">$100–$250</td></tr>
+          <tr><td>Apr 2025</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP11-010_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP11-010_p1.png" onerror="this.src=this.dataset.fallback"><div class="card-name-col">Hibari (SR)</div></div></td><td>OP11-010</td><td>—</td><td>🇯🇵🌏</td><td class="price-med">$150–$300</td></tr>
+          <tr><td>Jul–Sep 2025</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/ST21-014_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST21-014_p1.png" onerror="this.src=this.dataset.fallback"><div class="card-name-col">Monkey D. Luffy (SR)</div></div></td><td>ST21-014</td><td>Roronoa Zoro ST21-015</td><td>🇯🇵🌏🇺🇸</td><td class="price-lo">$100–$250</td></tr>
+        </tbody>
+      </table>
+
+      <div class="info-box" style="--accent:var(--fb-orange)">
+        <strong>Value note on Flagship vs Treasure Cup:</strong> Flagship Winner promos look similar to Treasure Cup cards but are worth significantly less. The key reason is total supply — while each individual Flagship event only produces 1 winner card, hundreds of Flagship events run globally each month. A TC Top 8 card has ~256 copies globally per wave; Flagship winner cards collectively number in the thousands. Early 2023 Flagship promos (Zoro OP01-025) are exceptions because very few events ran in that early period.
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE: STANDARD BATTLE
+    ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-standard-battle">
+      <div class="page-hero" style="--accent:var(--sb-blue)">
+        <div class="hero-icon">🎲</div>
+        <div class="hero-text">
+          <h1>Standard Battle</h1>
+          <div class="subtitle">Weekly/Recurring Store Events · JP + Asia-Pacific dominant</div>
+          <p>Standard Battle is the most accessible entry point into organized OPTCG play. Weekly events at registered stores. All participants receive 1 of 4 Standard Battle Pack cards. Winners get the foil version. The Gear 5 Luffy winner promo hit ¥10,000 JP due to competitive playability — the exception that proves the rule.</p>
+        </div>
+      </div>
+
+      <div class="section-header">Prize Structure</div>
+      <div class="prize-tiers">
+        <div class="tier">
+          <div class="tier-place">All Players</div>
+          <div class="tier-badge badge-participation">Participation</div>
+          <div class="tier-desc">1 of 4 Standard Battle Pack cards (non-foil). Rotates by season. $1–$10 typically.</div>
+          <div class="tier-value">$1–$10</div>
+        </div>
+        <div class="tier">
+          <div class="tier-place">1st Place</div>
+          <div class="tier-badge badge-winner">Winner</div>
+          <div class="tier-desc">Foil (F) parallel version of the same card. Notable winners: Sanji ST10-004 (¥10k JP), Roronoa Zoro EB02-019.</div>
+          <div class="tier-value">$15–$200</div>
+        </div>
+      </div>
+
+      <div class="section-header">Notable Standard Battle Winner Promos</div>
+      <table class="prize-table">
+        <thead><tr><th>Pack</th><th>Winner Card</th><th>Card #</th><th>Why Notable</th><th>JP Value</th></tr></thead>
+        <tbody>
+          <tr><td>8 Packs Battle Winner</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/ST10-004_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST10-004_p1.png" onerror="this.src=this.dataset.fallback"><div class="card-name-col">Sanji — Gear 5 Theme</div></div></td><td>ST10-004</td><td>Competitive staple in top decks — playability drives demand</td><td class="price-med">¥10,000+</td></tr>
+          <tr><td>Std Battle Pack Vol.11</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/EB02-019_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB02-019_p1.png" onerror="this.src=this.dataset.fallback"><div class="card-name-col">Roronoa Zoro</div></div></td><td>EB02-019</td><td>Zoro parallel always carries a premium</td><td class="price-med">¥5,000–¥8,000</td></tr>
+          <tr><td>8 Packs Battle Winner</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP05-001_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP05-001_p1.png" onerror="this.src=this.dataset.fallback"><div class="card-name-col">Monkey D. Luffy</div></div></td><td>P-041 area</td><td>Luffy character always has strong baseline demand</td><td class="price-med">¥5,000–¥8,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE: 3-ON-3 / 8 PACKS
+    ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-3on3">
+      <div class="page-hero" style="--accent:#8b5cf6">
+        <div class="hero-icon">👥</div>
+        <div class="hero-text">
+          <h1>3-on-3 Cup &amp; 8 Packs Battle</h1>
+          <div class="subtitle">Team Format · Sealed Format · JP Primary · Historical Significance</div>
+          <p>Two alternative competitive formats. The 3-on-3 Cup (team of 3 players) ran in 2022-2023 and distributed the Zoro ST01-013 participant promo — now worth $600–$1,200 and <strong>frequently confused with the Treasure Cup version</strong>. The 8 Packs Battle is a sealed format (players open 8 packs and build a deck).</p>
+        </div>
+      </div>
+
+      <div class="warn-box">
+        ⚠️ <strong>Critical collector warning:</strong> The Zoro ST01-013 promo exists in THREE different versions — <strong>Treasure Cup Top 8</strong> (~$3,000+), <strong>Flagship Battle Winner</strong> (~$300–$600), and <strong>3-on-3 Cup Participant</strong> (~$600–$1,200). They look nearly identical. The only way to distinguish them is the event logo stamp. Always buy PSA-graded copies for these cards to ensure authenticity and correct version identification.
+      </div>
+
+      <div class="section-header">3-on-3 Cup Promos</div>
+      <table class="prize-table">
+        <thead><tr><th>Event</th><th>Card</th><th>Card #</th><th>Placement</th><th>Value</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>3-on-3 Cup 2022-23</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/ST01-013_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST01-013_p2.png" onerror="this.src=this.dataset.fallback"><div class="card-name-col">Roronoa Zoro</div><div class="card-sub">ST01-013 — Participant version</div></div></td><td>ST01-013</td><td><span class="tier-badge badge-participation">Participant</span></td><td class="price-med">$600–$1,200</td><td style="font-size:0.7rem;color:var(--muted)">~1,500 copies. Often misidentified as TC version.</td></tr>
+          <tr><td>3-on-3 Cup 2023</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/ST04-005_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST04-005_p1.png" onerror="this.src=this.dataset.fallback"><div class="card-name-col">Queen</div></div></td><td>ST04-005</td><td><span class="tier-badge badge-participation">Participant/Winner</span></td><td class="price-med">$400–$700</td><td style="font-size:0.7rem;color:var(--muted)">Competitive staple, boosted value</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-header">8 Packs Battle Promos</div>
+      <table class="prize-table">
+        <thead><tr><th>Event</th><th>Card</th><th>Card #</th><th>Placement</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>8 Packs Battle 2025</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/ST10-004_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST10-004_p1.png" onerror="this.src=this.dataset.fallback"><div class="card-name-col">Sanji — 8 Packs Winner</div></div></td><td>ST10-004</td><td><span class="tier-badge badge-winner">Winner</span></td><td class="price-med">$80–$180</td></tr>
+          <tr><td>8 Packs Battle 2025 Mar</td><td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP05-001_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP05-001_p1.png" onerror="this.src=this.dataset.fallback"><div class="card-name-col">Monkey D. Luffy</div></div></td><td>Promo P-series</td><td><span class="tier-badge badge-participation">Participant</span></td><td class="price-lo">$40–$100</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE: SERIAL NUMBER CARDS
+    ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-serial">
+      <div class="page-hero" style="--accent:var(--ser-gold)">
+        <div class="hero-icon">🔢</div>
+        <div class="hero-text">
+          <h1>Serial Number Cards</h1>
+          <div class="subtitle">Pre-Launch Era 2022 · The True Grails of OPTCG · Never Reissued</div>
+          <p>Serial Number cards are unique numbered prints distributed exclusively during the 2022 Super Pre-Release events — before the game even launched publicly. Each card has a unique serial number stamped on it (e.g., "001/500"). Low serial numbers command significant premiums. These will never be issued again. The Luffy ST01-001 serial is the first serialized prize card in OPTCG history.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-val">$5,000+</div><div class="stat-lbl">Raw value range</div></div>
+          <div class="stat"><div class="stat-val">&lt;500</div><div class="stat-lbl">Total copies</div></div>
+        </div>
+      </div>
+
+      <div class="section-header">Known Serial Number Cards</div>
+      <table class="prize-table">
+        <thead><tr><th>Card</th><th>Card #</th><th>Serial Format</th><th>Distributed At</th><th>Raw Value</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/ST01-001_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST01-001_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Monkey D. Luffy</div><div class="card-sub">Leader — Straw Hat Crew Starter</div></div></div></td>
+            <td>ST01-001</td>
+            <td>XXX/500 stamped</td>
+            <td>Super Pre-Release 2022 (JP) · Top 8 / Winner</td>
+            <td class="price-hi">$5,000–$6,000</td>
+            <td style="font-size:0.7rem;color:var(--muted)">First ever serialized OPTCG prize card. Low #s command premium. #001 theoretically worth significantly more.</td>
+          </tr>
+          <tr>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP07-109_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP07-109_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Monkey D. Luffy</div><div class="card-sub">CS 24-25 Finals Serial Number Card</div></div></div></td>
+            <td>OP07-109</td>
+            <td>Serialized</td>
+            <td>CS 24-25 Finals (JP) · Champion</td>
+            <td class="price-hi">$2,000–$4,000</td>
+            <td style="font-size:0.7rem;color:var(--muted)">Second era of serialized prize cards from CS Finals</td>
+          </tr>
+          <tr>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP07-119_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP07-119_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Portgas D. Ace</div><div class="card-sub">OP07-119 Serial — Flagship Battle Top 8 Trophy</div></div></div></td>
+            <td>OP07-119</td>
+            <td>Serial # Trophy</td>
+            <td>Flagship Battle 2024 · Top 8</td>
+            <td class="price-hi">$1,500–$3,000</td>
+            <td style="font-size:0.7rem;color:var(--muted)">Ace serial — Marineford emotional premium</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box" style="--accent:var(--ser-gold)">
+        <strong>Serial Number value dynamics:</strong> Low serial numbers command premiums in collector markets. #001/500 is theoretically worth 2–5× more than #499/500 for the same card. The Luffy ST01-001 #001 has never been publicly sold — its value is unknown but estimated at $15,000–$30,000. When buying serialized cards, always verify the number is clearly legible and the stamp authentic — these are among the most counterfeited cards in the game.
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE: WORLD FINALS TROPHIES
+    ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-world-finals">
+      <div class="page-hero" style="--accent:var(--wc-red)">
+        <div class="hero-icon">🌍</div>
+        <div class="hero-text">
+          <h1>World Championship / CS Finals Trophy Cards</h1>
+          <div class="subtitle">Sub-10 copies · The ultimate OPTCG grails · Never purchased, only earned</div>
+          <p>CS Finals Trophy cards are the most exclusive items in the game. First place receives a card with fewer than 10 copies globally. These cards almost never appear on the secondary market — when they do, they set price records. The Kaido CS 2023 Finals 2nd place PSA 10 sold for $17,998. Rebecca CS 2024 BGS 10 sold for $17,000.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-val">$17,998</div><div class="stat-lbl">Record sale (Kaido)</div></div>
+          <div class="stat"><div class="stat-val">&lt;10</div><div class="stat-lbl">1st Place copies</div></div>
+        </div>
+      </div>
+
+      <div class="section-header">CS Finals Prize Structure</div>
+      <div class="prize-tiers">
+        <div class="tier"><div class="tier-place">All Attendees</div><div class="tier-badge badge-participation">Event Pack</div><div class="tier-desc">CS Finals Event Pack — all finalists who attend receive this</div><div class="tier-value">$30–$80</div></div>
+        <div class="tier"><div class="tier-place">Top 512</div><div class="tier-badge badge-top64">Celebration</div><div class="tier-desc">CS Finals Celebration Pack</div><div class="tier-value">$30–$100</div></div>
+        <div class="tier"><div class="tier-place">Top 64</div><div class="tier-badge badge-top16">Top Player</div><div class="tier-desc">CS Finals Top Player Pack</div><div class="tier-value">$100–$300</div></div>
+        <div class="tier"><div class="tier-place">Top 32</div><div class="tier-badge badge-top16">Finalist</div><div class="tier-desc">CS Finals Event Finalist Pack version — distinguished from standard Event Pack</div><div class="tier-value">$200–$500</div></div>
+        <div class="tier"><div class="tier-place">Top 8</div><div class="tier-badge badge-top8">Top 8</div><div class="tier-desc">Jumbo-size version of a current meta card + Winner Card Set</div><div class="tier-value">$500–$2,000</div></div>
+        <div class="tier"><div class="tier-place" style="color:#ffd700">2nd–3rd Place</div><div class="tier-badge badge-champion">Trophy</div><div class="tier-desc">Trophy card — unique stamp, fewer than 50 copies across all regional Finals combined</div><div class="tier-value" style="color:#ffd700">$5,000–$18,000+</div></div>
+        <div class="tier"><div class="tier-place" style="color:#ffd700">WORLD CHAMPION ★</div><div class="tier-badge badge-champion">1st Place</div><div class="tier-desc">The ultimate card. Unique artwork, serialized or unique stamp. Fewer than 10 copies. May include additional physical trophy and playmat.</div><div class="tier-value" style="color:#ffd700">$10,000–$30,000+</div></div>
+      </div>
+
+      <div class="section-header">CS Finals Trophy Cards — All Known</div>
+      <table class="prize-table">
+        <thead><tr><th>Season</th><th>Card</th><th>Card #</th><th>Placement</th><th>Sale Record</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>CS 2022-23 Finals</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/ST01-012_p3.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST01-012_p3.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Monkey D. Luffy</div><div class="card-sub">ST01-012 — CS 22-23 Finals</div></div></div></td>
+            <td>ST01-012</td>
+            <td><span class="tier-badge badge-champion">World Champion</span></td>
+            <td class="price-hi">$8,000+ est.</td>
+          </tr>
+          <tr>
+            <td>CS 2023 Finals</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/ST04-003_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST04-003_p2.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Kaido</div><div class="card-sub">2nd Place Trophy</div></div></div></td>
+            <td>ST04-003</td>
+            <td><span class="tier-badge badge-champion">2nd Place</span></td>
+            <td class="price-hi">$17,998 PSA 10 ✓</td>
+          </tr>
+          <tr>
+            <td>CS 2024 Finals</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP04-039_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP04-039_p2.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Rebecca</div><div class="card-sub">Top Prize</div></div></div></td>
+            <td>OP04-039</td>
+            <td><span class="tier-badge badge-champion">Top Prize</span></td>
+            <td class="price-hi">$17,000 BGS 10 ✓</td>
+          </tr>
+          <tr>
+            <td>CS 23-24 Finals</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP01-114_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP01-114_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">X. Drake</div><div class="card-sub">Winner / Finalist / Top Player — 3 versions</div></div></div></td>
+            <td>OP01-114</td>
+            <td><span class="tier-badge badge-champion">1st/2nd/3rd</span></td>
+            <td class="price-hi">$4,000–$8,000</td>
+          </tr>
+          <tr>
+            <td>CS 24-25 Finals</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/OP07-109_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP07-109_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Monkey D. Luffy</div><div class="card-sub">OP07-109 Serial Number</div></div></div></td>
+            <td>OP07-109</td>
+            <td><span class="tier-badge badge-champion">Champion Serial</span></td>
+            <td class="price-hi">$2,000–$4,000</td>
+          </tr>
+          <tr>
+            <td>CS 25-26 Finals S1</td>
+            <td><div class="thumb-cell"><img class="thumb-sm" src="/images/cards/ST21-015_p1.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST21-015_p1.png" onerror="this.src=this.dataset.fallback"><div><div class="card-name-col">Roronoa Zoro</div><div class="card-sub">ST21-015 — 1st Place Trophy</div></div></div></td>
+            <td>ST21-015</td>
+            <td><span class="tier-badge badge-champion">1st Trophy</span></td>
+            <td class="price-hi">$2,500+ (new)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE: PACKS INDEX
+    ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-packs-index">
+      <div class="page-hero" style="--accent:var(--green)">
+        <div class="hero-icon">📦</div>
+        <div class="hero-text">
+          <h1>All Packs Index</h1>
+          <div class="subtitle">Every Tournament Pack, Event Pack, Winner Pack, Judge Pack & Regional Pack</div>
+          <p>Complete reference of every promotional pack distributed at OPTCG events. Each pack contains a specific set of promo cards. This index maps each pack to its card contents and approximate secondary market values.</p>
+        </div>
+      </div>
+
+      <div class="section-header">Pack Type Legend</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;font-size:0.72rem">
+        <span style="background:#0f2a0f;color:#4ade80;padding:3px 10px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-weight:700">EVENT PACK — All participants at Treasure Cup / Championship events</span>
+        <span style="background:#0f1a2a;color:#60a5fa;padding:3px 10px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-weight:700">TOURNAMENT PACK — All participants at Store Tournaments</span>
+        <span style="background:#2a1000;color:#fb923c;padding:3px 10px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-weight:700">WINNER PACK — 1st place at Store Tournaments (foil versions)</span>
+        <span style="background:#1a0a30;color:#c084fc;padding:3px 10px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-weight:700">JUDGE PACK — Certified judges only (12 cards per pack)</span>
+        <span style="background:#1a2a0a;color:#86efac;padding:3px 10px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-weight:700">REGIONAL PACK — Offline Regional Championship attendees</span>
+      </div>
+
+      <table class="prize-table">
+        <thead><tr><th>Pack Name</th><th>Date</th><th>Cards</th><th>Notable Cards</th><th>Pack Value</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Event Pack Vol.1</strong></td><td>Feb 2023</td><td>5 cards (P-028 to P-032)</td><td>Ace, Luffy, Sanji, Nami, Zoro — all foil</td><td class="price-lo">$8–$42</td></tr>
+          <tr><td><strong>Event Pack Vol.2</strong></td><td>Jun 2023</td><td>4 cards</td><td>Monkey D. Luffy foil</td><td class="price-lo">$10–$30</td></tr>
+          <tr><td><strong>Event Pack Vol.3</strong></td><td>Oct 2023</td><td>4 cards</td><td>Yamato foil</td><td class="price-lo">$8–$25</td></tr>
+          <tr><td><strong>Event Pack Vol.4</strong></td><td>Feb 2024</td><td>4 cards</td><td>Jinbe, Kouzuki Momonosuke foil</td><td class="price-lo">$8–$25</td></tr>
+          <tr><td><strong>Event Pack Vol.5</strong></td><td>Jun 2024</td><td>4 cards</td><td>Koala, Zoro-Juurou foil</td><td class="price-lo">$8–$25</td></tr>
+          <tr><td><strong>Event Pack Vol.6</strong></td><td>Oct 2024</td><td>4 cards</td><td>Ulti, Carrot foil</td><td class="price-lo">$5–$20</td></tr>
+          <tr><td><strong>Event Pack Vol.7</strong></td><td>Jul 2025</td><td>4 cards</td><td>Charlotte Smoothie, Koby foil</td><td class="price-lo">$8–$30</td></tr>
+          <tr><td><strong>Event Pack Vol.8</strong></td><td>Mar 2026</td><td>4 cards</td><td>Buggy, Marshall D. Teach foil</td><td class="price-lo">$8–$25</td></tr>
+          <tr><td colspan="5" style="background:#0d0820;color:#555577;font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:0.1em;padding:5px 10px">── TOURNAMENT PACKS ──</td></tr>
+          <tr><td><strong>Tournament Pack Vol.1</strong></td><td>Dec 2022</td><td>10 cards (5N + 5F)</td><td>Luffy P-006/007, Yamato P-008, Kaido P-009/010</td><td class="price-lo">$15–$60</td></tr>
+          <tr><td><strong>Tournament Pack Vol.2</strong></td><td>Mar 2023</td><td>8 cards</td><td>Black Maria, Trafalgar Law, DON!! card</td><td class="price-lo">$10–$50</td></tr>
+          <tr><td><strong>Tournament Pack Vol.3</strong></td><td>Jun 2023</td><td>8 cards</td><td>Who's-Who Winner, Jewelry Bonney</td><td class="price-lo">$10–$50</td></tr>
+          <tr><td><strong>Tournament Pack Vol.4</strong></td><td>Sep 2023</td><td>8 cards</td><td>Brook, Perona</td><td class="price-lo">$10–$40</td></tr>
+          <tr><td><strong>Tournament Pack Vol.5 ★</strong></td><td>Nov 2023</td><td>8 cards</td><td>Luffy Alt Art, Kaido Alt Art, Crocodile Alt Art</td><td class="price-med">$50–$200</td></tr>
+          <tr><td><strong>Tournament Pack Vol.6</strong></td><td>Feb 2024</td><td>8 cards</td><td>Kaya</td><td class="price-lo">$10–$40</td></tr>
+          <tr><td><strong>Tournament Pack Vol.7</strong></td><td>Jun 2024</td><td>8 cards</td><td>Bepo, Trafalgar Law</td><td class="price-lo">$15–$50</td></tr>
+          <tr><td><strong>Tournament Pack 2024 Oct–Dec</strong></td><td>Oct 2024</td><td>8 cards</td><td>Seasonal rotation</td><td class="price-lo">$10–$40</td></tr>
+          <tr><td><strong>Tournament Pack 2025 Vol.1</strong></td><td>Jan 2025</td><td>8 cards</td><td>Kaku, Charlotte Pudding</td><td class="price-lo">$15–$60</td></tr>
+          <tr><td><strong>Tournament Pack 2025 Vol.2</strong></td><td>Apr 2025</td><td>8 cards</td><td>Wyper</td><td class="price-lo">$10–$40</td></tr>
+          <tr><td><strong>Tournament Pack 2025 Vol.3</strong></td><td>Jul 2025</td><td>8 cards</td><td>Jinbe, Tony Chopper</td><td class="price-lo">$10–$40</td></tr>
+          <tr><td><strong>Tournament Pack 2026 Vol.2</strong></td><td>Apr 2026</td><td>12 cards</td><td>Latest wave — full list TBD</td><td class="price-lo">$15–$50</td></tr>
+          <tr><td colspan="5" style="background:#0d0820;color:#555577;font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:0.1em;padding:5px 10px">── REGIONAL PACKS ──</td></tr>
+          <tr><td><strong>Offline Regional Participation Pack 2024 Vol.2</strong></td><td>2024</td><td>4 cards</td><td>Eustass Kid Finalist/Participant versions</td><td class="price-lo">$10–$60</td></tr>
+          <tr><td><strong>Offline Regional Participation Pack 2024 Vol.3</strong></td><td>2024</td><td>4 cards</td><td>Various 2024 meta cards</td><td class="price-lo">$10–$50</td></tr>
+          <tr><td><strong>Regional Participation Pack 2026 Vol.1</strong></td><td>Mar 2026</td><td>4 cards</td><td>Current season prizes</td><td class="price-lo">$10–$40</td></tr>
+          <tr><td colspan="5" style="background:#0d0820;color:#555577;font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:0.1em;padding:5px 10px">── CS FINALS EXCLUSIVE PACKS ──</td></tr>
+          <tr><td><strong>CS 25-26 Event Pack EN</strong></td><td>Aug–Sep 2025</td><td>Exclusive</td><td>Participation prize at CS Finals</td><td class="price-lo">$30–$80</td></tr>
+          <tr><td><strong>CS 25-26 Celebration Pack EN</strong></td><td>Aug–Sep 2025</td><td>Exclusive</td><td>Top 512 at CS Finals</td><td class="price-lo">$40–$100</td></tr>
+          <tr><td><strong>CS 25-26 Top Player Pack EN</strong></td><td>Aug–Sep 2025</td><td>Exclusive</td><td>Top 64 at CS Finals</td><td class="price-med">$100–$300</td></tr>
+          <tr><td><strong>CS 25-26 Finalist Pack EN</strong></td><td>Aug–Sep 2025</td><td>Exclusive</td><td>Top 32 at CS Finals</td><td class="price-med">$150–$400</td></tr>
+          <tr><td><strong>Finalist Card Set Vol.1</strong></td><td>CS 25-26 S1</td><td>Special set</td><td>Top 16 at CS Finals — Luffy OP07-109, Ace ST15-005</td><td class="price-med">$300–$800</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE: EN vs JP
+    ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-en-jp-diff">
+      <div class="page-hero" style="--accent:#94a3b8">
+        <div class="hero-icon">🆚</div>
+        <div class="hero-text">
+          <h1>English vs Japanese Prize Cards</h1>
+          <div class="subtitle">Key differences · Pricing · What to look for · Common traps</div>
+          <p>EN and JP prize cards are different products even when they share a card number. The stamp, language, foil treatment, and print run all differ. Understanding these differences is essential to avoid overpaying — or worse, buying a JP card when you wanted EN.</p>
+        </div>
+      </div>
+
+      <div class="section-header">Side-by-Side Comparison</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+        <div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:14px">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:0.85rem;color:#93c5fd;margin-bottom:10px">🇺🇸 ENGLISH PRIZE CARDS</div>
+          <ul style="font-size:0.74rem;color:#bfdbfe;line-height:2;list-style:none">
+            <li>✅ Treasure Cup is the premier EN event (Top 8 = rarest EN promo)</li>
+            <li>✅ Championship Regionals run Oct–Dec each season</li>
+            <li>✅ EN Top 8 TC cards have <strong>lower total copies</strong> than JP equivalent (fewer simultaneous events)</li>
+            <li>✅ Cards have English text + EN regional stamp</li>
+            <li>✅ Easier to price — TCGPlayer + eBay Sold Listings</li>
+            <li>✅ PSA grading infrastructure is mature in EN market</li>
+            <li>⚠️ Serial Number cards only from 2022 era</li>
+            <li>⚠️ Fewer format types than JP (no Standard Battle, 3-on-3)</li>
+          </ul>
+        </div>
+        <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:14px">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:0.85rem;color:#fca5a5;margin-bottom:10px">🇯🇵 JAPANESE PRIZE CARDS</div>
+          <ul style="font-size:0.74rem;color:#fee2e2;line-height:2;list-style:none">
+            <li>✅ Most tournament formats: Flagship, Standard, 8 Packs, Grand Asia Open</li>
+            <li>✅ CS Finals trophy cards originate in JP — the absolute grails</li>
+            <li>✅ More cards available due to higher event frequency</li>
+            <li>✅ Some JP-exclusive formats (ONE PIECE DAY, WSJ magazine promos)</li>
+            <li>⚠️ Harder to price — Mercari JP, Snkrdunk, CardRush only</li>
+            <li>⚠️ Higher total Flagship Winner supply (more events = more copies)</li>
+            <li>⚠️ Shipping + import costs from JP can be significant</li>
+            <li>⚠️ Counterfeit risk is higher in JP market for sub-$500 promos</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="warn-box">
+        ⚠️ <strong>The most common buying mistake:</strong> Purchasing a Japanese version of a promo thinking it's the English version (or vice versa). The Sakazuki Championship 2023 EN card is worth $1,300–$1,600. The Japanese equivalent may be worth a different amount entirely — and they are NOT interchangeable for EN collectors. Always verify language on the card face and confirm the event stamp language before buying any promo over $200.
+      </div>
+
+      <div class="section-header">Same Card Number, Different Cards — Examples</div>
+      <table class="prize-table">
+        <thead><tr><th>Card #</th><th>EN Version</th><th>EN Value</th><th>JP Version</th><th>JP Value</th></tr></thead>
+        <tbody>
+          <tr><td>ST01-013</td><td>Treasure Cup Top 8 — ~256 copies</td><td class="price-hi">$3,000–$5,800</td><td>Flagship Battle Winner — thousands of copies</td><td class="price-lo">$300–$600</td></tr>
+          <tr><td>ST01-013</td><td>3-on-3 Cup Participant — ~1,500 copies</td><td class="price-med">$600–$1,200</td><td>Same card — JP version exists too</td><td class="price-med">¥60,000–¥100,000</td></tr>
+          <tr><td>OP02-099</td><td>Championship 2023 Regional Top 16 EN</td><td class="price-hi">$1,300–$1,600</td><td>JP Championship equivalent (if exists)</td><td class="price-med">Different</td></tr>
+          <tr><td>OP07-109</td><td>CS Finals Participation (lower tier)</td><td class="price-lo">$200–$500</td><td>CS Finals Serial Number (Champion)</td><td class="price-hi">$2,000–$4,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE: COLLECTOR TIPS
+    ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-collector-tips">
+      <div class="page-hero" style="--accent:var(--gold)">
+        <div class="hero-icon">🔍</div>
+        <div class="hero-text">
+          <h1>Collector Tips &amp; Authentication</h1>
+          <div class="subtitle">How to buy safely · Counterfeit detection · Pricing sources · Grade strategy</div>
+          <p>Prize cards are the most counterfeited cards in OPTCG. The event stamps, limited copies, and high values make them primary targets for fakers. These tips will help you buy safely and avoid the most common traps.</p>
+        </div>
+      </div>
+
+      <div class="section-header">Authentication Checklist</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div class="info-box" style="--accent:var(--gold)"><strong>1. Buy PSA-graded for anything over $200.</strong> The grading process authenticates the card. A PSA-slabbed prize card is far harder to fake than a raw one. For JP promos over $200, always buy graded.</div>
+        <div class="info-box" style="--accent:var(--gold)"><strong>2. Check the event stamp logo carefully.</strong> TC, Flagship, 3-on-3, and Championship promos have different logos. Counterfeits often get the logo font or metallic finish wrong. Use a 60× loupe — the Bandai embossed logo should be sharply defined.</div>
+        <div class="info-box" style="--accent:var(--gold)"><strong>3. Verify the rosette dot pattern.</strong> Genuine Bandai cards have a specific dot pattern in the card face under magnification. Counterfeits often use incorrect dot density or patterns. This is the most reliable physical authentication test.</div>
+        <div class="info-box" style="--accent:var(--gold)"><strong>4. Check event-specific details.</strong> For TC cards: the Treasure Cup logo appears on the card face, not just as a sticker. Championship stamps appear on specific zones of the card. If the stamp placement looks off, walk away.</div>
+        <div class="info-box" style="--accent:var(--gold)"><strong>5. Confirm card language matches your market.</strong> EN cards have English text. JP cards have Japanese. Some collectors mistakenly pay EN prices for JP versions. Always read the card face before buying.</div>
+        <div class="info-box" style="--accent:var(--gold)"><strong>6. For serial numbers: verify the serial is ink-stamped, not printed.</strong> Genuine serial number cards have stamps that show slight embossing. Printed serials are flat and uniform. The ink color and shine also differ from the base card.</div>
+      </div>
+
+      <div class="section-header">Pricing Sources by Market</div>
+      <table class="prize-table">
+        <thead><tr><th>Market</th><th>Best Source</th><th>For What</th><th>Reliability</th></tr></thead>
+        <tbody>
+          <tr><td>🇺🇸 EN Raw</td><td>eBay Sold Listings (filter: Completed only)</td><td>All EN promos</td><td style="color:#4ade80">★★★★★</td></tr>
+          <tr><td>🇺🇸 EN Raw</td><td>PriceCharting.com</td><td>Historical price charts, grade comparisons</td><td style="color:#4ade80">★★★★☆</td></tr>
+          <tr><td>🇺🇸 EN Graded</td><td>eBay Sold Listings (PSA/BGS filter)</td><td>Graded price comparisons</td><td style="color:#4ade80">★★★★★</td></tr>
+          <tr><td>🇯🇵 JP Raw</td><td>Snkrdunk App (StockX equivalent)</td><td>JP promos — most reliable JP market data</td><td style="color:#4ade80">★★★★★</td></tr>
+          <tr><td>🇯🇵 JP Raw</td><td>Mercari Japan (search in Japanese)</td><td>JP promos — check Sold listings</td><td style="color:#fbbf24">★★★★☆</td></tr>
+          <tr><td>🇯🇵 JP Raw</td><td>CardRush / Surugaya</td><td>JP dealer prices — use as ceiling reference</td><td style="color:#fbbf24">★★★☆☆</td></tr>
+          <tr><td>Both markets</td><td>Mantel.gg</td><td>Aggregated multi-source OPTCG price data</td><td style="color:#4ade80">★★★★☆</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-header">When to Grade Prize Cards</div>
+      <div class="info-box" style="--accent:var(--gold)">
+        <strong>Grade immediately if:</strong> You pull or receive a Top 8 Treasure Cup card, any CS Finals trophy card, a serial number card, or any promo worth $300+ raw. The pop counts on graded EN promos are extremely low — PSA 10 scarcity multiplies value significantly.<br><br>
+        <strong>Grade eventually if:</strong> You have Championship Regional Top 16 cards (2023 Admirals especially) or early Treasure Cup Top 64 cards. These grade well and the PSA 10 premium is 3–5×.<br><br>
+        <strong>Don't grade:</strong> Store Tournament participation packs, Event Pack pull cards worth &lt;$30 raw. The fees will exceed the graded value.
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- POPUP for zoomed card images -->
+<div id="popup-overlay" onclick="this.classList.remove('show')">
+  <span class="close-btn">×</span>
+  <img id="popup-img" src="" alt="">
+</div>
+
+<script>
+// ── Navigation ────────────────────────────────────────────────────────────
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('page-' + id);
+  if (el) el.classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ── Image popup ───────────────────────────────────────────────────────────
+function showPopup(img) {
+  const overlay = document.getElementById('popup-overlay');
+  const popImg  = document.getElementById('popup-img');
+  popImg.src = img.src;
+  popImg.alt = img.alt;
+  overlay.classList.add('show');
+}
+
+// ── Fallback images ───────────────────────────────────────────────────────
+document.querySelectorAll('img[data-fallback]').forEach(img => {
+  img.onerror = function() {
+    this.src = this.dataset.fallback;
+    this.removeAttribute('onerror');
+  };
+});
+
+// ── Thumb click → popup (all thumbs) ─────────────────────────────────────
+document.querySelectorAll('.pack-img, .thumb-sm').forEach(img => {
+  img.style.cursor = 'zoom-in';
+  img.addEventListener('click', function() { showPopup(this); });
+});
+</script>
+</body>
+</html>
