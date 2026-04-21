@@ -2646,15 +2646,13 @@ document.querySelectorAll('.pack-img, .thumb-sm').forEach(img => {
 .csm-hist-chips{display:flex;flex-wrap:wrap;gap:5px}
 .csm-hist-chip{font-family:monospace;font-size:.68rem;padding:3px 9px;border-radius:4px;border:1px solid #2a2a4a;color:#a78bfa;cursor:pointer;background:#0d0d1a;transition:all .12s}
 .csm-hist-chip:hover{border-color:#a78bfa}
-#card-search-trigger{position:fixed;bottom:24px;right:24px;z-index:8000;background:#f0b429;color:#080810;border:none;border-radius:50px;padding:13px 22px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 24px rgba(240,180,41,.4);display:flex;align-items:center;gap:7px;transition:transform .15s,box-shadow .15s}
+#card-search-trigger{position:fixed;bottom:24px;right:24px;z-index:8000;background:#f0b429;color:#080810;border:none;border-radius:50px;padding:12px 20px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 24px rgba(240,180,41,.4);display:flex;align-items:center;gap:6px;transition:transform .15s,box-shadow .15s;white-space:nowrap}
 #card-search-trigger:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(240,180,41,.5)}
 
 </style>
 
 <!-- ══ CARD SEARCH FLOATING BUTTON ═══════════════════════════════════ -->
-<button id="card-search-trigger" onclick="openCardSearch()" title="Look up any card by number">
-  <span class="csm-icon">🔍</span> Card Lookup
-</button>
+
 
 <!-- ══ CARD SEARCH MODAL ═══════════════════════════════════════════════ -->
 <div id="card-search-modal">
@@ -2894,6 +2892,7 @@ function csmFill(code) {
 }
 
 // ── Main lookup ────────────────────────────────────────────────────────────
+
 async function csmLookup(code) {
   code = code || csmNorm(document.getElementById('csm-input').value);
   if (!code) return;
@@ -2908,18 +2907,31 @@ async function csmLookup(code) {
   localStorage.setItem('optcg_csm_history', JSON.stringify(csmHistory));
   csmRenderHistory();
 
-  // Probe EN base image
-  const enUrl = `${EN_CDN}/${code}.png`;
-  const hasEN = await probeImg(enUrl);
-  if (!hasEN) {
-    csmShow('error', `No card found for <strong>${code}</strong>.<br>Check the format: OP01-120 · EB01-006 · ST01-013 · P-028`);
-    return;
-  }
+  // Don't probe — just render and let onerror handle missing images
+  // We use a test image to verify the base code exists
+  const testImg = new Image();
+  testImg.onload = () => {
+    csmRender(code, true, true, [], '');
+    csmShow('data');
+    // After render, probe variants async
+    csmProbeVariants(code);
+  };
+  testImg.onerror = () => {
+    // Try JP CDN as fallback check
+    const jpTest = new Image();
+    jpTest.onload = () => {
+      csmRender(code, false, true, [], '');
+      csmShow('data');
+    };
+    jpTest.onerror = () => {
+      csmShow('error', `No card found for <strong>${code}</strong>.<br>Check the format: OP01-120 · EB01-006 · ST01-013 · P-028`);
+    };
+    jpTest.src = `${JP_CDN}/${code}.png`;
+  };
+  testImg.src = `${EN_CDN}/${code}.png`;
+}
 
-  // Probe JP
-  const hasJP = await probeImg(`${JP_CDN}/${code}.png`);
-
-  // Probe variants
+async function csmProbeVariants(code) {
   const VARS = [
     {key:'p1',label:'Parallel',   suffix:'_p1', note:'Foil parallel'},
     {key:'p2',label:'Manga Alt',  suffix:'_p2', note:'Manga Alt Art'},
@@ -2928,15 +2940,24 @@ async function csmLookup(code) {
     {key:'p5',label:'SP Gold',    suffix:'_p5', note:'SP Gold signature'},
     {key:'r1',label:'Reprint',    suffix:'_r1', note:'Reprint (PRB-01)'},
   ];
-  const varProbes = await Promise.all(VARS.map(async v => {
-    const ok = await probeImg(`${EN_CDN}/${code}${v.suffix}.png`);
-    return { ...v, ok };
-  }));
-  const availVars = varProbes.filter(v => v.ok);
-
-  csmRender(code, hasEN, hasJP, availVars, '');
-  csmShow('data');
+  const found = [];
+  await Promise.all(VARS.map(v => new Promise(res => {
+    const i = new Image();
+    i.onload  = () => { found.push(v); res(); };
+    i.onerror = () => res();
+    i.src = `${EN_CDN}/${code}${v.suffix}.png`;
+  })));
+  if (found.length && csmCurrentCode === code) {
+    const varSec = document.getElementById('csm-var-section');
+    const allV = [{key:'base',label:'Base',suffix:'',note:'Standard'},...found];
+    document.getElementById('csm-var-bar').innerHTML = allV.map(v =>
+      `<button class="csm-var-btn${v.suffix===''?' active':''}"
+        onclick="csmSwitchVar('${v.suffix}')" title="${v.note}">${v.label}</button>`
+    ).join('');
+    varSec.style.display = 'block';
+  }
 }
+
 
 // ── Render card ────────────────────────────────────────────────────────────
 function csmRender(code, hasEN, hasJP, variants, suffix) {
@@ -3039,13 +3060,10 @@ function csmSwitchVar(suffix) {
 
 // Zoom popup (reuse existing #popup or create simple one)
 function csmZoom(imgEl) {
-  const popup = document.getElementById('popup');
-  if (popup) {
-    document.getElementById('popupImg').src = imgEl.src;
-    popup.classList.add('show');
-  } else {
-    window.open(imgEl.src, '_blank');
-  }
+  const p = document.getElementById('popup');
+  const pi = document.getElementById('popupImg');
+  if (p && pi) { pi.src = imgEl.src; p.classList.add('show'); }
+  else { window.open(imgEl.src, '_blank'); }
 }
 
 // ── UI state ──────────────────────────────────────────────────────────────
@@ -3085,5 +3103,14 @@ window.openCardSearch = openCardSearch;
 </script>
 
 
+
+<!-- Zoom popup for card images -->
+<div id="popup" onclick="this.classList.remove('show')"
+  style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;
+  align-items:center;justify-content:center;cursor:zoom-out">
+  <img id="popupImg" src="" alt="" style="max-height:88vh;max-width:92vw;border-radius:10px;
+    border:2px solid #f0b429;box-shadow:0 0 60px rgba(240,180,41,.3)">
+</div>
+<style>#popup.show{display:flex!important}</style>
 </body>
 </html>
