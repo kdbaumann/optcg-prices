@@ -619,6 +619,47 @@ function probeImage(url) {
     img.src = url;
   });
 }
+// Background variant probe (non-blocking, appends buttons after initial render)
+function probeVariantsAsync(code) {
+  const suffixes = ['_p1','_p2','_p3','_p4','_p5','_r1','_r2'];
+  const variantBar = document.getElementById('variantBar');
+  const variantWrap = document.getElementById('variantSection');
+  if (!variantBar || !variantWrap) return;
+  
+  let found = [];
+  let done = 0;
+  suffixes.forEach(suf => {
+    const img = new Image();
+    img.onload = () => {
+      found.push(suf);
+      done++;
+      if (done === suffixes.length) appendVariantBtns(code, found);
+    };
+    img.onerror = () => {
+      done++;
+      if (done === suffixes.length) appendVariantBtns(code, found);
+    };
+    img.src = imgUrl(code, suf, 'en');
+  });
+}
+
+function appendVariantBtns(code, foundSuffixes) {
+  if (currentCode !== code || !foundSuffixes.length) return;
+  const variantBar  = document.getElementById('variantBar');
+  const variantWrap = document.getElementById('variantSection');
+  if (!variantBar || !variantWrap) return;
+  
+  const allV = [
+    {suffix:'', label:'Base'},
+    ...foundSuffixes.map(s => ({suffix:s, label: VARIANT_LABELS[s] || s}))
+  ];
+  variantBar.innerHTML = allV.map(v =>
+    `<button class="var-btn${v.suffix === currentVariant ? ' active' : ''}"
+      onclick="switchVariant('${v.suffix}')">${v.label}</button>`
+  ).join('');
+  variantWrap.style.display = 'block';
+}
+
 
 // ─── Main lookup ─────────────────────────────────────────────────────────────
 async function lookup(code) {
@@ -636,27 +677,13 @@ async function lookup(code) {
   localStorage.setItem('optcg_lookup_history', JSON.stringify(searchHistory));
   renderHistory();
 
-  // Probe EN base image
-  const enBase = await probeImage(imgUrl(code, '', 'en'));
-  if (!enBase.ok) {
-    setState('error', `No card found for <strong>${code}</strong>. Check the card number format and try again.`);
-    return;
-  }
-
-  // Probe JP base image
-  const jpBase = await probeImage(imgUrl(code, '', 'jp'));
-
-  // Probe which variants exist
-  const variantChecks = await Promise.all(
-    VARIANTS.filter(v => v.suffix).map(async v => {
-      const enV = await probeImage(imgUrl(code, v.suffix, 'en'));
-      return { ...v, enExists: enV.ok };
-    })
-  );
-  const availableVariants = variantChecks.filter(v => v.enExists);
-
-  renderCard(code, enBase.ok, jpBase.ok, availableVariants, '');
+  // Render immediately without cross-origin image probing (CORS blocks Image() onload)
+  // Images render in the DOM; onerror handles missing cards visually
+  renderCard(code, true, true, [], '');
   setState('data');
+
+  // Background: probe variants async so variant buttons appear after render
+  probeVariantsAsync(code);
 }
 
 function fillAndLookup(code) {
@@ -699,7 +726,7 @@ function renderCard(code, hasEN, hasJP, variants, suffix) {
         onclick="switchVariant('${v.suffix}')" title="${v.note}">${v.label}</button>`
     ).join('');
   } else {
-    varSection.style.display = 'none';
+    varSection.style.display = 'none'; // probeVariantsAsync may show it later
   }
 
   // Price grid
@@ -779,9 +806,11 @@ function makeImgPanel(langLabel, badgeClass, localSrc, cdnSrc, code, hasImage) {
       <div class="card-img-wrap">
         <img class="card-img-main"
           src="${src}"
-          ${localSrc && fallback ? `onerror="this.src='${fallback}';this.removeAttribute('onerror')"` : ''}
+          data-fallback="${fallback || ''}"
+          onerror="if(this.dataset.fallback && this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.display='none';this.nextElementSibling&&(this.nextElementSibling.style.display='flex');}"
           alt="${langLabel} card art"
           loading="lazy">
+        <div style="display:none;width:180px;height:252px;border-radius:8px;border:2px dashed #2a2a4a;background:#0d0d1a;align-items:center;justify-content:center;color:#3a3a5a;font-size:.75rem;text-align:center;padding:20px">${langLabel === '🇯🇵 Japanese' ? 'JP image<br>not available' : 'Image not<br>available'}</div>
       </div>
       <p class="zoom-hint">Click image to zoom</p>
       <div class="card-sub">${langLabel} · ${code}</div>
