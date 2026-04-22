@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Set Hits — One Piece TCG | Fulcrum Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#e8b84b;--bg:#080810;--surface:#0f0f1c;--surface2:#14142a;--border:#1e1e38;--text:#dde0f0;--muted:#6b6b90;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;}
+
+.header{background:linear-gradient(135deg,#0a0a18,#12091f,#0d0a1a);border-bottom:2px solid var(--gold);padding:20px 20px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.header h1{font-family:'Cinzel Decorative',serif;font-size:clamp(.9rem,2.5vw,1.4rem);color:var(--gold);}
+.header-sub{font-size:.68rem;color:var(--muted);margin-top:3px;}
+.back-btn{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:5px 12px;border-radius:4px;transition:all .15s;margin-left:auto;}
+.back-btn:hover{color:var(--gold);border-color:var(--gold);}
+
+.set-selector{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.set-selector-label{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
+.set-pill{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;text-transform:uppercase;}
+.set-pill:hover,.set-pill.active{background:var(--gold);color:#000;border-color:var(--gold);}
+.set-pill.eb-pill{color:#a78bfa;border-color:rgba(167,139,250,.3);}
+.set-pill.eb-pill.active{background:#a78bfa;color:#000;}
+.set-pill.prb-pill{color:#f0d080;border-color:rgba(240,208,128,.3);}
+.set-pill.prb-pill.active{background:#f0d080;color:#000;}
+
+.main{max-width:1000px;margin:0 auto;padding:20px 16px 60px;}
+.set-hits{display:none;}
+.set-hits.active{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+.set-header{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px;display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;}
+.set-id{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:var(--gold);}
+.set-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;color:var(--text);margin-top:2px;}
+.set-meta{font-size:.7rem;color:var(--muted);margin-top:4px;line-height:1.7;}
+.case-stats{margin-left:auto;text-align:right;}
+.case-stat-val{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;color:var(--gold);}
+.case-stat-lbl{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+
+.rarity-section{margin-bottom:20px;}
+.rarity-header{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;padding:6px 12px;border-radius:4px 4px 0 0;border:1px solid;border-bottom:none;}
+.rh-mr {background:rgba(232,184,75,.1);color:var(--gold);border-color:rgba(232,184,75,.3);}
+.rh-gold{background:rgba(251,191,36,.1);color:#fbbf24;border-color:rgba(251,191,36,.3);}
+.rh-red {background:rgba(248,113,113,.1);color:#f87171;border-color:rgba(248,113,113,.3);}
+.rh-sp  {background:rgba(96,165,250,.1);color:#60a5fa;border-color:rgba(96,165,250,.3);}
+.rh-tr  {background:rgba(167,139,250,.1);color:#a78bfa;border-color:rgba(167,139,250,.3);}
+.rh-sec {background:rgba(45,212,191,.1);color:#2dd4bf;border-color:rgba(45,212,191,.3);}
+.rh-gp  {background:rgba(240,208,128,.1);color:#f0d080;border-color:rgba(240,208,128,.3);}
+
+.hits-table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-top:none;margin-bottom:0;}
+.hits-table th{background:var(--surface2);padding:7px 10px;font-family:'Barlow Condensed',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;border-bottom:1px solid var(--border);}
+.hits-table th.r{text-align:right;}
+.hits-table td{padding:9px 10px;font-size:.8rem;border-bottom:1px solid rgba(30,30,56,.5);}
+.hits-table td.r{text-align:right;font-family:'Barlow Condensed',sans-serif;font-size:.82rem;}
+.hits-table tr:last-child td{border-bottom:none;}
+.hits-table tr:hover{background:rgba(255,255,255,.025);}
+.hits-table tr.lottery-row{background:rgba(248,113,113,.03);border-left:2px solid rgba(248,113,113,.3);}
+
+.card-name{font-weight:600;color:#eef2f8;}
+.card-code{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:var(--muted);margin-top:1px;}
+.card-img{width:34px;height:48px;object-fit:cover;border-radius:3px;border:1px solid var(--border);background:var(--surface2);flex-shrink:0;cursor:zoom-in;}
+.cell-flex{display:flex;align-items:center;gap:8px;}
+.lottery-tag{font-size:.6rem;color:#f87171;margin-left:4px;font-family:'Barlow Condensed',sans-serif;font-weight:700;}
+.pull-bar{height:4px;background:var(--surface2);border-radius:2px;min-width:50px;max-width:100px;margin-top:3px;}
+.pull-fill{height:100%;border-radius:2px;background:var(--gold);}
+.rate-txt{font-size:.68rem;color:var(--muted);}
+.price-en{color:#60a5fa;font-weight:700;}
+.price-psa{color:#a78bfa;font-weight:700;}
+.price-na{color:var(--muted);}
+
+.pull-note{font-size:.7rem;color:var(--muted);background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.15);border-radius:5px;padding:8px 12px;margin-top:6px;}
+
+/* Popup zoom */
+#zoom-popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out;}
+#zoom-popup.show{display:flex;}
+#zoom-img{max-height:85vh;max-width:90vw;border-radius:10px;border:2px solid var(--gold);}
+
+footer{background:var(--bg);border-top:1px solid var(--border);padding:16px 20px;text-align:center;font-size:.62rem;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div id="zoom-popup" onclick="this.classList.remove('show')">
+  <img id="zoom-img" src="" alt="">
+</div>
+
+<div class="header">
+  <div>
+    <h1>Set Hits — Pull Guide</h1>
+    <div class="header-sub">All notable hits per set · Sorted by rarity & value · Pull rates: community data 2025–26</div>
+  </div>
+  <a href="index.html" class="back-btn">← Back to Price Guide</a>
+</div>
+
+<div class="set-selector">
+  <span class="set-selector-label">Set:</span>
+  <button class="set-pill active" onclick="showHits('op01',this)">OP-01</button>
+  <button class="set-pill" onclick="showHits('op02',this)">OP-02</button>
+  <button class="set-pill" onclick="showHits('op03',this)">OP-03</button>
+  <button class="set-pill" onclick="showHits('op04',this)">OP-04</button>
+  <button class="set-pill" onclick="showHits('op05',this)">OP-05</button>
+  <button class="set-pill" onclick="showHits('op06',this)">OP-06</button>
+  <button class="set-pill" onclick="showHits('op07',this)">OP-07</button>
+  <button class="set-pill" onclick="showHits('op08',this)">OP-08</button>
+  <button class="set-pill" onclick="showHits('op09',this)">OP-09</button>
+  <button class="set-pill" onclick="showHits('op10',this)">OP-10</button>
+  <button class="set-pill" onclick="showHits('op11',this)">OP-11</button>
+  <button class="set-pill" onclick="showHits('op12',this)">OP-12</button>
+  <button class="set-pill" onclick="showHits('op13',this)">OP-13</button>
+  <button class="set-pill" onclick="showHits('op14',this)">OP-14</button>
+  <button class="set-pill eb-pill" onclick="showHits('eb01',this)">EB-01</button>
+  <button class="set-pill eb-pill" onclick="showHits('eb02',this)">EB-02</button>
+  <button class="set-pill eb-pill" onclick="showHits('eb03',this)">EB-03</button>
+  <button class="set-pill prb-pill" onclick="showHits('prb01',this)">PRB-01</button>
+</div>
+
+<div class="main" id="hits-main">
+  <!-- Populated by JS -->
+</div>
+
+<footer>© 2025–2026 Fulcrum Cards · Pull rates are community estimates; Bandai publishes no official rates · Prices sourced from OPCardlist, TCGPlayer, eBay completed sales · Not financial advice</footer>
+
+<script>
+const CDN = 'https://en.onepiece-cardgame.com/images/cardlist/card';
+const LIM = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece';
+
+function img(code, suffix) {
+  suffix = suffix || '';
+  const src = `${CDN}/${code}${suffix}.png`;
+  const fb  = `${CDN}/${code}.png`;
+  return `<img class="card-img" src="${src}" data-fallback="${fb}" alt="${code}"
+    onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.opacity='.2';}"
+    onclick="zoom(this)">`;
+}
+function zoom(el){ document.getElementById('zoom-img').src=el.src; document.getElementById('zoom-popup').classList.add('show'); }
+function fmtRate(perCase){
+  if(perCase>=1) return perCase.toFixed(1)+'/case';
+  const inv=Math.round(1/perCase); return '1/'+inv+' cases';
+}
+function f$(n){ return '$'+Math.round(n).toLocaleString(); }
+
+const SETS_HITS = {
+op01:{
+  id:'OP-01', name:'Romance Dawn', release:'Dec 2022', boxes:12, caseCost:2400,
+  header:'The base set. Shanks Manga Rare is the grail. ~1 MR per 3 cases (confirmed 1/576–1728 packs EN). 3 possible MRs.',
+  sections:[
+    {rarity:'MANGA RARE', cls:'mr', items:[
+      {code:'OP01-120',suf:'_p2',name:'Shanks',sub:'SEC★ Manga Rare · Leader',rate:0.11,rawVal:1644,psa10:4500,note:'1/9 cases avg (1 of 3 MRs; total MR rate 0.33/case)'},
+      {code:'OP01-003',suf:'_p2',name:'Monkey D. Luffy',sub:'SEC★ Manga Rare · Leader',rate:0.11,rawVal:833,psa10:2800,note:'OP-01 Luffy MR · strong demand'},
+      {code:'OP01-002',suf:'_p2',name:'Roronoa Zoro',sub:'SEC★ Manga Rare',rate:0.11,rawVal:400,psa10:1400,note:'Completes the OP-01 MR trio'},
+    ]},
+    {rarity:'SP / PARALLEL', cls:'sp', items:[
+      {code:'OP01-016',suf:'_p1',name:'Nami',sub:'SR Parallel Foil',rate:0.5,rawVal:454,psa10:1500,note:'High demand female character parallel'},
+      {code:'OP01-003',suf:'_p1',name:'Monkey D. Luffy',sub:'Leader Parallel Foil',rate:0.5,rawVal:200,psa10:700,note:'OP-01 Leader parallel'},
+    ]},
+    {rarity:'SECRET RARE ALT ART', cls:'sec', items:[
+      {code:'OP01-121',suf:'_p1',name:'Yamato',sub:'SEC Alt Art',rate:2,rawVal:80,psa10:250,note:'~2/case valuable SECs avg'},
+      {code:'OP01-120',suf:'_p1',name:'Shanks',sub:'SR Parallel Foil',rate:0.5,rawVal:100,psa10:300,note:'SR Parallel — cheaper Shanks entry point'},
+    ]},
+  ]
+},
+op02:{
+  id:'OP-02', name:'Paramount War', release:'Mar 2023', boxes:12, caseCost:1560,
+  header:'Marineford arc. Ace and Whitebeard Manga Rares are the chase. Championship 2023 stamp cards are the biggest value adds outside packs.',
+  sections:[
+    {rarity:'MANGA RARE', cls:'mr', items:[
+      {code:'OP02-013',suf:'_p2',name:'Portgas D. Ace',sub:'SEC★ Manga Rare',rate:0.17,rawVal:702,psa10:2100,note:'~1/6 cases; Ace commands premium due to fan demand'},
+      {code:'OP02-099',suf:'_p2',name:'Sakazuki (Akainu)',sub:'SEC★ Manga Rare',rate:0.17,rawVal:250,psa10:750,note:'~1/6 cases avg'},
+    ]},
+    {rarity:'SR PARALLEL / SEC ALT ART', cls:'sec', items:[
+      {code:'OP02-013',suf:'_p1',name:'Portgas D. Ace',sub:'SR Parallel Foil',rate:0.5,rawVal:120,psa10:360,note:'More accessible Ace parallel'},
+      {code:'OP02-096',suf:'_p4',name:'Kuzan (Aokiji)',sub:'Championship 2023 stamp (PROMO)',rate:0.0,rawVal:1000,psa10:5450,note:'⚠️ Tournament promo — NOT in packs'},
+      {code:'OP02-099',suf:'_p4',name:'Sakazuki (Akainu)',sub:'Championship 2023 stamp (PROMO)',rate:0.0,rawVal:1300,psa10:3500,note:'⚠️ Tournament promo — NOT in packs'},
+    ]},
+  ]
+},
+op03:{
+  id:'OP-03', name:'Pillars of Strength', release:'Jun 2023', boxes:12, caseCost:1650,
+  header:'Wano arc. Sogeking is the undisputed #1 most beloved MR in the game. SP Wanted Posters are the secondary chase.',
+  sections:[
+    {rarity:'MANGA RARE', cls:'mr', items:[
+      {code:'OP03-122',suf:'_p2',name:'Sogeking',sub:'SEC★ Manga Rare',rate:0.11,rawVal:1949,psa10:7000,note:'Fan-favorite mystery hero MR — highest value in OP-03'},
+      {code:'OP03-021',suf:'_p2',name:'Monkey D. Luffy',sub:'SEC★ Manga Rare',rate:0.11,rawVal:443,psa10:1550,note:''},
+      {code:'OP03-040',suf:'_p2',name:'Nami',sub:'SEC★ Manga Rare',rate:0.11,rawVal:328,psa10:1150,note:'Female character premium'},
+    ]},
+    {rarity:'SP WANTED POSTER', cls:'sp', items:[
+      {code:'OP03-122',suf:'_p1',name:'Sogeking',sub:'SP Wanted Poster Parallel',rate:0.33,rawVal:426,psa10:1280,note:'~1/3 cases avg SP rate; Sogeking SP commands premium'},
+      {code:'OP03-021',suf:'_p1',name:'Sabo',sub:'SP Wanted Poster Parallel',rate:0.33,rawVal:399,psa10:1197,note:''},
+    ]},
+    {rarity:'TREASURE RARE', cls:'tr', items:[
+      {code:'OP03-122',suf:'_p3',name:'Sogeking',sub:'TR Treasure Rare',rate:0.5,rawVal:120,psa10:300,note:'TR introduced in OP-03 EN'},
+    ]},
+  ]
+},
+op04:{
+  id:'OP-04', name:'Kingdoms of Intrigue', release:'Sep 2023', boxes:12, caseCost:1350,
+  header:'Dressrosa arc. SP Gold cards are the primary chase. Sabo Manga Rare is the headline pull.',
+  sections:[
+    {rarity:'MANGA RARE', cls:'mr', items:[
+      {code:'OP04-083',suf:'_p2',name:'Sabo',sub:'SEC★ Manga Rare',rate:0.11,rawVal:600,psa10:1800,note:'OP-04 headline MR · Sabo fan base strong'},
+      {code:'OP04-039',suf:'_p2',name:'Rebecca',sub:'SEC★ Manga Rare',rate:0.11,rawVal:200,psa10:600,note:'Female character premium'},
+    ]},
+    {rarity:'SP GOLD', cls:'sp', items:[
+      {code:'OP04-039',suf:'_p5',name:'Kaido',sub:'SP Gold Parallel',rate:0.33,rawVal:244,psa10:680,note:'~1/3 cases avg SP rate'},
+      {code:'OP04-040',suf:'_p5',name:'Yamato',sub:'SP Gold Parallel',rate:0.33,rawVal:244,psa10:680,note:''},
+    ]},
+    {rarity:'TREASURE RARE', cls:'tr', items:[
+      {code:'OP04-039',suf:'_p3',name:'Rebecca',sub:'TR Treasure Rare',rate:0.5,rawVal:80,psa10:200,note:''},
+    ]},
+  ]
+},
+op05:{
+  id:'OP-05', name:'Awakening of the New Era', release:'Dec 2023', boxes:12, caseCost:8000,
+  header:'1st Anniversary set — THE investment flagship. Gear 5 Luffy Manga Rare sparked the entire EN TCG boom. Stained Glass SPs are secondary chase. Every card in this set trades at premium.',
+  sections:[
+    {rarity:'MANGA RARE (1st Anniversary)', cls:'mr', items:[
+      {code:'OP05-119',suf:'_p2',name:'Monkey D. Luffy — Gear 5',sub:'SEC★ Manga Rare ★★★',rate:0.17,rawVal:4165,psa10:14000,note:'THE chase card; ~1/6 cases; sparked OPTCG boom. Original OP-05 commands max premium vs reprints.'},
+      {code:'OP05-060',suf:'_p2',name:'Trafalgar Law',sub:'SEC★ Manga Rare',rate:0.17,rawVal:1104,psa10:3900,note:'~1/6 cases'},
+      {code:'OP05-119',suf:'_p4',name:'Eustass Kid',sub:'SEC★ Manga Rare',rate:0.17,rawVal:621,psa10:2200,note:'~1/6 cases · OP-05 has 3 separate MRs'},
+    ]},
+    {rarity:'SP STAINED GLASS', cls:'sp', items:[
+      {code:'OP05-060',suf:'_p4',name:'Nami',sub:'SP Stained Glass',rate:0.33,rawVal:244,psa10:610,note:'6 types total; Nami commands top SP value'},
+      {code:'OP05-119',suf:'_p5',name:'Monkey D. Luffy (Gold Sig)',sub:'SP Gold Signature · Championship promo',rate:0.0,rawVal:3761,psa10:13000,note:'⚠️ NOT in packs — Championship exclusive'},
+    ]},
+    {rarity:'SECRET RARE ALT ART', cls:'sec', items:[
+      {code:'OP05-060',suf:'_p1',name:'Various SEC Alt Arts',sub:'~4 high-value per case',rate:4,rawVal:45,psa10:112,note:'Higher alt art density than standard OP sets'},
+    ]},
+  ]
+},
+op06:{
+  id:'OP-06', name:'Wings of the Captain', release:'Mar 2024', boxes:12, caseCost:1680,
+  header:'Zoro Manga Rare is the single highest-value pull in the set by a large margin. Introduced Treasure Rares to EN. SP Daily Life series is the secondary chase.',
+  sections:[
+    {rarity:'MANGA RARE', cls:'mr', items:[
+      {code:'OP06-118',suf:'_p2',name:'Roronoa Zoro',sub:'SEC★ Manga Rare ★★★',rate:0.33,rawVal:1928,psa10:6750,note:'THE case pull of OP-06; ~1/3 cases avg'},
+    ]},
+    {rarity:'SP DAILY LIFE', cls:'sp', items:[
+      {code:'OP06-047',suf:'_p5',name:'Nico Robin — All Sunday',sub:'SP Daily Life',rate:0.33,rawVal:314,psa10:785,note:'~1/3 cases avg total SP; All Sunday commands premium'},
+      {code:'OP06-047',suf:'_p4',name:'Nami',sub:'SP Daily Life',rate:0.33,rawVal:286,psa10:715,note:'6 total SP types in the set'},
+    ]},
+    {rarity:'TREASURE RARE', cls:'tr', items:[
+      {code:'OP06-118',suf:'_p3',name:'Roronoa Zoro',sub:'TR Treasure Rare',rate:0.5,rawVal:80,psa10:160,note:'First TR in EN OPTCG · ~1/2 cases'},
+    ]},
+  ]
+},
+op07:{
+  id:'OP-07', name:'500 Years in the Future', release:'Jun 2024', boxes:12, caseCost:1650,
+  header:'Egghead arc. Boa Hancock Manga Rare and SP dominate value. Female character premium continues.',
+  sections:[
+    {rarity:'MANGA RARE', cls:'mr', items:[
+      {code:'OP07-051',suf:'_p2',name:'Boa Hancock',sub:'SEC★ Manga Rare',rate:0.33,rawVal:2192,psa10:6000,note:'Female character premium; ~1/3 cases'},
+      {code:'OP07-001',suf:'_p2',name:'Monkey D. Luffy',sub:'SEC★ Manga Rare',rate:0.33,rawVal:280,psa10:840,note:''},
+    ]},
+    {rarity:'SP', cls:'sp', items:[
+      {code:'OP07-051',suf:'_p5',name:'Boa Hancock',sub:'SP Parallel',rate:0.33,rawVal:850,psa10:2125,note:'SP premium on female characters — significant value add'},
+    ]},
+    {rarity:'TREASURE RARE', cls:'tr', items:[
+      {code:'OP07-051',suf:'_p3',name:'Boa Hancock',sub:'TR Treasure Rare',rate:0.5,rawVal:60,psa10:120,note:''},
+    ]},
+  ]
+},
+op08:{
+  id:'OP-08', name:'Two Legends', release:'Sep 2024', boxes:12, caseCost:1900,
+  header:'Roger & Whitebeard legends arc. Rayleigh Manga Rare is the headline. Set considered a potential sleeper if supply tightens.',
+  sections:[
+    {rarity:'MANGA RARE', cls:'mr', items:[
+      {code:'OP08-118',suf:'_p2',name:'Silvers Rayleigh',sub:'SEC★ Manga Rare ★★',rate:0.33,rawVal:652,psa10:2000,note:'~1/3 cases; case chase of OP-08'},
+    ]},
+    {rarity:'SP', cls:'sp', items:[
+      {code:'OP08-003',suf:'_p5',name:'Portgas D. Ace',sub:'SP Parallel',rate:0.33,rawVal:332,psa10:830,note:'Ace SP · ~1/3 cases total SP'},
+      {code:'OP08-004',suf:'_p5',name:'Jewelry Bonney',sub:'SP Parallel',rate:0.33,rawVal:261,psa10:653,note:''},
+    ]},
+    {rarity:'TREASURE RARE', cls:'tr', items:[
+      {code:'OP08-118',suf:'_p3',name:'Silvers Rayleigh',sub:'TR Treasure Rare',rate:0.5,rawVal:55,psa10:110,note:''},
+    ]},
+  ]
+},
+op09:{
+  id:'OP-09', name:'Emperors in the New World', release:'Dec 2024', boxes:12, caseCost:7200,
+  header:'2nd Anniversary set. Gold SEC★ Manga Rares are exclusive to OP-09 — a new tier. Gol D. Roger Gold is the rarest and most valuable. BGS 10 of Roger has sold for $45,000+.',
+  sections:[
+    {rarity:'GOLD MANGA RARE (2nd Anniv — OP-09 only)', cls:'gold', items:[
+      {code:'OP09-118',suf:'_p2',name:'Gol D. Roger',sub:'SEC★ GOLD Manga Rare ★★★★',rate:0.17,rawVal:3574,psa10:14000,lottery:true,note:'~1/6 cases; 0.07% per pack; BGS 10 sold $45k'},
+      {code:'OP09-119',suf:'_p2',name:'Monkey D. Luffy',sub:'SEC★ GOLD Manga Rare ★★★',rate:0.17,rawVal:2950,psa10:8500,lottery:true,note:'~1/6 cases'},
+      {code:'OP09-051',suf:'_p2',name:'Buggy',sub:'SEC★ GOLD Manga Rare ★★',rate:0.17,rawVal:2200,psa10:7000,lottery:true,note:'~1/6 cases'},
+    ]},
+    {rarity:'STANDARD MANGA RARE', cls:'mr', items:[
+      {code:'OP09-004',suf:'_p2',name:'Shanks',sub:'SEC★ Standard Manga Rare',rate:0.33,rawVal:450,psa10:1575,note:'~1/3 cases avg'},
+      {code:'OP09-093',suf:'_p2',name:'Marshall D. Teach',sub:'SEC★ Standard Manga Rare',rate:0.33,rawVal:400,psa10:1200,note:''},
+    ]},
+    {rarity:'SP WANTED POSTER', cls:'sp', items:[
+      {code:'OP09-004',suf:'_p5',name:'Shanks',sub:'SP Wanted Poster',rate:0.33,rawVal:200,psa10:500,note:'~1/3 cases total SP'},
+    ]},
+    {rarity:'TREASURE RARE', cls:'tr', items:[
+      {code:'OP09-118',suf:'_p3',name:'Gol D. Roger',sub:'TR Treasure Rare',rate:0.5,rawVal:70,psa10:140,note:''},
+    ]},
+  ]
+},
+op10:{
+  id:'OP-10', name:'Royal Blood', release:'Mar 2025', boxes:12, caseCost:1800,
+  header:'Dressrosa/Impel Down arc. Trafalgar Law Manga Rare dominates. Mid-tier set but Law MR holds strong due to character popularity.',
+  sections:[
+    {rarity:'MANGA RARE', cls:'mr', items:[
+      {code:'OP10-119',suf:'_p2',name:'Trafalgar Law',sub:'SEC★ Manga Rare ★★',rate:0.33,rawVal:817,psa10:2450,note:'~1/3 cases avg; Law is top-5 most popular character'},
+    ]},
+    {rarity:'SP', cls:'sp', items:[
+      {code:'OP10-005',suf:'_p5',name:'Sanji',sub:'SP Parallel',rate:0.33,rawVal:157,psa10:393,note:'~1/3 cases total SP'},
+    ]},
+    {rarity:'TREASURE RARE', cls:'tr', items:[
+      {code:'OP10-119',suf:'_p3',name:'Trafalgar Law',sub:'TR Treasure Rare',rate:0.5,rawVal:60,psa10:120,note:''},
+    ]},
+  ]
+},
+op11:{
+  id:'OP-11', name:'A Fist of Divine Speed', release:'Jun 2025', boxes:12, caseCost:4620,
+  header:'3rd Anniversary set. SP Gold/Silver Luffy are the ultra-rare lottery pulls. Comic Parallel Snakeman is a separate lottery. Very high EV on the top end but lottery-dependent.',
+  sections:[
+    {rarity:'SP GOLD — LOTTERY (3rd Anniversary)', cls:'gold', items:[
+      {code:'OP05-119',suf:'_p5',name:'Monkey D. Luffy — SP Gold',sub:'SP Gold Signature · 3rd Anniversary',rate:0.11,rawVal:3196,psa10:12800,lottery:true,note:'~1/9 cases; 1/105 boxes; sell immediately if pulled'},
+      {code:'OP05-119',suf:'_r2',name:'Monkey D. Luffy — Comic Parallel',sub:'Comic Parallel (Snakeman)',rate:0.14,rawVal:900,psa10:3150,lottery:true,note:'~1/7 cases; separate lottery from SP Gold'},
+    ]},
+    {rarity:'SP SILVER', cls:'sp', items:[
+      {code:'OP11-119',suf:'_p2',name:'Monkey D. Luffy — SP Silver',sub:'SP Silver Signature · 3rd Anniversary',rate:0.25,rawVal:2133,psa10:8500,note:'~1/4 cases; Gold+Silver combined ~0.09% per pack'},
+    ]},
+    {rarity:'STANDARD SP', cls:'sp', items:[
+      {code:'OP11-004',suf:'_p5',name:'Various SPs (6 types)',sub:'Standard SP Parallels',rate:0.33,rawVal:150,psa10:375,note:'~1/3 cases avg for standard SPs'},
+    ]},
+    {rarity:'TREASURE RARE + SEC ALT ART', cls:'tr', items:[
+      {code:'OP11-119',suf:'_p3',name:'TR + SEC Alt Arts',sub:'~4/case combined',rate:4,rawVal:40,psa10:80,note:'TR ~1/case + ~3 SEC AA'},
+    ]},
+  ]
+},
+op12:{
+  id:'OP-12', name:'Legacy of the Master', release:'Sep 2025', boxes:12, caseCost:1680,
+  header:'3rd Anniversary follow-up. Blackbeard SP Gold/Silver continue the 3rd Anniv pattern. Jewelry Bonney Manga Rare is the standard chase.',
+  sections:[
+    {rarity:'SP GOLD (3rd Anniversary)', cls:'gold', items:[
+      {code:'OP12-118',suf:'_p5',name:'Marshall D. Teach — SP Gold',sub:'SP Gold · 3rd Anniversary',rate:0.25,rawVal:800,psa10:3200,note:'~1/4 cases; 0.09% per pack'},
+    ]},
+    {rarity:'SP SILVER', cls:'sp', items:[
+      {code:'OP12-118',suf:'_p4',name:'Marshall D. Teach — SP Silver',sub:'SP Silver · 3rd Anniversary',rate:0.25,rawVal:500,psa10:2000,note:'~1/4 cases'},
+    ]},
+    {rarity:'MANGA RARE', cls:'mr', items:[
+      {code:'OP12-118',suf:'_p2',name:'Jewelry Bonney',sub:'SEC★ Manga Rare',rate:0.33,rawVal:800,psa10:2500,note:'~1/3 cases avg; top chase card'},
+      {code:'OP12-020',suf:'_p1',name:'Roronoa Zoro',sub:'Treasure Cup Serial # prize (PROMO)',rate:0.0,rawVal:1500,psa10:6000,note:'⚠️ NOT in packs — TC Top 4 tournament prize only'},
+    ]},
+    {rarity:'TREASURE RARE + SEC ALT ART', cls:'tr', items:[
+      {code:'OP12-118',suf:'_p3',name:'TR + SEC Alt Arts',sub:'~4/case combined',rate:4,rawVal:35,psa10:70,note:'TR ~1/case + ~3 SEC AA'},
+    ]},
+  ]
+},
+op13:{
+  id:'OP-13', name:'Carrying On His Will', release:'Dec 2025', boxes:12, caseCost:6600,
+  header:'3rd Anniversary flagship — most spectacular set in OPTCG history. Red Super Alternate Art cards are a new tier (Red SAA). Three Red SAAs exist: Luffy ($8,490), Sabo ($4,750), Ace ($4,420). All are extreme lottery pulls (~1/20 cases each). Demon Pack is a separate lottery. SP Gold Shanks is ~1/4 cases. Even without hitting lottery, base EV from SEC pool is strong.',
+  sections:[
+    {rarity:'RED SUPER ALT ART — LOTTERY (rarest pullable)', cls:'red', items:[
+      {code:'OP13-118',suf:'_p3',name:'Monkey D. Luffy — RED SAA',sub:'Red Super Alternate Art ★★★★★',rate:0.05,rawVal:8490,psa10:24100,lottery:true,note:'~1/20 cases; confirmed community data; 3 exist in circulation — rarest pullable EN card ever'},
+      {code:'OP13-120',suf:'_p3',name:'Sabo — RED SAA',sub:'Red Super Alternate Art ★★★★',rate:0.05,rawVal:4750,psa10:15500,lottery:true,note:'~1/20 cases'},
+      {code:'OP13-119',suf:'_p3',name:'Portgas D. Ace — RED SAA',sub:'Red Super Alternate Art ★★★★',rate:0.05,rawVal:4420,psa10:15000,lottery:true,note:'~1/20 cases'},
+    ]},
+    {rarity:'DEMON PACK — LOTTERY (Five Elders)', cls:'gp', items:[
+      {code:'OP13-079',suf:'_p2',name:'Imu — Demon Pack',sub:'God Pack: all 5 Five Elders Alt Art',rate:0.08,rawVal:2000,psa10:null,lottery:true,note:'~1/12 cases; Five Elders illustrated by Gege Akutami · Sell as complete set'},
+      {code:'OP13-080',suf:'_p2',name:'St. Nusjuro — Demon Pack',sub:'Individual hit (rare)',rate:0.1,rawVal:468,psa10:null,note:'Can pull individual Demon Pack cards outside full pack'},
+    ]},
+    {rarity:'SP GOLD (3rd Anniversary)', cls:'gold', items:[
+      {code:'OP13-118',suf:'_p5',name:'Shanks — SP Gold',sub:'SP Gold · 3rd Anniversary',rate:0.25,rawVal:1000,psa10:4000,note:'~1/4 cases; 0.09% per pack rate'},
+    ]},
+    {rarity:'MANGA ALT ART (SAA)', cls:'mr', items:[
+      {code:'OP13-118',suf:'_p2',name:'Monkey D. Luffy — SAA',sub:'Super Alternate Art (non-Red)',rate:0.33,rawVal:1949,psa10:7000,note:'~1/3 cases; distinct from Red SAA; still very valuable'},
+      {code:'OP13-119',suf:'_p2',name:'Portgas D. Ace — SAA',sub:'Super Alternate Art',rate:0.33,rawVal:800,psa10:2800,note:''},
+      {code:'OP13-120',suf:'_p2',name:'Sabo — SAA',sub:'Super Alternate Art',rate:0.33,rawVal:700,psa10:2450,note:''},
+    ]},
+    {rarity:'SEC ALT ART (12 types)', cls:'sec', items:[
+      {code:'OP13-016',suf:'_p1',name:'Monkey D. Garp',sub:'SEC Alt Art',rate:1,rawVal:150,psa10:525,note:'~12 SEC AA per case total; Garp is top-value SEC AA'},
+      {code:'OP13-118',suf:'_p1',name:'SEC Pool (various)',sub:'~12 valuable SECs per case',rate:11,rawVal:35,psa10:100,note:'Massive SEC pool; avg $35 each'},
+    ]},
+  ]
+},
+op14:{
+  id:'OP-14', name:'The Azure Sea's Seven', release:'Mar 2026', boxes:12, caseCost:2880,
+  header:'Seven Warlords arc. SP Gold Buggy (3rd Anniversary) and Mihawk Manga Rare are the chase cards. Strong pull profile — Zoro and Boa Hancock SPs add secondary value.',
+  sections:[
+    {rarity:'SP GOLD (3rd Anniversary)', cls:'gold', items:[
+      {code:'OP09-051',suf:'_p4',name:'Buggy — SP Gold',sub:'SP Gold · 3rd Anniversary',rate:0.25,rawVal:2649,psa10:10000,note:'~1/4 cases; 0.09% per pack rate'},
+    ]},
+    {rarity:'MANGA RARE', cls:'mr', items:[
+      {code:'OP14-119',suf:'_p2',name:'Dracule Mihawk',sub:'SEC★ Manga Rare ★★★',rate:0.40,rawVal:1400,psa10:4900,note:'~1/2–3 cases; SaifrTCG: rarest in set; Mihawk character premium'},
+    ]},
+    {rarity:'SP', cls:'sp', items:[
+      {code:'OP06-118',suf:'_p2',name:'Roronoa Zoro',sub:'SP Parallel',rate:0.33,rawVal:975,psa10:2438,note:'Zoro SP commands premium — ~1/3 cases total SP'},
+      {code:'OP07-051',suf:'_p4',name:'Boa Hancock',sub:'SP Parallel',rate:0.33,rawVal:400,psa10:1000,note:'Female character premium'},
+    ]},
+    {rarity:'TREASURE RARE + SEC ALT ART', cls:'tr', items:[
+      {code:'OP14-119',suf:'_p3',name:'TR + SEC Alt Arts',sub:'~4/case combined',rate:4,rawVal:40,psa10:100,note:'TR ~1/case + ~3 valuable SEC AAs'},
+    ]},
+  ]
+},
+eb01:{
+  id:'EB-01', name:'Memorial Collection', release:'Dec 2023', boxes:12, caseCost:4700,
+  header:'First Extra Booster — never reprinted by Bandai. Chopper Manga Rare is one of the most beloved pulls in the game. Higher alt art density than standard OP sets. EB sets are the most protected sealed products.',
+  sections:[
+    {rarity:'MANGA RARE', cls:'mr', items:[
+      {code:'EB01-006',suf:'_p2',name:'Tony Tony Chopper',sub:'SEC★ Manga Rare ★★★★',rate:0.33,rawVal:1973,psa10:6900,note:'~1/3 cases; most valuable EB-01 card; beloved character'},
+    ]},
+    {rarity:'SP / SAA', cls:'sp', items:[
+      {code:'EB01-012',suf:'_p2',name:'Mr. 2 Bon Clay',sub:'SP Alt Art',rate:0.33,rawVal:175,psa10:438,note:'~1/3 cases total SP; EB-01 SP commands premium'},
+      {code:'EB01-006',suf:'_p5',name:'Oden',sub:'SP Alt Art',rate:0.33,rawVal:64,psa10:160,note:''},
+    ]},
+    {rarity:'SEC ALT ART (high density)', cls:'sec', items:[
+      {code:'EB01-006',suf:'_p1',name:'Multiple SEC Alt Arts',sub:'~4 high-value per case',rate:4,rawVal:35,psa10:88,note:'EB sets have higher alt art density than standard OP'},
+    ]},
+  ]
+},
+eb02:{
+  id:'EB-02', name:'Anime 25th Collection', release:'Jun 2024', boxes:12, caseCost:5600,
+  header:'25th Anniversary celebration. Multiple Luffy Manga Rare variants (3 different artworks!) are the chase. Unusually high SP count (26 types) makes this a strong case opener.',
+  sections:[
+    {rarity:'MANGA RARE (multiple variants)', cls:'mr', items:[
+      {code:'EB02-061',suf:'_p2',name:'Monkey D. Luffy — Gear 2',sub:'SEC★ Manga Rare #1 (top value)',rate:0.17,rawVal:1607,psa10:4200,note:'3 Luffy MR variants in EB-02; Gear 2 is highest value'},
+      {code:'EB02-061',suf:'_p3',name:'Monkey D. Luffy — Anime 25th',sub:'SEC★ Manga Rare #2',rate:0.17,rawVal:731,psa10:2193,note:'25th Anniversary artwork'},
+      {code:'EB02-061',suf:'_p4',name:'Monkey D. Luffy — Classic',sub:'SEC★ Manga Rare #3',rate:0.17,rawVal:668,psa10:2004,note:'Third Luffy MR in same set — unique'},
+    ]},
+    {rarity:'SP (26 TYPES — unusually high)', cls:'sp', items:[
+      {code:'EB02-061',suf:'_p5',name:'Monkey D. Luffy — SP Gold Leader',sub:'SP Gold Leader',rate:0.33,rawVal:3000,psa10:10000,note:'SP Gold Leader — EB-02's ultra-chase; highest value SP in set'},
+      {code:'EB02-004',suf:'_p5',name:'Various SP (26 types)',sub:'~3 SP total per case',rate:3,rawVal:120,psa10:300,note:'EB-02 has 26 SP types — most of any set; ~3/case avg'},
+    ]},
+  ]
+},
+eb03:{
+  id:'EB-03', name:'One Piece Heroines', release:'Dec 2024', boxes:12, caseCost:3800,
+  header:'Female-focused set. Three Manga Rares (Nami, Uta, Robin/Hancock). SP God Pack is the super-lottery. Higher average value per case than most standard OP sets.',
+  sections:[
+    {rarity:'SP GOD PACK — LOTTERY', cls:'gp', items:[
+      {code:'EB03-053',suf:'_p2',name:'SP God Pack (6 SPs sealed)',sub:'God Pack: all 6 female SP cards',rate:0.067,rawVal:900,psa10:3500,lottery:true,note:'~1/15 cases; sell as a complete set for max value (~$900 raw)'},
+    ]},
+    {rarity:'MANGA RARE', cls:'mr', items:[
+      {code:'EB03-053',suf:'_p2',name:'Nami',sub:'SEC★ Manga Rare ★★★★',rate:0.11,rawVal:1725,psa10:6000,note:'~1/9 cases (1 of 3 MRs; total MR rate ~0.33/case)'},
+      {code:'EB03-061',suf:'_p2',name:'Uta',sub:'SEC★ Manga Rare ★★★',rate:0.11,rawVal:1536,psa10:5376,note:'FILM RED character — strong demand'},
+      {code:'EB03-060',suf:'_p2',name:'Nico Robin / Boa Hancock',sub:'SEC★ Manga Rare',rate:0.11,rawVal:1100,psa10:3850,note:''},
+    ]},
+    {rarity:'SP (STANDARD)', cls:'sp', items:[
+      {code:'EB03-053',suf:'_p5',name:'Various SP (9 types)',sub:'~2 SP per case',rate:2,rawVal:300,psa10:750,note:'~2/case; EB-03 SPs carry higher avg value than standard OP sets'},
+    ]},
+  ]
+},
+prb01:{
+  id:'PRB-01', name:'One Piece Card The Best', release:'Jun 2024', boxes:10, caseCost:8500,
+  header:'Premium Booster — 10-box case, never reprinted. God Pack is the mega-lottery. All cards are reprints of top hits from OP-01 to OP-06 with fresh foil treatments. Manga God Pack (all 10 MR reprints) is ~$9,000+ in combined card value.',
+  sections:[
+    {rarity:'MANGA GOD PACK — LOTTERY', cls:'gp', items:[
+      {code:'OP01-120',suf:'_r1',name:'Manga God Pack (10 MR reprints)',sub:'God Pack: all 10 Manga Rare reprints (OP-01 to OP-06)',rate:0.07,rawVal:9000,psa10:null,lottery:true,note:'~1/14 cases; $9k+ combined card value; sell as complete set. Individual MRs also pull separately.'},
+    ]},
+    {rarity:'SP / ALT ART REPRINTS', cls:'sp', items:[
+      {code:'OP05-119',suf:'_r1',name:'Monkey D. Luffy (Gear 5 reprint)',sub:'SP Alt Art Reprint — PRB-01 treatment',rate:0.33,rawVal:900,psa10:2700,note:'The OP-05 Gear 5 reprint in PRB-01 foil — significant value; ~1/3 cases total SP'},
+      {code:'OP01-120',suf:'_r1',name:'Shanks Manga Rare (reprint)',sub:'Manga Rare reprint — PRB-01 treatment',rate:0.33,rawVal:400,psa10:1200,note:'Individual MR reprints pull separately from God Pack'},
+    ]},
+    {rarity:'SEC / PARALLEL REPRINTS', cls:'sec', items:[
+      {code:'OP01-002',suf:'_r1',name:'Luffy ST01-012 reprint',sub:'SEC Parallel Reprint — commands premium',rate:1,rawVal:80,psa10:200,note:'PRB-01 reprint treatment with unique foil; ~2/case SEC parallels'},
+    ]},
+  ]
+},
+};
+
+function makeRarityBadge(cls){
+  const map={mr:'r-mr',gold:'r-gold',red:'r-red',sp:'r-sp',tr:'r-tr',sec:'r-sec',gp:'r-gp'};
+  return map[cls]||'';
+}
+
+function makeRow(item, maxRaw){
+  const pct = Math.min((item.rawVal / maxRaw * 100), 100);
+  const barW = Math.max(pct, 3);
+  const rateStr = item.rate === 0 ? '— promo only' : (item.rate >= 1 ? item.rate.toFixed(0)+'/case' : '1/'+Math.round(1/item.rate)+' cases');
+  const lottery = item.lottery ? '<span class="lottery-tag">🎰 LOTTERY</span>' : '';
+  const psaTxt = item.psa10 ? '<span class="price-psa">'+f$(item.psa10)+'</span>' : '<span class="price-na">—</span>';
+  return `<tr class="${item.lottery ? 'lottery-row' : ''}">
+    <td><div class="cell-flex">${img(item.code, item.suf || '')}<div>
+      <div class="card-name">${item.name}${lottery}</div>
+      <div class="card-code">${item.code}${item.suf||''} · ${item.sub}</div>
+    </div></div></td>
+    <td class="r"><span style="font-size:.72rem;color:var(--muted)">${rateStr}</span><div class="pull-bar"><div class="pull-fill" style="width:${barW}%"></div></div></td>
+    <td class="r"><span class="price-en">${item.rawVal > 0 ? f$(item.rawVal) : '—'}</span></td>
+    <td class="r">${psaTxt}</td>
+    <td style="font-size:.68rem;color:var(--muted);max-width:200px;white-space:normal">${item.note || ''}</td>
+  </tr>`;
+}
+
+function showHits(id, btn){
+  document.querySelectorAll('.set-pill').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+
+  const set = SETS_HITS[id];
+  if(!set){ document.getElementById('hits-main').innerHTML = '<p style="color:var(--muted);padding:20px">Set not found.</p>'; return; }
+
+  const maxRaw = Math.max(...set.sections.flatMap(s => s.items.map(i => i.rawVal)));
+
+  let html = `<div class="set-hits active">
+    <div class="set-header">
+      <div>
+        <div class="set-id">${set.id}</div>
+        <div class="set-name">${set.name}</div>
+        <div class="set-meta">Released: ${set.release} · ${set.boxes} boxes/case · Case: ~$${set.caseCost.toLocaleString()}</div>
+        <div style="font-size:.72rem;color:var(--muted);margin-top:6px;max-width:700px">${set.header}</div>
+      </div>
+      <div class="case-stats">
+        <div class="case-stat-val">$${set.caseCost.toLocaleString()}</div>
+        <div class="case-stat-lbl">Case Cost</div>
+        <div style="margin-top:6px">
+          <a href="index.html" style="font-family:'Barlow Condensed',sans-serif;font-size:.65rem;color:#60a5fa;text-decoration:none;border:1px solid rgba(96,165,250,.3);padding:3px 8px;border-radius:3px">← Case ROI ↗</a>
+        </div>
+      </div>
+    </div>`;
+
+  set.sections.forEach(sec => {
+    const clsMap = {mr:'rh-mr',gold:'rh-gold',red:'rh-red',sp:'rh-sp',tr:'rh-tr',sec:'rh-sec',gp:'rh-gp'};
+    const maxSec = Math.max(...sec.items.map(i => i.rawVal));
+    html += `<div class="rarity-section">
+      <div class="rarity-header ${clsMap[sec.cls]||'rh-sec'}">★ ${sec.rarity}</div>
+      <table class="hits-table">
+        <thead><tr>
+          <th>Card</th><th class="r">Pull Rate</th>
+          <th class="r">Raw NM</th><th class="r">PSA 10</th><th>Notes</th>
+        </tr></thead>
+        <tbody>${sec.items.map(item => makeRow(item, maxSec)).join('')}</tbody>
+      </table>
+    </div>`;
+  });
+
+  const pullNote = `<div class="pull-note">⚠️ Pull rates are community averages from case break data (2025–26). Bandai publishes no official rates. Manga Rares pull at approximately 1/576–1,728 packs (1/2–6 cases for a 12-box EN case). High variance: any single case may return 0× or 3× expected value. Card prices sourced from OPCardlist/TCGPlayer, last updated Apr 2026.</div>`;
+
+  html += pullNote + '</div>';
+  document.getElementById('hits-main').innerHTML = html;
+  function f$(n){ return '$'+Math.round(n).toLocaleString(); }
+}
+
+// URL param: ?set=op05
+const urlSet = new URLSearchParams(window.location.search).get('set') || 'op01';
+const matchBtn = [...document.querySelectorAll('.set-pill')].find(b => b.getAttribute('onclick').includes("'"+urlSet+"'"));
+showHits(urlSet, matchBtn || document.querySelector('.set-pill'));
+</script>
+</body>
+</html>

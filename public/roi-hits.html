@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Set Hits Viewer — Fulcrum Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#e8b84b;--bg:#080810;--surface:#0f0f1c;--surface2:#14142a;--border:#1e1e38;--text:#dde0f0;--muted:#6b6b90;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;}
+.hdr{background:linear-gradient(135deg,#0a0a18,#12091f);border-bottom:2px solid var(--gold);padding:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.hdr h1{font-family:'Cinzel Decorative',serif;font-size:clamp(.9rem,2.5vw,1.4rem);color:var(--gold);}
+.set-badge{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:4px 12px;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:900;color:var(--gold);letter-spacing:.06em;}
+.back{margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:5px 12px;border-radius:4px;}
+.back:hover{color:var(--gold);border-color:var(--gold);}
+.main{max-width:1100px;margin:0 auto;padding:20px;}
+
+/* Summary bar */
+.sumbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px;}
+.sc{background:var(--surface);padding:10px 14px;}
+.sc .sl{font-size:.62rem;color:var(--muted);font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;}
+.sc .sv{font-size:1.2rem;font-family:'Barlow Condensed',sans-serif;font-weight:900;margin-top:2px;}
+
+/* Rarity section headers */
+.rar-section{margin-bottom:20px;}
+.rar-hdr{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;padding:6px 12px;border-radius:4px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.rar-hdr .count{font-size:.62rem;opacity:.7;}
+
+/* Hit cards grid */
+.hits-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+.hit-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;position:relative;cursor:pointer;transition:border-color .15s;}
+.hit-card:hover{border-color:var(--gold);}
+.hit-card.lottery{border-left:3px solid #f87171;}
+.hit-img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:5px;background:var(--surface2);display:block;margin-bottom:8px;}
+.hit-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.85rem;color:var(--text);margin-bottom:2px;}
+.hit-variant{font-size:.65rem;color:var(--muted);margin-bottom:6px;line-height:1.5;}
+.hit-prices{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px;}
+.hit-price{background:var(--surface2);border-radius:3px;padding:4px 6px;}
+.hit-price .pl{font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
+.hit-price .pv{font-size:.8rem;font-family:'Barlow Condensed',sans-serif;font-weight:900;}
+.hit-rate{font-size:.62rem;color:var(--muted);border-top:1px solid var(--border);padding-top:5px;margin-top:3px;}
+.pill{display:inline-block;padding:1px 6px;border-radius:3px;font-weight:700;font-size:.65rem;}
+.pg{background:rgba(74,222,128,.12);color:#4ade80;border:1px solid rgba(74,222,128,.25);}
+.py{background:rgba(251,191,36,.10);color:#fbbf24;border:1px solid rgba(251,191,36,.2);}
+.pb{background:rgba(248,113,113,.10);color:#f87171;border:1px solid rgba(248,113,113,.2);}
+.rarity-badge{display:inline-block;padding:1px 5px;border-radius:2px;font-size:.6rem;font-weight:700;margin-right:3px;}
+.r-mr{background:rgba(232,184,75,.15);color:var(--gold);}
+.r-gold{background:rgba(251,191,36,.15);color:#fbbf24;}
+.r-red{background:rgba(248,113,113,.15);color:#f87171;}
+.r-sp{background:rgba(96,165,250,.12);color:#60a5fa;}
+.r-sec{background:rgba(45,212,191,.10);color:#2dd4bf;}
+.r-tr{background:rgba(167,139,250,.12);color:#a78bfa;}
+.r-gp{background:rgba(240,208,128,.15);color:#f0d080;}
+.r-par{background:rgba(100,116,139,.15);color:#94a3b8;}
+.lottery-tag{font-size:.58rem;color:#f87171;margin-left:3px;}
+.lookup-btn{width:100%;margin-top:6px;padding:4px;background:rgba(232,184,75,.06);border:1px solid rgba(232,184,75,.3);border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;color:var(--gold);cursor:pointer;letter-spacing:.05em;text-align:center;text-decoration:none;display:block;}
+.lookup-btn:hover{background:rgba(232,184,75,.12);}
+.not-found{text-align:center;padding:60px 20px;color:var(--muted);font-family:'Barlow Condensed',sans-serif;}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+.fbtn{background:var(--surface2);border:1px solid var(--border);border-radius:3px;color:var(--muted);cursor:pointer;padding:4px 10px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.fbtn:hover,.fbtn.on{border-color:var(--gold);color:var(--gold);background:rgba(232,184,75,.06);}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:4px">Fulcrum Cards · Case ROI</div>
+    <h1>Hit Viewer — <span id="set-title">Loading...</span></h1>
+  </div>
+  <span class="set-badge" id="set-badge">—</span>
+  <a href="index.html" class="back">← Back to Price Guide</a>
+</div>
+
+<div class="main">
+  <div class="sumbar" id="sumbar">
+    <div class="sc"><div class="sl">Case Cost</div><div class="sv" style="color:var(--gold)" id="s-cost">—</div></div>
+    <div class="sc"><div class="sl">Box EV (parallels)</div><div class="sv" style="color:#60a5fa" id="s-ev">—</div></div>
+    <div class="sc"><div class="sl">Top Chase Card</div><div class="sv" style="color:#f0d080" id="s-chase">—</div></div>
+    <div class="sc"><div class="sl">MR Pull Rate</div><div class="sv" style="color:#e8b84b" id="s-mr-rate">—</div></div>
+    <div class="sc"><div class="sl">Total Hits Listed</div><div class="sv" id="s-hits">—</div></div>
+  </div>
+
+  <div class="filter-bar">
+    <span style="font-family:'Barlow Condensed',sans-serif;font-size:.65rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase">Sort:</span>
+    <button class="fbtn on" id="f-val"  onclick="hitSort('value')">By Value</button>
+    <button class="fbtn"    id="f-rar"  onclick="hitSort('rarity')">By Rarity</button>
+    <button class="fbtn"    id="f-rate" onclick="hitSort('rate')">By Pull Rate</button>
+    <button class="fbtn"    id="f-psa"  onclick="hitSort('psa')">By PSA 10</button>
+  </div>
+
+  <div id="content"><div class="not-found">Loading set data...</div></div>
+</div>
+
+<script>
+// ── Embedded SETS data (same as ROI calculator) ──────────────────────────
+const HITS_SETS = [
+{id:'OP-01',name:'Romance Dawn',caseCost:2400,boxCnt:12,parEV:452,pulls:[
+  {label:'Manga Rare — Shanks',rarity:'r-mr',perCase:1.58,rawVal:776,psa10:2500,note:'Most valuable MR in set',img:'OP01-120_p2'},
+  {label:'Manga Rare — Monkey D. Luffy',rarity:'r-mr',perCase:1.58,rawVal:833,psa10:2800,note:'Leader parallel',img:'OP01-003_p1'},
+  {label:'Manga Rare — Nami',rarity:'r-mr',perCase:1.58,rawVal:454,psa10:1500,note:'Female char premium',img:'OP01-016_p1'},
+  {label:'Manga Rare — Roronoa Zoro',rarity:'r-mr',perCase:1.58,rawVal:533,psa10:1800,note:'',img:'OP01-025_p1'},
+  {label:'SEC Alt Art — Luffy',rarity:'r-sec',perCase:3,rawVal:50,psa10:140,note:'Top SEC in set',img:'OP01-003'},
+  {label:'SR Parallel pool (avg)',rarity:'r-par',perCase:12,rawVal:12,psa10:null,note:'Bulk raw sell',img:'OP01-016'},
+]},
+{id:'OP-02',name:'Paramount War',caseCost:1560,boxCnt:12,parEV:246,pulls:[
+  {label:'Manga Rare — Portgas D. Ace',rarity:'r-mr',perCase:1.58,rawVal:702,psa10:2100,note:'Most valuable card',img:'OP02-013_p2'},
+  {label:'Manga Rare — Edward Newgate',rarity:'r-mr',perCase:1.58,rawVal:250,psa10:750,note:'Whitebeard',img:'OP02-099_p2'},
+  {label:'Championship Stamp — Sakazuki',rarity:'r-sp',perCase:0.1,rawVal:1300,psa10:3500,note:'CS 2023 Top 8 promo',img:'OP02-099_p4'},
+  {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:22,psa10:55,note:'',img:'OP02-013'},
+]},
+{id:'OP-03',name:'Pillars of Strength',caseCost:1944,boxCnt:12,parEV:172,pulls:[
+  {label:'Manga Rare — Sogeking',rarity:'r-mr',perCase:1.58,rawVal:1949,psa10:7000,note:'Most valuable OP-03 card; fan-fav mystery hero',img:'OP03-122_p2'},
+  {label:'Manga Rare — Monkey D. Luffy',rarity:'r-mr',perCase:1.58,rawVal:443,psa10:1300,note:'',img:'OP03-022_p2'},
+  {label:'SP Wanted Poster — Sabo',rarity:'r-sp',perCase:1.2,rawVal:399,psa10:1000,note:'',img:'OP03-040_p1'},
+  {label:'SP Wanted Poster — Sogeking',rarity:'r-sp',perCase:1.2,rawVal:426,psa10:1100,note:'',img:'OP03-122_p1'},
+  {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:16,psa10:40,note:'',img:'OP03-022'},
+]},
+{id:'OP-04',name:'Kingdoms of Intrigue',caseCost:1356,boxCnt:12,parEV:256,pulls:[
+  {label:'Manga Rare — Boa Hancock',rarity:'r-mr',perCase:1.58,rawVal:795,psa10:2400,note:'Top card in set',img:'OP04-083_p2'},
+  {label:'Manga Rare — Sabo',rarity:'r-mr',perCase:1.58,rawVal:691,psa10:2100,note:'',img:'OP04-039_p2'},
+  {label:'SP Gold Yamato',rarity:'r-sp',perCase:1.2,rawVal:200,psa10:560,note:'High demand',img:'OP04-003_p1'},
+  {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:15,psa10:38,note:'',img:'OP04-039'},
+]},
+{id:'OP-05',name:'Awakening of the New Era',caseCost:1860,boxCnt:12,parEV:611,pulls:[
+  {label:'Manga Rare — Luffy Gear 5 ★★★',rarity:'r-mr',perCase:1.58,rawVal:3761,psa10:13000,note:'#1 pull in game history for OP-05',img:'OP05-119_p2'},
+  {label:'Manga Rare — Trafalgar Law ★★',rarity:'r-mr',perCase:1.58,rawVal:1104,psa10:3900,note:'',img:'OP05-079_p2'},
+  {label:'Manga Rare — Eustass Kid',rarity:'r-mr',perCase:1.58,rawVal:621,psa10:2200,note:'',img:'OP05-060_p2'},
+  {label:'SP Stained Glass — Nami',rarity:'r-sp',perCase:1.2,rawVal:244,psa10:610,note:'Top SP in set',img:'OP05-016_p1'},
+  {label:'SP Stained Glass — Yamato',rarity:'r-sp',perCase:1.2,rawVal:244,psa10:610,note:'',img:'OP05-003_p1'},
+  {label:'SP Stained Glass — Enel',rarity:'r-sp',perCase:1.2,rawVal:208,psa10:520,note:'',img:'OP05-060_p1'},
+  {label:'Anniversary Special Card',rarity:'r-sp',perCase:0.5,rawVal:190,psa10:475,note:'1/box but smaller premium',img:'OP05-119_p1'},
+  {label:'SEC Alt Art',rarity:'r-sec',perCase:4,rawVal:45,psa10:112,note:'',img:'OP05-119'},
+]},
+{id:'OP-06',name:'Wings of the Captain',caseCost:1680,boxCnt:12,parEV:351,pulls:[
+  {label:'Manga Rare — Roronoa Zoro ★★★',rarity:'r-mr',perCase:1.58,rawVal:1928,psa10:6750,note:'THE case hit of OP-06',img:'OP06-118_p2'},
+  {label:'SP Daily Life — Nico Robin (All Sunday)',rarity:'r-sp',perCase:1.2,rawVal:314,psa10:785,note:'Top SP',img:'OP06-047_p1'},
+  {label:'SP Daily Life — Nami',rarity:'r-sp',perCase:1.2,rawVal:286,psa10:715,note:'',img:'OP06-016_p1'},
+  {label:'SP Daily Life — Buggy',rarity:'r-sp',perCase:1.2,rawVal:195,psa10:488,note:'',img:'OP06-001_p1'},
+  {label:'Treasure Rare — TR (first EN set)',rarity:'r-tr',perCase:1.0,rawVal:80,psa10:160,note:'OP-06 introduced TR to EN',img:'OP06-118'},
+  {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:28,psa10:70,note:'',img:'OP06-001'},
+]},
+{id:'OP-07',name:'500 Years in the Future',caseCost:1656,boxCnt:12,parEV:176,pulls:[
+  {label:'Manga Rare — Boa Hancock ★★',rarity:'r-mr',perCase:1.58,rawVal:850,psa10:2550,note:'Most valuable in set',img:'OP07-051_p2'},
+  {label:'SP Boa Hancock',rarity:'r-sp',perCase:1.2,rawVal:280,psa10:700,note:'High collector demand',img:'OP07-051_p1'},
+  {label:'Manga Rare — Dragon',rarity:'r-mr',perCase:1.58,rawVal:200,psa10:600,note:'',img:'OP07-001_p2'},
+  {label:'Treasure Rare',rarity:'r-tr',perCase:1.0,rawVal:60,psa10:120,note:'',img:'OP07-001'},
+  {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:15,psa10:38,note:'',img:'OP07-001'},
+]},
+{id:'OP-08',name:'Two Legends',caseCost:1896,boxCnt:12,parEV:205,pulls:[
+  {label:'Manga Rare — Silvers Rayleigh ★★',rarity:'r-mr',perCase:1.58,rawVal:652,psa10:2000,note:'Top chase of OP-08',img:'OP08-118_p2'},
+  {label:'SP Portgas D. Ace',rarity:'r-sp',perCase:1.2,rawVal:332,psa10:830,note:'Top SP in set',img:'OP08-013_p1'},
+  {label:'SP Jewelry Bonney',rarity:'r-sp',perCase:1.2,rawVal:261,psa10:653,note:'',img:'OP08-039_p1'},
+  {label:'SP Charlotte Pudding',rarity:'r-sp',perCase:1.2,rawVal:123,psa10:308,note:'',img:'OP08-068_p1'},
+  {label:'Treasure Rare',rarity:'r-tr',perCase:1.0,rawVal:55,psa10:110,note:'',img:'OP08-001'},
+  {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:20,psa10:50,note:'',img:'OP08-001'},
+]},
+{id:'OP-09',name:'Emperors in the New World',caseCost:7200,boxCnt:12,parEV:663,pulls:[
+  {label:'GOLD MR Gol D. Roger ★★★★',rarity:'r-gold',perCase:0.20,rawVal:3500,psa10:14000,lottery:true,note:'0.07%/pack = ~1/5 cases. BGS10 sold $45k',img:'OP09-118_p2'},
+  {label:'Manga Rare — Shanks',rarity:'r-mr',perCase:1.58,rawVal:650,psa10:2275,note:'',img:'OP09-004_p2'},
+  {label:'Manga Rare — Monkey D. Luffy',rarity:'r-mr',perCase:1.58,rawVal:450,psa10:1575,note:'',img:'OP09-119_p2'},
+  {label:'Manga Rare — Buggy',rarity:'r-mr',perCase:1.58,rawVal:380,psa10:1330,note:'Gold theme',img:'OP09-051_p2'},
+  {label:'SP Wanted Poster (6 types)',rarity:'r-sp',perCase:1.2,rawVal:200,psa10:500,note:'~1.2/case total',img:'OP09-004_p1'},
+  {label:'Treasure Rare',rarity:'r-tr',perCase:1.0,rawVal:70,psa10:140,note:'',img:'OP09-001'},
+  {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:35,psa10:88,note:'',img:'OP09-001'},
+]},
+{id:'OP-10',name:'Royal Blood',caseCost:1800,boxCnt:12,parEV:169,pulls:[
+  {label:'Manga Rare — Trafalgar Law ★★',rarity:'r-mr',perCase:1.58,rawVal:817,psa10:2450,note:'Top chase. 0.55%/pack confirmed SamuraiSwordTokyo',img:'OP10-005_p2'},
+  {label:'SP Sanji',rarity:'r-sp',perCase:1.2,rawVal:157,psa10:393,note:'~1/10 boxes',img:'OP10-001_p1'},
+  {label:'SP Charlotte Pudding',rarity:'r-sp',perCase:1.2,rawVal:68,psa10:170,note:'',img:'OP10-039_p1'},
+  {label:'Treasure Rare',rarity:'r-tr',perCase:1.0,rawVal:60,psa10:120,note:'',img:'OP10-001'},
+  {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:18,psa10:45,note:'',img:'OP10-001'},
+]},
+{id:'OP-11',name:'A Fist of Divine Speed',caseCost:4620,boxCnt:12,parEV:357,pulls:[
+  {label:'SP Gold Luffy 3rd Anniv ★★★★',rarity:'r-gold',perCase:0.20,rawVal:3196,psa10:12800,lottery:true,note:'0.07%/pack = ~1/5 cases',img:'OP11-119_p2'},
+  {label:'SP Silver Luffy 3rd Anniv ★★★',rarity:'r-sp',perCase:0.25,rawVal:2133,psa10:8500,note:'~1/4 cases',img:'OP11-119_p1'},
+  {label:'Enel Comic Parallel ★★',rarity:'r-mr',perCase:0.20,rawVal:900,psa10:3150,lottery:true,note:'~1/5 cases. Rising trend flagged by SamuraiSwordTokyo',img:'OP11-118_p2'},
+  {label:'SP regular (6 types)',rarity:'r-sp',perCase:1.2,rawVal:150,psa10:375,note:'~1.2/case total',img:'OP11-001_p1'},
+  {label:'TR + SEC Alt Art',rarity:'r-tr',perCase:4,rawVal:40,psa10:80,note:'TR ~1/case + ~3 SEC',img:'OP11-001'},
+]},
+{id:'OP-12',name:'Legacy of the Master',caseCost:1680,boxCnt:12,parEV:148,pulls:[
+  {label:'SP Gold Blackbeard 3rd Anniv ★★★',rarity:'r-gold',perCase:0.20,rawVal:800,psa10:3200,note:'0.07%/pack = ~1/5 cases',img:'OP12-093_p2'},
+  {label:'SP Silver Blackbeard ★★',rarity:'r-sp',perCase:0.25,rawVal:500,psa10:2000,note:'~1/4 cases',img:'OP12-093_p1'},
+  {label:'Manga Rare — Jewelry Bonney',rarity:'r-mr',perCase:1.58,rawVal:250,psa10:750,note:'',img:'OP12-118_p2'},
+  {label:'TR + SEC Alt Art',rarity:'r-tr',perCase:4,rawVal:35,psa10:70,note:'TR + ~3 valuable SEC AA',img:'OP12-001'},
+]},
+{id:'OP-13',name:'Carrying On His Will',caseCost:6600,boxCnt:12,parEV:1665,pulls:[
+  {label:'Red SAA Monkey D. Luffy ★★★★★',rarity:'r-red',perCase:0.05,rawVal:8490,psa10:22570,lottery:true,note:'~1/20 cases. Rarest pullable EN card',img:'OP13-118_p3'},
+  {label:'Red SAA Sabo ★★★★',rarity:'r-red',perCase:0.05,rawVal:4750,psa10:15500,lottery:true,note:'~1/20 cases',img:'OP13-120_p3'},
+  {label:'Red SAA Portgas D. Ace ★★★★',rarity:'r-red',perCase:0.05,rawVal:4420,psa10:15000,lottery:true,note:'~1/20 cases',img:'OP13-119_p3'},
+  {label:'Manga SAA Luffy ★★★',rarity:'r-mr',perCase:1.58,rawVal:1949,psa10:6800,note:'~1.6/case · $1,949 OPCardlist',img:'OP13-118_p2'},
+  {label:'Demon Pack (Five Elders)',rarity:'r-gp',perCase:0.08,rawVal:2000,psa10:null,lottery:true,note:'~1/10–20 cases. Sell as set.',img:'OP13-079_p2'},
+  {label:'SP Gold Shanks 3rd Anniv ★★★',rarity:'r-gold',perCase:0.20,rawVal:1000,psa10:4000,note:'~1/5 cases',img:'OP13-016_p1'},
+  {label:'SEC Alt Art (12 types)',rarity:'r-sec',perCase:12,rawVal:35,psa10:100,note:'~12/case',img:'OP13-016'},
+  {label:'TR + Regular SP',rarity:'r-tr',perCase:3,rawVal:55,psa10:138,note:'TR ~1/case + SPs ~2/case',img:'OP13-001'},
+]},
+{id:'OP-14',name:"The Azure Sea's Seven",caseCost:2880,boxCnt:12,parEV:535,pulls:[
+  {label:'SP Gold Buggy 3rd Anniv ★★★★',rarity:'r-gold',perCase:0.20,rawVal:2649,psa10:10000,note:'~1/5 cases',img:'OP09-051_p4'},
+  {label:'Manga Rare — Dracule Mihawk ★★★',rarity:'r-mr',perCase:1.58,rawVal:1400,psa10:4900,note:'~1.6/case',img:'OP14-119_p2'},
+  {label:'SP Zoro',rarity:'r-sp',perCase:1.2,rawVal:975,psa10:2438,note:'Top SP · ~1.2/case',img:'OP14-001_p1'},
+  {label:'SP Boa Hancock',rarity:'r-sp',perCase:1.2,rawVal:450,psa10:1125,note:'',img:'OP14-035_p1'},
+  {label:'TR + SEC Alt Art',rarity:'r-tr',perCase:4,rawVal:40,psa10:100,note:'',img:'OP14-001'},
+]},
+{id:'EB-01',name:'Memorial Collection',caseCost:4704,boxCnt:12,parEV:413,pulls:[
+  {label:'Manga Rare — Tony Tony Chopper ★★★★',rarity:'r-mr',perCase:1.58,rawVal:1973,psa10:6900,note:'~1.6/case · $1,973 OPCardlist',img:'EB01-006_p2'},
+  {label:'SP Mr.2 Bon Clay (Bentham)',rarity:'r-sp',perCase:1.2,rawVal:175,psa10:438,note:'',img:'EB01-006_p1'},
+  {label:'SP Kozuki Oden',rarity:'r-sp',perCase:1.2,rawVal:64,psa10:160,note:'',img:'EB01-003_p1'},
+  {label:'SP Laboon',rarity:'r-sp',perCase:1.2,rawVal:60,psa10:150,note:'',img:'EB01-012_p1'},
+  {label:'SEC Alt Art (×4 valuable)',rarity:'r-sec',perCase:4,rawVal:35,psa10:88,note:'EB sets have higher alt art density',img:'EB01-006'},
+]},
+{id:'EB-02',name:'Anime 25th Collection',caseCost:5604,boxCnt:12,parEV:695,pulls:[
+  {label:'Manga Rare Luffy — Gear 2 variant ★★★★',rarity:'r-mr',perCase:1.58,rawVal:1607,psa10:5625,note:'Top card · $1,607 OPCardlist',img:'EB02-061_p2'},
+  {label:'Manga Rare Luffy — variant 2',rarity:'r-mr',perCase:1.58,rawVal:731,psa10:2559,note:'$731 OPCardlist',img:'EB02-061_p1'},
+  {label:'Manga Rare Luffy — variant 3',rarity:'r-mr',perCase:1.58,rawVal:668,psa10:2338,note:'$668 OPCardlist',img:'EB02-061'},
+  {label:'Manga Rare — Jewelry Bonney',rarity:'r-mr',perCase:1.58,rawVal:550,psa10:1925,note:'$550 OPCardlist',img:'EB02-039_p2'},
+  {label:'Manga Rare — Boa Hancock',rarity:'r-mr',perCase:1.58,rawVal:532,psa10:1862,note:'$532 OPCardlist',img:'EB02-053_p2'},
+  {label:'SP (26 types)',rarity:'r-sp',perCase:3,rawVal:120,psa10:300,note:'EB-02 SP-heavy — ~3/case',img:'EB02-001_p1'},
+  {label:'SEC Alt Art',rarity:'r-sec',perCase:4,rawVal:40,psa10:100,note:'',img:'EB02-001'},
+]},
+{id:'EB-03',name:'One Piece Heroines',caseCost:3804,boxCnt:12,parEV:848,pulls:[
+  {label:'Manga Rare — Nami ★★★★',rarity:'r-mr',perCase:1.58,rawVal:1725,psa10:6000,note:'~1.6/case · $1,725 OPCardlist',img:'EB03-053_p2'},
+  {label:'Manga Rare — Uta',rarity:'r-mr',perCase:1.58,rawVal:1536,psa10:5376,note:'$1,536 OPCardlist',img:'EB03-061_p2'},
+  {label:'Manga Rare — Nico Robin',rarity:'r-mr',perCase:1.58,rawVal:1314,psa10:4599,note:'$1,314 OPCardlist',img:'EB03-060_p2'},
+  {label:'Manga Rare — Boa Hancock',rarity:'r-mr',perCase:1.58,rawVal:1303,psa10:4561,note:'$1,303 OPCardlist',img:'EB03-062_p2'},
+  {label:'SP God Pack (6 SPs — lottery)',rarity:'r-gp',perCase:0.067,rawVal:900,psa10:3500,lottery:true,note:'~1/15 cases · sell as set',img:'EB03-053_p1'},
+  {label:'SP regular (9 types)',rarity:'r-sp',perCase:2,rawVal:300,psa10:750,note:'~2/case · high avg value',img:'EB03-001_p1'},
+  {label:'SEC Alt Art',rarity:'r-sec',perCase:4,rawVal:50,psa10:125,note:'',img:'EB03-001'},
+]},
+{id:'PRB-01',name:'Card The Best',caseCost:8500,boxCnt:10,parEV:149,pulls:[
+  {label:'Manga God Pack (10 MR reprints) ★★★★★',rarity:'r-gp',perCase:0.07,rawVal:9000,psa10:null,lottery:true,note:'~1/10–20 cases · $9k+ total · sell complete',img:'OP05-119_p2'},
+  {label:'SP / Alt Art reprints (OP-01–OP-06)',rarity:'r-sp',perCase:1.0,rawVal:400,psa10:1000,note:'Various high-value reprints',img:'OP01-120_p1'},
+  {label:'SEC / parallel reprints',rarity:'r-sec',perCase:2,rawVal:80,psa10:200,note:'Luffy ST01-012 reprint premium',img:'OP01-003_p1'},
+]},
+];
+
+const CDN = 'https://en.onepiece-cardgame.com/images/cardlist/card';
+const RARITY_ORDER = {'r-red':1,'r-gold':2,'r-gp':3,'r-mr':4,'r-sp':5,'r-tr':6,'r-sec':7,'r-par':8};
+
+let currentSort = 'value';
+
+function fmoney(n){
+  if(!n && n!==0) return '—';
+  const abs = Math.abs(n);
+  const s = abs >= 1000 ? '$'+abs.toLocaleString('en-US',{maximumFractionDigits:0}) : '$'+abs.toFixed(0);
+  return n < 0 ? '-'+s : s;
+}
+function frac(n){
+  if(n >= 1) return n.toFixed(1)+'/case';
+  const inv = Math.round(1/n);
+  return '1/'+inv+' cases';
+}
+
+function buildPage(set){
+  document.getElementById('set-title').textContent = set.id + ' — ' + set.name;
+  document.getElementById('set-badge').textContent = set.id;
+  document.getElementById('s-cost').textContent = fmoney(set.caseCost);
+  document.getElementById('s-ev').textContent = fmoney(set.parEV * set.boxCnt) + '/case';
+  const topPull = [...set.pulls].sort((a,b)=>b.rawVal-a.rawVal)[0];
+  document.getElementById('s-chase').textContent = topPull ? fmoney(topPull.rawVal) : '—';
+  const mrPull = set.pulls.find(p=>p.rarity==='r-mr' && p.perCase > 0.5);
+  document.getElementById('s-mr-rate').textContent = mrPull ? frac(mrPull.perCase) : '—';
+  document.getElementById('s-hits').textContent = set.pulls.length;
+  renderHits(set);
+}
+
+function renderHits(set){
+  let pulls = [...set.pulls];
+  
+  if(currentSort === 'value') pulls.sort((a,b)=>b.rawVal - a.rawVal);
+  else if(currentSort === 'rarity') pulls.sort((a,b)=>(RARITY_ORDER[a.rarity]||9)-(RARITY_ORDER[b.rarity]||9) || b.rawVal-a.rawVal);
+  else if(currentSort === 'rate') pulls.sort((a,b)=>b.perCase-a.perCase);
+  else if(currentSort === 'psa') pulls.sort((a,b)=>(b.psa10||0)-(a.psa10||0));
+
+  const content = document.getElementById('content');
+  content.innerHTML = '';
+
+  pulls.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'hit-card' + (p.lottery ? ' lottery' : '');
+    
+    const imgSrc = `${CDN}/${p.img}.png`;
+    const lookupCode = p.img ? p.img.replace(/_p\d$|_p\d\d$/, '') : '';
+    
+    const pricePairs = [
+      {label:'Raw NM',val:p.rawVal,cls:p.rawVal>=1000?'cg':p.rawVal>=200?'cy':''},
+      {label:'PSA 10 est.',val:p.psa10,cls:'cp'},
+    ];
+    
+    card.innerHTML = `
+      <img class="hit-img" src="${imgSrc}" alt="${p.label}"
+        onerror="this.style.background='#1a1a2e';this.style.opacity='.4'">
+      <div class="hit-name">
+        <span class="rarity-badge ${p.rarity}">${p.rarity.replace('r-','').toUpperCase()}</span>
+        ${p.lottery ? '<span class="lottery-tag">🎰 LOTTERY</span>' : ''}
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.85rem;color:#eef2f8;margin:3px 0 2px">${p.label}</div>
+      <div class="hit-variant">${p.note}</div>
+      <div class="hit-prices">
+        <div class="hit-price">
+          <div class="pl">Raw NM</div>
+          <div class="pv" style="color:${p.rawVal>=1000?'#4ade80':p.rawVal>=200?'#fbbf24':'#dde0f0'}">${fmoney(p.rawVal)}</div>
+        </div>
+        <div class="hit-price">
+          <div class="pl">PSA 10</div>
+          <div class="pv" style="color:#a78bfa">${p.psa10 ? fmoney(p.psa10) : '—'}</div>
+        </div>
+      </div>
+      <div class="hit-rate">
+        Pull rate: <strong>${frac(p.perCase)}</strong>
+        &nbsp;·&nbsp; EV/case: <strong style="color:#60a5fa">${fmoney(p.perCase * p.rawVal)}</strong>
+      </div>
+      ${lookupCode ? `<a class="lookup-btn" href="card-lookup.html?code=${lookupCode}" target="_blank">🔍 Look up ${lookupCode} →</a>` : ''}
+    `;
+    
+    content.appendChild(card);
+  });
+}
+
+function hitSort(s){
+  currentSort = s;
+  ['val','rar','rate','psa'].forEach(x => document.getElementById('f-'+x).classList.remove('on'));
+  const map = {value:'val',rarity:'rar',rate:'rate',psa:'psa'};
+  document.getElementById('f-'+map[s])?.classList.add('on');
+  const setId = new URLSearchParams(window.location.search).get('set');
+  const set = HITS_SETS.find(s=>s.id===setId);
+  if(set) renderHits(set);
+}
+
+// Init
+const params = new URLSearchParams(window.location.search);
+const setId = params.get('set');
+const set = HITS_SETS.find(s => s.id === setId);
+
+if(set) {
+  buildPage(set);
+} else {
+  document.getElementById('set-title').textContent = 'Set Not Found';
+  document.getElementById('content').innerHTML = `
+    <div class="not-found">
+      <div style="font-size:2rem;margin-bottom:12px">🏴‍☠️</div>
+      <div>Set "${setId || 'unknown'}" not found.</div>
+      <div style="margin-top:8px"><a href="index.html" style="color:var(--gold)">← Back to Price Guide</a></div>
+    </div>`;
+}
+</script>
+</body>
+</html>
