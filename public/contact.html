@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Fulcrum Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#e8b84b;--bg:#080810;--surface:#0f0f1c;--border:#1e1e38;--text:#dde0f0;--muted:#6b6b90; }
+  * { box-sizing:border-box;margin:0;padding:0; }
+  body { background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh; }
+  .header { background:linear-gradient(135deg,#0a0a18,#12091f,#0d0a1a);border-bottom:2px solid var(--gold);padding:28px 20px 22px;text-align:center; }
+  h1 { font-family:'Cinzel Decorative',serif;font-size:clamp(1.1rem,3.5vw,1.9rem);color:var(--gold);margin-bottom:6px; }
+  .nav-back { display:inline-block;margin:14px 0;font-family:'Barlow Condensed',sans-serif;font-size:.75rem;letter-spacing:.1em;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:5px 12px;border-radius:4px; }
+  .nav-back:hover { color:var(--gold);border-color:var(--gold); }
+  .main { max-width:600px;margin:0 auto;padding:30px 20px 60px; }
+  h2 { font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--gold);margin:28px 0 12px; }
+  p { font-size:.88rem;line-height:1.8;color:var(--text);margin-bottom:14px; }
+  .contact-box { background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;margin:20px 0; }
+  label { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px; }
+  input, textarea { width:100%;background:#0d0d1a;border:1px solid var(--border);border-radius:5px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:.85rem;margin-bottom:16px;outline:none; }
+  input:focus, textarea:focus { border-color:var(--gold); }
+  textarea { min-height:120px;resize:vertical; }
+  button { font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;background:var(--gold);color:#000;border:none;border-radius:5px;padding:10px 24px;cursor:pointer; }
+  button:hover { background:#f5d87a; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:6px">Fulcrum Cards</div>
+  <h1>Contact Us</h1>
+</div>
+<div class="main">
+  <a href="index.html" class="nav-back">← Back to Price Guide</a>
+
+  <p>Have a question about pricing data, found an error, or interested in partnering? We'd love to hear from you.</p>
+
+  <div class="contact-box">
+    <h2>Send a Message</h2>
+    <form action="mailto:hello@fulcrumcards.com" method="post" enctype="text/plain">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" name="name" placeholder="Grand Line Collector" autocomplete="name">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email">
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="subject" placeholder="Pricing question / Data correction / Partnership">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="Tell us what's on your mind..."></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <h2>Other Ways to Reach Us</h2>
+  <p>For data corrections, price disputes, or partnership inquiries, email us directly at <strong style="color:var(--gold)">hello@fulcrumcards.com</strong>.</p>
+  <p>For information about affiliate partnerships or advertising on Fulcrum Cards, please include "Partnership" in your subject line.</p>
+</div>
+</body>
+</html>

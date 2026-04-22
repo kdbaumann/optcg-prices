@@ -439,9 +439,9 @@ body {
   </div>
 
   <div class="input-row">
-    <input id="cardInput" class="card-input" type="text"
+    <input id="cardInput" class="card-input" type="search"
       placeholder="e.g. OP01-120  or  EB01-006  or  P-043"
-      autocomplete="off" autocorrect="off" spellcheck="false">
+      autocomplete="off" autocorrect="off" spellcheck="false" data-form-type="other" autocapitalize="none">
     <button class="search-btn" id="searchBtn" onclick="lookup()">Look Up</button>
   </div>
 
@@ -520,9 +520,33 @@ body {
 // ─── Config ──────────────────────────────────────────────────────────────────
 const EN_CDN = 'https://en.onepiece-cardgame.com/images/cardlist/card';
 const JP_CDN = 'https://www.onepiece-cardgame.com/images/cardlist/card';
+
+// ── Affiliate / Partner Config ─────────────────────────────────────────────────
+// Set your partner/affiliate codes here. Leave blank to use plain links.
+const AFF = {
+  tcgplayer:  '',   // TCGPlayer affiliate partner code (e.g. 'mystore')
+  limitless:  '',   // Limitless affiliate code
+  ebay:       '',   // eBay campaign ID
+};
+function affUrl(base, platform) {
+  if (!AFF[platform]) return base;
+  const sep = base.includes('?') ? '&' : '?';
+  return base + sep + 'partner=' + AFF[platform];
+}
+
 const LOCAL  = '/images/cards';
 
 // Variant suffixes we'll probe: p1 = base parallel, p2 = manga alt, p3 = Red SAA, p4 = TC stamp, r1/r2 = reprints
+const VARIANT_LABELS = {
+  '_p1': 'Parallel Foil',
+  '_p2': 'Manga Alt Art',
+  '_p3': 'Red Super Alt Art',
+  '_p4': 'Promo / TC Stamp',
+  '_p5': 'SP Gold Signature',
+  '_r1': 'Reprint (PRB-01)',
+  '_r2': 'Reprint (PRB-02)',
+};
+
 const VARIANTS = [
   { key: 'base',  label: 'Base',         suffix: '',      note: '' },
   { key: 'p1',    label: 'Parallel',     suffix: '_p1',   note: 'Foil parallel' },
@@ -633,11 +657,11 @@ function probeVariantsAsync(code) {
     img.onload = () => {
       found.push(suf);
       done++;
-      if (done === suffixes.length) appendVariantBtns(code, found);
+      if (done === suffixes.length) showAllVersions(code, found);
     };
     img.onerror = () => {
       done++;
-      if (done === suffixes.length) appendVariantBtns(code, found);
+      if (done === suffixes.length) showAllVersions(code, found);
     };
     img.src = imgUrl(code, suf, 'en');
   });
@@ -750,7 +774,7 @@ function renderCard(code, hasEN, hasJP, variants, suffix) {
   // External links
   const encCode = encodeURIComponent(code);
   document.getElementById('linksRow').innerHTML = [
-    { label: 'TCGPlayer',    href: `https://www.tcgplayer.com/search/one-piece-card-game/product?q=${encCode}` },
+    { label: 'TCGPlayer',    href: affUrl(`https://www.tcgplayer.com/search/one-piece-card-game/product?q=${encCode}`, 'tcgplayer') },
     { label: 'OPCardlist',   href: `https://www.opcardlist.com` },
     { label: 'Limitless',    href: `https://onepiece.limitlesstcg.com/cards/${code.toLowerCase()}` },
     { label: 'PSA Pop',      href: `https://www.psacard.com/pop/trading-card-games/one-piece-card-game/149549` },
@@ -762,23 +786,84 @@ function renderCard(code, hasEN, hasJP, variants, suffix) {
   ].map(l => `<a class="ext-link" href="${l.href}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('');
 
   // ── Image panels ──
-  const enSrc = hasEN ? imgUrl(code, suffix, 'en') : null;
-  const jpSrc = hasJP ? imgUrl(code, suffix, 'jp') : null;
-  // Try local first for EN
-  const localSrc = `${LOCAL}/${code}${suffix}.png`;
+  const enSrc = imgUrl(code, suffix, 'en');
+  const jpSrc = imgUrl(code, suffix, 'jp');
 
   document.getElementById('imgGrid').innerHTML = `
-    ${makeImgPanel('🇺🇸 English', 'lang-en', localSrc, enSrc, code, hasEN)}
-    ${makeImgPanel('🇯🇵 Japanese', 'lang-jp', null, jpSrc, code, hasJP)}
+    ${makeVersionPanel(code, suffix, '')}
   `;
 
   // Wire up zoom on newly created images
   document.querySelectorAll('.card-img-main').forEach(img => {
     img.addEventListener('click', () => {
-      document.getElementById('popupImg').src = img.src;
-      document.getElementById('popup').classList.add('show');
+      const pp = document.getElementById('popup');
+      const pi = document.getElementById('popupImg');
+      if (pp && pi) { pi.src = img.src; pp.classList.add('show'); }
+      else window.open(img.src, '_blank');
     });
   });
+}
+
+
+// ── makeVersionPanel: renders one card version (EN + JP) ────────────────────
+function makeVersionPanel(code, suffix, label) {
+  const enSrc = `${EN_CDN}/${code}${suffix}.png`;
+  const jpSrc = `${JP_CDN}/${code}${suffix}.png`;
+  const varLabel = label || (suffix ? (VARIANT_LABELS[suffix] || suffix) : 'Base');
+  const displayCode = code + (suffix || '');
+  return `
+    <div class="version-block" style="display:inline-flex;flex-direction:column;align-items:center;gap:6px;
+      background:#0d0d1a;border:1px solid #1e1e38;border-radius:10px;padding:12px 10px;min-width:200px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.7rem;
+        letter-spacing:.1em;text-transform:uppercase;color:#e8b84b;margin-bottom:4px">${varLabel}</div>
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div style="text-align:center">
+          <div style="font-size:.55rem;color:#6b6b90;margin-bottom:3px">🇺🇸 EN</div>
+          <img class="card-img-main" src="${enSrc}" alt="EN ${displayCode}" loading="lazy"
+            style="width:100px;height:140px;object-fit:cover;border-radius:6px;border:1px solid #2a2a4a;
+              background:#1e2035;cursor:zoom-in;display:block"
+            onerror="this.style.background='#1a1a2e';this.style.opacity='.3'">
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:.55rem;color:#6b6b90;margin-bottom:3px">🇯🇵 JP</div>
+          <img class="card-img-main" src="${jpSrc}" alt="JP ${displayCode}" loading="lazy"
+            style="width:100px;height:140px;object-fit:cover;border-radius:6px;border:1px solid #2a2a4a;
+              background:#1e2035;cursor:zoom-in;display:block"
+            onerror="this.style.background='#1a1a2e';this.style.opacity='.3'">
+        </div>
+      </div>
+      <div style="font-size:.6rem;color:#4a4a6a;text-align:center">${displayCode}</div>
+    </div>`;
+}
+
+// ── showAllVersions: renders base + all found variants side by side ───────────
+function showAllVersions(code, foundSuffixes) {
+  if (currentCode !== code) return;
+  const allSuffixes = ['', ...foundSuffixes];
+  const allV = allSuffixes.map(s => ({suffix: s, label: s ? (VARIANT_LABELS[s] || s) : 'Base'}));
+  const panels = allV.map(v => makeVersionPanel(code, v.suffix, v.label)).join('');
+  const grid = document.getElementById('imgGrid');
+  if (grid) {
+    grid.innerHTML = `<div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;
+      scrollbar-width:thin;scrollbar-color:#2a2a4a transparent">${panels}</div>`;
+    grid.querySelectorAll('.card-img-main').forEach(img => {
+      img.addEventListener('click', () => {
+        const popup = document.getElementById('popup');
+        const popupImg = document.getElementById('popupImg');
+        if (popup && popupImg) { popupImg.src = img.src; popup.classList.add('show'); }
+        else window.open(img.src, '_blank');
+      });
+    });
+  }
+  // Also update variant section to show count
+  const variantWrap = document.getElementById('variantSection');
+  const variantBar  = document.getElementById('variantBar');
+  if (variantBar && variantWrap && foundSuffixes.length) {
+    variantBar.innerHTML = `<span style="font-size:.68rem;color:#86efac">
+      ✅ ${allSuffixes.length} version${allSuffixes.length>1?'s':''} shown · Base${foundSuffixes.map(s=>' + '+(VARIANT_LABELS[s]||s)).join('')}
+    </span>`;
+    variantWrap.style.display = 'block';
+  }
 }
 
 function makeImgPanel(langLabel, badgeClass, localSrc, cdnSrc, code, hasImage) {
@@ -871,5 +956,65 @@ if (urlParams.get('card')) {
   fillAndLookup(normalizeCode(urlParams.get('card')));
 }
 </script>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════════════════════ -->
+<footer style="background:#080810;border-top:1px solid #1e1e38;padding:28px 20px 20px;margin-top:40px;font-family:'Barlow',sans-serif">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+      
+      <div style="min-width:180px">
+        <div style="font-family:'Cinzel Decorative',serif;font-size:.85rem;color:#e8b84b;margin-bottom:8px">Fulcrum Cards</div>
+        <div style="font-size:.68rem;color:#6b6b90;line-height:1.7">
+          Your reference for One Piece TCG<br>
+          English Edition pricing & valuation.
+        </div>
+      </div>
+
+      <div style="min-width:160px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:#e8b84b;margin-bottom:8px">Tools</div>
+        <div style="font-size:.7rem;line-height:2">
+          <a href="index.html"       style="color:#a0a0c0;text-decoration:none;display:block" onmouseover="this.style.color='#e8b84b'" onmouseout="this.style.color='#a0a0c0'">📊 Price Guide</a>
+          <a href="tournament-guide.html" style="color:#a0a0c0;text-decoration:none;display:block" onmouseover="this.style.color='#e8b84b'" onmouseout="this.style.color='#a0a0c0'">🏆 Tournament Guide</a>
+          <a href="card-lookup.html" style="color:#a0a0c0;text-decoration:none;display:block" onmouseover="this.style.color='#e8b84b'" onmouseout="this.style.color='#a0a0c0'">🔍 Card Lookup</a>
+        </div>
+      </div>
+
+      <div style="min-width:160px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:#e8b84b;margin-bottom:8px">Company</div>
+        <div style="font-size:.7rem;line-height:2">
+          <a href="about.html"   style="color:#a0a0c0;text-decoration:none;display:block" onmouseover="this.style.color='#e8b84b'" onmouseout="this.style.color='#a0a0c0'">ℹ️ About Fulcrum Cards</a>
+          <a href="contact.html" style="color:#a0a0c0;text-decoration:none;display:block" onmouseover="this.style.color='#e8b84b'" onmouseout="this.style.color='#a0a0c0'">✉️ Contact Us</a>
+        </div>
+      </div>
+
+      <div style="min-width:180px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:#e8b84b;margin-bottom:8px">External Resources</div>
+        <div style="font-size:.7rem;line-height:2">
+          <a href="https://www.opcardlist.com" target="_blank" rel="noopener" style="color:#a0a0c0;text-decoration:none;display:block" onmouseover="this.style.color='#e8b84b'" onmouseout="this.style.color='#a0a0c0'">OPCardlist ↗</a>
+          <a href="https://www.tcgplayer.com" target="_blank" rel="noopener" style="color:#a0a0c0;text-decoration:none;display:block" onmouseover="this.style.color='#e8b84b'" onmouseout="this.style.color='#a0a0c0'">TCGPlayer ↗</a>
+          <a href="https://en.onepiece-cardgame.com" target="_blank" rel="noopener" style="color:#a0a0c0;text-decoration:none;display:block" onmouseover="this.style.color='#e8b84b'" onmouseout="this.style.color='#a0a0c0'">Bandai Official ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="border-top:1px solid #1e1e38;padding-top:14px;font-size:.62rem;color:#4a4a6a;line-height:1.8">
+      <p>© 2025–2026 <strong style="color:#6b6b90">Fulcrum Cards</strong>. All original site content, layout, data compilations, and pricing analysis are the intellectual property of Fulcrum Cards.</p>
+      <p style="margin-top:4px">
+        <strong style="color:#6b6b90">Image &amp; card content disclaimer:</strong>
+        Card images, card names, set names, artwork, and game content are the property of
+        <strong style="color:#6b6b90">Bandai Co., Ltd.</strong> and are used here for informational and 
+        price-reference purposes only. Fulcrum Cards does not claim ownership of any Bandai intellectual property.
+        One Piece is © Eiichiro Oda / Shueisha. This site is not affiliated with or endorsed by Bandai or Shueisha.
+      </p>
+      <p style="margin-top:4px">
+        Price data sourced from TCGPlayer, OPCardlist, eBay completed sales, Snkrdunk, PriceCharting, and community research.
+        Prices are for reference only and may not reflect current market conditions.
+      </p>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
