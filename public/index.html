@@ -565,6 +565,31 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
 #casroi .wbox{margin-top:10px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:4px;padding:8px 12px;font-size:9px;color:#fbbf24;font-family:'Barlow Condensed',sans-serif;line-height:1.7;}
 #casroi .roi-note{padding:8px 0;font-size:9px;color:#4a5568;font-family:'Barlow Condensed',sans-serif;border-top:1px solid var(--border);line-height:1.7;}
 
+
+/* Box prices table */
+.price-table { width:100%; border-collapse:collapse; font-size:.82rem; }
+.price-table th { background:var(--surface2); border-bottom:2px solid var(--border); padding:8px 10px;
+  font-family:'Barlow Condensed',sans-serif; font-size:.72rem; font-weight:700;
+  color:#6b6b90; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap; }
+.price-table td { padding:7px 10px; border-bottom:1px solid rgba(30,30,56,.6); vertical-align:middle; }
+.price-table tr:hover td { background:rgba(255,255,255,.03); }
+.price-table tr:last-child td { border-bottom:none; }
+
+
+/* ── Variant gallery ──────────────────────────────────── */
+#csm-var-section { margin-top: 16px; }
+#csm-var-section > div { font-size:.72rem; color:var(--muted); margin-bottom:8px;
+  font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.08em; }
+#csm-var-bar { display:flex; flex-wrap:wrap; gap:16px; }
+.csm-var-card { display:flex; flex-direction:column; align-items:center; gap:4px; }
+.csm-var-label { font-size:.65rem; font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  color:var(--gold); text-transform:uppercase; letter-spacing:.06em; text-align:center; }
+.csm-var-imgs { display:flex; gap:6px; }
+.csm-var-img-wrap { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.csm-var-flag { font-size:.58rem; color:var(--muted); font-family:'Barlow Condensed',sans-serif; }
+.csm-var-img { width:90px; border-radius:6px; border:1px solid var(--border);
+  cursor:zoom-in; transition:transform .15s; }
+.csm-var-img:hover { transform:scale(1.06); border-color:var(--gold); }
 </style>
 </head>
 <body>
@@ -2886,7 +2911,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP13/OP13-120_p3_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-120_p3.png" alt="OP13-120" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP13-120')" title="Look up OP13-120"><div><div class="card-name">Sabo — RED Manga Rare ★★</div><div class="card-variant">OP13-120 P3 · ASL Brotherhood trio</div></div></div></td>
         <td class="card-num">OP13-120</td>
         <td class="price-cell mega">$4,750</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥700 (≈$0)k +</td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥700 (≈$4.90)k +</td>
         <td class="price-cell mega">≈$13,500</td>
         <td><span class="mult mult-high">2.8×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$4,425</td>
@@ -2897,7 +2922,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP13/OP13-119_p3_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-119_p3.png" alt="OP13-119" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP13-119')" title="Look up OP13-119"><div><div class="card-name">Ace — RED Manga Rare ★★</div><div class="card-variant">OP13-119 P3 · Note: reprints confirmed for OP-13</div></div></div></td>
         <td class="card-num">OP13-119</td>
         <td class="price-cell mega">$4,420</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥600 (≈$0)k +</td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥600 (≈$4.20)k +</td>
         <td class="price-cell mega">≈$12,000</td>
         <td><span class="mult mult-high">2.7×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$3,925</td>
@@ -2909,7 +2934,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP09/OP09-118_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-118_p2.png" alt="OP09-118" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP09-118')" title="Look up OP09-118"><div><div class="card-name">Gol D. Roger — Gold Manga Rare ★</div><div class="card-variant">OP09-118 P2 · "Gold" foil treatment · BGS 10 isolated $45k sale</div></div></div></td>
         <td class="card-num">OP09-118</td>
         <td class="price-cell high">$3,574</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥480 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥480 (≈$3.36) </td>
         <td class="price-cell mega">$7,995 confirmed</td>
         <td><span class="mult mult-high">2.2×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$2,590</td>
@@ -2920,7 +2945,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP06/OP06-118_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP06-118_p2.png" alt="OP06-118" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP06-118')" title="Look up OP06-118"><div><div class="card-name">Roronoa Zoro — Manga Rare ★</div><div class="card-variant">OP06-118 P2 · First Zoro manga · Extremely low EN PSA 10 pop</div></div></div></td>
         <td class="card-num">OP06-118</td>
         <td class="price-cell high">$1,928</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥280 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥280 (≈$1.96) </td>
         <td class="price-cell mega">≈$6,750 mid est.</td>
         <td><span class="mult mult-fire">~3.5×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$2,175</td>
@@ -2931,7 +2956,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP07/OP07-051_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP07-051_p2.png" alt="OP07-051" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP07-051')" title="Look up OP07-051"><div><div class="card-name">Boa Hancock — Manga Rare ★</div><div class="card-variant">OP07-051 P2 · Heroine demand · Low EN pop</div></div></div></td>
         <td class="card-num">OP07-051</td>
         <td class="price-cell high">$1,686</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥230 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥230 (≈$1.61) </td>
         <td class="price-cell mega">≈$5,250 mid est.</td>
         <td><span class="mult mult-fire">~3.1×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$1,675</td>
@@ -2942,7 +2967,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB01/EB01-006_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB01-006_p2.png" alt="EB01-006" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('EB01-006')" title="Look up EB01-006"><div><div class="card-name">Tony Tony Chopper — Manga Rare ★</div><div class="card-variant">EB01-006 P2 · ~1 per 4–6 cartons · EB never reprinted</div></div></div></td>
         <td class="card-num">EB01-006</td>
         <td class="price-cell high">$1,973</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥280 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥280 (≈$1.96) </td>
         <td class="price-cell mega">≈$7,000 mid est.</td>
         <td><span class="mult mult-fire">~3.5×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$2,258</td>
@@ -2964,7 +2989,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB03/EB03-053_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB03-053_p2.png" alt="EB03-053" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('EB03-053')" title="Look up EB03-053"><div><div class="card-name">Nami — Manga Rare ★ (Heroines)</div><div class="card-variant">EB03-053 P2 · Hottest new set · Feb 2026 · EB never reprinted</div></div></div></td>
         <td class="card-num">EB03-053</td>
         <td class="price-cell high">$1,725</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥180 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥180 (≈$1.26) </td>
         <td class="price-cell mega">≈$6,750 mid est.</td>
         <td><span class="mult mult-fire">~3.9×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$2,175</td>
@@ -2975,7 +3000,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB03/EB03-061_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB03-061_p2.png" alt="EB03-061" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('EB03-061')" title="Look up EB03-061"><div><div class="card-name">Uta — Manga Rare ★ (Heroines)</div><div class="card-variant">EB03-061 P2 · Film Red character · Strong crossover collector base</div></div></div></td>
         <td class="card-num">EB03-061</td>
         <td class="price-cell high">$1,536</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥140 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥140 (≈$0.98) </td>
         <td class="price-cell mega">≈$5,000 mid est.</td>
         <td><span class="mult mult-fire">~3.3×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$1,592</td>
@@ -2986,7 +3011,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB03/EB03-055_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB03-055_p2.png" alt="EB03-055" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('EB03-055')" title="Look up EB03-055"><div><div class="card-name">Nico Robin — Manga Rare ★ (Heroines)</div><div class="card-variant">EB03-055 P2 · Straw Hat core · Collector favorite</div></div></div></td>
         <td class="card-num">EB03-055</td>
         <td class="price-cell high">$1,314</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥120 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥120 (≈$0.84) </td>
         <td class="price-cell high">≈$5,000 mid est.</td>
         <td><span class="mult mult-fire">~3.8×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$1,592</td>
@@ -2997,7 +3022,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB03/EB03-026_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB03-026_p2.png" alt="EB03-026" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('EB03-026')" title="Look up EB03-026"><div><div class="card-name">Boa Hancock — Manga Rare ★ (Heroines)</div><div class="card-variant">EB03-026 P2 · Second Hancock manga · Dual collector demand</div></div></div></td>
         <td class="card-num">EB03-026</td>
         <td class="price-cell high">$1,303</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥110 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥110 (≈$0.77) </td>
         <td class="price-cell high">≈$4,500 mid est.</td>
         <td><span class="mult mult-fire">~3.5×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$1,425</td>
@@ -3008,7 +3033,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP09/OP09-119_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-119.png" alt="OP09-119" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP09-119')" title="Look up OP09-119"><div><div class="card-name">Monkey D. Luffy — Manga Rare ★</div><div class="card-variant">OP09-119 · New Emperor arc · 3rd different Luffy manga</div></div></div></td>
         <td class="card-num">OP09-119</td>
         <td class="price-cell high">$1,441</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥190 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥190 (≈$1.33) </td>
         <td class="price-cell high">≈$4,750 mid est.</td>
         <td><span class="mult mult-fire">~3.3×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$1,508</td>
@@ -3019,7 +3044,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP02/OP02-013_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP02-013_p2.png" alt="OP02-013" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP02-013')" title="Look up OP02-013"><div><div class="card-name">Portgas D. Ace — Comic Parallel ★</div><div class="card-variant">OP02-013 P2 · ~1 per 72 boxes · Marineford emotional anchor</div></div></div></td>
         <td class="card-num">OP02-013</td>
         <td class="price-cell high">$1,223</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥140 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥140 (≈$0.98) </td>
         <td class="price-cell high">≈$3,750 mid est.</td>
         <td><span class="mult mult-fire">~3.1×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$1,175</td>
@@ -3030,7 +3055,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://en.onepiece-cardgame.com/images/cardlist/card/OP05-069_r1.png" data-fallback="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP05/OP05-069_EN.webp" alt="OP05-069" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP05-069')" title="Look up OP05-069"><div><div class="card-name">Trafalgar Law — Comic Parallel ★</div><div class="card-variant">OP05-069 R1 · PRB-01 Comic Parallel reprint · Law's most collectible card · PRB never reprinted</div></div></div></td>
         <td class="card-num">OP05-069</td>
         <td class="price-cell high">$766–$1,500</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0.63) </td>
         <td class="price-cell high">≈$2,500 mid est.</td>
         <td><span class="mult mult-high">~3.3×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$950</td>
@@ -3041,7 +3066,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://en.onepiece-cardgame.com/images/cardlist/card/OP03-122_r1.png" data-fallback="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP03/OP03-122_EN.webp" alt="OP03-122" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP03-122')" title="Look up OP03-122"><div><div class="card-name">Sogeking — Comic Parallel ★</div><div class="card-variant">OP03-122 R1 · PRB-01 reprint of iconic manga rare · Scarcer than original OP-03 version</div></div></div></td>
         <td class="card-num">OP03-122</td>
         <td class="price-cell mid">$426–$1,150</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥60 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥60 (≈$0.42) </td>
         <td class="price-cell high">≈$3,200 mid est.</td>
         <td><span class="mult mult-high">~3.5×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$800</td>
@@ -3053,7 +3078,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB04/EB04-044_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB04-044.png" alt="EB04-044" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('EB04-044')" title="Look up EB04-044"><div><div class="card-name">Koby — Manga Rare ★</div><div class="card-variant">EB04-044 · EB-04 Egghead Crisis · JP ¥90,000–¥100,000 (≈$650–$700) launch · EN pricing still thin · EB never reprinted</div></div></div></td>
         <td class="card-num">EB04-044</td>
         <td class="price-cell mid">$400–$600+ EN</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0)k –100k</td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0.63) –100k</td>
         <td class="price-cell high">≈$1,800–$3,000 est.</td>
         <td><span class="mult mult-high">~3–5×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#fbbf24;font-size:0.95rem">⚠️ Still settling</td>
@@ -3063,7 +3088,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div class="card-name">Dracule Mihawk — Manga Rare ★</div><div class="card-variant">OP14-119 · Newest set · Pop near zero · Pricing still settling</div></td>
         <td class="card-num">OP14-119</td>
         <td class="price-cell high">$1,100</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥130 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥130 (≈$0.91) </td>
         <td class="price-cell high">≈$4,000 mid est.</td>
         <td><span class="mult mult-fire">~3.6×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$1,258</td>
@@ -3074,7 +3099,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP09/OP09-004_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-004_p2.png" alt="OP09-004" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP09-004')" title="Look up OP09-004"><div><div class="card-name">Shanks — Manga Rare ★ (SR)</div><div class="card-variant">OP09-004 P2 · Also exists as SP Gold ($1,203) — separate card</div></div></div></td>
         <td class="card-num">OP09-004</td>
         <td class="price-cell high">$1,203</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥140 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥140 (≈$0.98) </td>
         <td class="price-cell high">≈$4,250 mid est.</td>
         <td><span class="mult mult-fire">~3.5×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$1,342</td>
@@ -3085,7 +3110,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP01/OP01-120_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP01-120_p2.png" alt="OP01-120" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP01-120')" title="Look up OP01-120"><div><div class="card-name">Shanks — Manga Rare ★ (First Ever)</div><div class="card-variant">OP01-120 P2 · First manga rare printed in OPTCG history</div></div></div></td>
         <td class="card-num">OP01-120</td>
         <td class="price-cell mid">$776</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0.63) </td>
         <td class="price-cell high">≈$2,700 confirmed BGS</td>
         <td><span class="mult mult-high">3.5×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$825</td>
@@ -3096,7 +3121,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP03/OP03-122_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP03-122_p2.png" alt="OP03-122" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP03-122')" title="Look up OP03-122"><div><div class="card-name">Sogeking — Manga Rare ★</div><div class="card-variant">OP03-122 P2 · Fan-favourite mystery hero · Also reprinted in PRB-01 as Comic Parallel R1</div></div></div></td>
         <td class="card-num">OP03-122</td>
         <td class="price-cell mid">$450–$1,150</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥60 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥60 (≈$0.42) </td>
         <td class="price-cell high">≈$3,500 mid est.</td>
         <td><span class="mult mult-high">3–7×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$800</td>
@@ -3107,7 +3132,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP04/OP04-083_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP04-083_p1.png" alt="OP04-083" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP04-083')" title="Look up OP04-083"><div><div class="card-name">Sabo — Manga Rare ★</div><div class="card-variant">OP04-083 P1 · ASL Brotherhood · Also reprinted in PRB-01 as Comic Parallel R1</div></div></div></td>
         <td class="card-num">OP04-083</td>
         <td class="price-cell high">$680–$1,281</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥80 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥80 (≈$0.56) </td>
         <td class="price-cell high">≈$3,000 mid est.</td>
         <td><span class="mult mult-fire">~3×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$900</td>
@@ -3118,7 +3143,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://en.onepiece-cardgame.com/images/cardlist/card/OP04-083_r1.png" data-fallback="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP04/OP04-083_EN.webp" alt="OP04-083" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP04-083')" title="Look up OP04-083"><div><div class="card-name">Sabo — Comic Parallel ★</div><div class="card-variant">OP04-083 R1 · PRB-01 comic parallel reprint · PRB never reprinted</div></div></div></td>
         <td class="card-num">OP04-083</td>
         <td class="price-cell mid">$399–$750</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥80 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥80 (≈$0.56) </td>
         <td class="price-cell high">≈$2,500 mid est.</td>
         <td><span class="mult mult-high">~3.3×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$750</td>
@@ -3129,7 +3154,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP09/OP09-051_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-051_p2.png" alt="OP09-051" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP09-051')" title="Look up OP09-051"><div><div class="card-name">Buggy — Manga Rare ★ (R rarity)</div><div class="card-variant">OP09-051 P2 · SP Gold version in OP14 at $2,775 · Unique narrative arc</div></div></div></td>
         <td class="card-num">OP09-051</td>
         <td class="price-cell mid">$938</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥110 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥110 (≈$0.77) </td>
         <td class="price-cell high">≈$3,000 mid est.</td>
         <td><span class="mult mult-high">3.2×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$925</td>
@@ -3140,7 +3165,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP09/OP09-093_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-093_p2.png" alt="OP09-093" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP09-093')" title="Look up OP09-093"><div><div class="card-name">Marshall D. Teach — Manga Rare ★ (SR)</div><div class="card-variant">OP09-093 P2 · SP Gold also in OP12 · Rising villain demand</div></div></div></td>
         <td class="card-num">OP09-093</td>
         <td class="price-cell mid">$944</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥110 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥110 (≈$0.77) </td>
         <td class="price-cell high">≈$3,000 mid est.</td>
         <td><span class="mult mult-high">3.2×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$925</td>
@@ -3151,7 +3176,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP08/OP08-118_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP08-118_p2.png" alt="OP08-118" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP08-118')" title="Look up OP08-118"><div><div class="card-name">Silvers Rayleigh — Manga Rare ★</div><div class="card-variant">OP08-118 P2 · Secondary character but clean mentor arc demand</div></div></div></td>
         <td class="card-num">OP08-118</td>
         <td class="price-cell mid">$652</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥80 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥80 (≈$0.56) </td>
         <td class="price-cell high">≈$2,150 mid est.</td>
         <td><span class="mult mult-high">3.3×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$642</td>
@@ -3162,7 +3187,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB02/EB02-061_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB02-061_p2.png" alt="EB02-061" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('EB02-061')" title="Look up EB02-061"><div><div class="card-name">Monkey D. Luffy — Manga Rare ★ (Gear 2)</div><div class="card-variant">EB02-061 P2 · Anime 25th set · Box EV 664% — strong opener</div></div></div></td>
         <td class="card-num">EB02-061</td>
         <td class="price-cell high">$1,607</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥85 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥85 (≈$0.59) </td>
         <td class="price-cell mega">≈$5,500 mid est.</td>
         <td><span class="mult mult-fire">~3.4×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$1,758</td>
@@ -3173,7 +3198,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP12/OP12-118_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP12-118_p2.png" alt="OP12-118" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP12-118')" title="Look up OP12-118"><div><div class="card-name">Jewelry Bonney — Manga Rare ★</div><div class="card-variant">OP12-118 P2 · Opened ≈$500, now settling higher</div></div></div></td>
         <td class="card-num">OP12-118</td>
         <td class="price-cell mid">$320</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥60 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥60 (≈$0.42) </td>
         <td class="price-cell high">≈$1,200 mid est.</td>
         <td><span class="mult mult-fire">~3.75×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$325</td>
@@ -3184,7 +3209,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP11/OP11-118_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP11-118.png" alt="OP11-118" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP11-118')" title="Look up OP11-118"><div><div class="card-name">Monkey D. Luffy — Manga Rare ★ (Gear 4)</div><div class="card-variant">OP11-118 · 4th Luffy manga rare · Opened ≈$600, settling lower</div></div></div></td>
         <td class="card-num">OP11-118</td>
         <td class="price-cell mid">$310</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥40 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥40 (≈$0.28) </td>
         <td class="price-cell high">≈$1,150 mid est.</td>
         <td><span class="mult mult-fire">~3.7×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$308</td>
@@ -3195,7 +3220,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP10/OP10-119_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP10-119_p2.png" alt="OP10-119" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP10-119')" title="Look up OP10-119"><div><div class="card-name">Trafalgar Law — Manga Rare ★</div><div class="card-variant">OP10-119 P2 · Strong Law collector base · Competitive relevance</div></div></div></td>
         <td class="card-num">OP10-119</td>
         <td class="price-cell mid">$817</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0.63) </td>
         <td class="price-cell high">≈$2,500 mid est.</td>
         <td><span class="mult mult-high">3.1×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$758</td>
@@ -3206,7 +3231,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP05/OP05-119_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP05-119.png" alt="OP05-119" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP05-119')" title="Look up OP05-119"><div><div class="card-name">Monkey D. Luffy — Gear 5 Manga Rare ★ (base)</div><div class="card-variant">OP05-119 base · The card that started everything · Also exists as Gold Sig ($4,165+)</div></div></div></td>
         <td class="card-num">OP05-119</td>
         <td class="price-cell mid">$190</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥520 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥520 (≈$3.64) </td>
         <td class="price-cell high">≈$1,250 mid est.</td>
         <td><span class="mult mult-fire">6.6×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$342</td>
@@ -3217,7 +3242,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB03/EB03-024_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB03-024_p2.png" alt="EB03-024" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('EB03-024')" title="Look up EB03-024"><div><div class="card-name">Nefeltari Vivi — Manga Rare ★ (Heroines)</div><div class="card-variant">EB03-024 P2 · 5th EB-03 SEC manga · Alabasta fanbase</div></div></div></td>
         <td class="card-num">EB03-024</td>
         <td class="price-cell mid">$545</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0.63) </td>
         <td class="price-cell high">≈$2,000 mid est.</td>
         <td><span class="mult mult-fire">~3.7×</span></td>
         <td style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#4ade80;font-size:0.95rem">$592</td>
@@ -3353,7 +3378,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP13/OP13-120_p3_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-120_p3.png" alt="OP13-120" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP13-120')" title="Look up OP13-120"><div><div class="card-name">Sabo — RED Manga Rare</div><div class="card-variant">OP13-120 P3 · Red Super Alt Art</div></div></div></td>
         <td class="card-num">OP13-120</td>
         <td class="price-cell mega">≈$4,750</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥700 (≈$0)k +</td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥700 (≈$4.90)k +</td>
         <td class="price-cell mega">≈$12,000–$15,000 est.</td>
         <td><span class="mult mult-high">2.5–3×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3363,7 +3388,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP13/OP13-119_p3_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-119_p3.png" alt="OP13-119" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP13-119')" title="Look up OP13-119"><div><div class="card-name">Portgas D. Ace — RED Manga Rare</div><div class="card-variant">OP13-119 P3 · Red Super Alt Art</div></div></div></td>
         <td class="card-num">OP13-119</td>
         <td class="price-cell mega">≈$4,420</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥600 (≈$0)k +</td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥600 (≈$4.20)k +</td>
         <td class="price-cell mega">≈$10,000–$14,000 est.</td>
         <td><span class="mult mult-high">2.5–3×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3374,7 +3399,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP05/OP05-119_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP05-119.png" alt="OP05-119" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP05-119')" title="Look up OP05-119"><div><div class="card-name">Monkey D. Luffy — Gear 5 Manga Rare</div><div class="card-variant">OP05-119 · The card that started the boom · ~4,165 raw (Gold Sig version)</div></div></div></td>
         <td class="card-num">OP05-119</td>
         <td class="price-cell high">≈$190 (base) / ≈$4,165 (Gold Sig)</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥520 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥520 (≈$3.64) </td>
         <td class="price-cell high">≈$1,000–$1,500 (base) / ≈$12,000+ (Gold Sig)</td>
         <td><span class="mult mult-fire">5–8× (base)</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3384,7 +3409,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP09/OP09-118_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-118.png" alt="OP09-118" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP09-118')" title="Look up OP09-118"><div><div class="card-name">Gol D. Roger — Gold Manga Rare</div><div class="card-variant">OP09-118 · First "Gold" manga treatment · Isolated BGS 10 sold $45,000</div></div></div></td>
         <td class="card-num">OP09-118</td>
         <td class="price-cell high">≈$3,574</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥480 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥480 (≈$3.36) </td>
         <td class="price-cell mega">≈$7,995 (confirmed peak) / BGS 10: $45,000</td>
         <td><span class="mult mult-fire">2–13×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3394,7 +3419,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP07/OP07-051_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP07-051_p2.png" alt="OP07-051" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP07-051')" title="Look up OP07-051"><div><div class="card-name">Boa Hancock — Manga Rare</div><div class="card-variant">OP07-051 P2 · Strong heroine demand · PSA 10 pop still very low</div></div></div></td>
         <td class="card-num">OP07-051</td>
         <td class="price-cell high">≈$1,686</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥230 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥230 (≈$1.61) </td>
         <td class="price-cell mega">≈$4,500–$6,000 est.</td>
         <td><span class="mult mult-fire">~3–4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3404,7 +3429,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP09/OP09-119_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-119.png" alt="OP09-119" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP09-119')" title="Look up OP09-119"><div><div class="card-name">Monkey D. Luffy — Manga Rare</div><div class="card-variant">OP09-119 · New Emperor arc Luffy</div></div></div></td>
         <td class="card-num">OP09-119</td>
         <td class="price-cell high">≈$1,441</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥190 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥190 (≈$1.33) </td>
         <td class="price-cell high">≈$4,000–$5,500 est.</td>
         <td><span class="mult mult-fire">~3–4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3414,7 +3439,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP02/OP02-013_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP02-013_p2.png" alt="OP02-013" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP02-013')" title="Look up OP02-013"><div><div class="card-name">Portgas D. Ace — Comic Parallel Manga</div><div class="card-variant">OP02-013 P2 · ~1 per 72 boxes · Pure emotional collect value</div></div></div></td>
         <td class="card-num">OP02-013</td>
         <td class="price-cell high">≈$1,223</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥140 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥140 (≈$0.98) </td>
         <td class="price-cell high">≈$3,000–$4,500 est.</td>
         <td><span class="mult mult-fire">~3–4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3424,7 +3449,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP03/OP03-122_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP03-122_p2.png" alt="OP03-122" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP03-122')" title="Look up OP03-122"><div><div class="card-name">Sogeking — Manga Rare</div><div class="card-variant">OP03-122 P2 · Fan-favourite mystery hero · Also reprinted in PRB-01 as Comic Parallel R1</div></div></div></td>
         <td class="card-num">OP03-122</td>
         <td class="price-cell mid">≈$450–$1,150</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥60 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥60 (≈$0.42) </td>
         <td class="price-cell high">≈$3,000–$4,500 est.</td>
         <td><span class="mult mult-fire">~3–7×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3434,7 +3459,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://en.onepiece-cardgame.com/images/cardlist/card/OP05-069_r1.png" data-fallback="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP05/OP05-069_EN.webp" alt="OP05-069" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP05-069')" title="Look up OP05-069"><div><div class="card-name">Trafalgar Law — Comic Parallel Manga</div><div class="card-variant">OP05-069 R1 · PRB-01 reprint · Law's rarest card · PRB never reprinted</div></div></div></td>
         <td class="card-num">OP05-069</td>
         <td class="price-cell high">≈$766–$1,500</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0.63) </td>
         <td class="price-cell high">≈$2,500–$4,000 est.</td>
         <td><span class="mult mult-fire">~3–4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3444,7 +3469,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://en.onepiece-cardgame.com/images/cardlist/card/OP03-122_r1.png" data-fallback="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP03/OP03-122_EN.webp" alt="OP03-122" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP03-122')" title="Look up OP03-122"><div><div class="card-name">Sogeking — Comic Parallel Manga</div><div class="card-variant">OP03-122 R1 · PRB-01 reprint · Scarcer than original OP-03 · PRB never reprinted</div></div></div></td>
         <td class="card-num">OP03-122</td>
         <td class="price-cell mid">≈$426–$1,150</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥60 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥60 (≈$0.42) </td>
         <td class="price-cell high">≈$2,500–$4,000 est.</td>
         <td><span class="mult mult-fire">~3–4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3454,7 +3479,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP09/OP09-004_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-004_p2.png" alt="OP09-004" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP09-004')" title="Look up OP09-004"><div><div class="card-name">Shanks — Manga Rare (SR)</div><div class="card-variant">OP09-004 P2 · SP Gold variant also exists at ≈$1,203</div></div></div></td>
         <td class="card-num">OP09-004</td>
         <td class="price-cell high">≈$1,203</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥140 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥140 (≈$0.98) </td>
         <td class="price-cell high">≈$3,500–$5,000 est.</td>
         <td><span class="mult mult-fire">~3–4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3464,7 +3489,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP06/OP06-118_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP06-118_p2.png" alt="OP06-118" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP06-118')" title="Look up OP06-118"><div><div class="card-name">Roronoa Zoro — Manga Rare</div><div class="card-variant">OP06-118 P2 · First Zoro Manga Rare · One of the purest collector cards</div></div></div></td>
         <td class="card-num">OP06-118</td>
         <td class="price-cell high">≈$1,928</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥280 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥280 (≈$1.96) </td>
         <td class="price-cell mega">≈$5,500–$8,000 est.</td>
         <td><span class="mult mult-fire">~3–4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3474,7 +3499,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP01/OP01-120_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP01-120_p2.png" alt="OP01-120" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP01-120')" title="Look up OP01-120"><div><div class="card-name">Shanks — Manga Rare (First Ever)</div><div class="card-variant">OP01-120 P2 · First Manga Rare ever printed in OPTCG</div></div></div></td>
         <td class="card-num">OP01-120</td>
         <td class="price-cell high">≈$776</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0.63) </td>
         <td class="price-cell high">≈$2,700 (confirmed BGS 9.5)</td>
         <td><span class="mult mult-high">3.5×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3484,7 +3509,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB01/EB01-006_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB01-006_p2.png" alt="EB01-006" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('EB01-006')" title="Look up EB01-006"><div><div class="card-name">Tony Tony Chopper — Manga Rare</div><div class="card-variant">EB01-006 P2 · ~1 per 4–6 cartons · Only EB-01 Manga Rare</div></div></div></td>
         <td class="card-num">EB01-006</td>
         <td class="price-cell high">≈$1,973</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥280 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥280 (≈$1.96) </td>
         <td class="price-cell mega">≈$6,000–$8,000 est.</td>
         <td><span class="mult mult-fire">~3–4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3494,7 +3519,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP09/OP09-093_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-093_p2.png" alt="OP09-093" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP09-093')" title="Look up OP09-093"><div><div class="card-name">Marshall D. Teach (Blackbeard) — Manga Rare (SR)</div><div class="card-variant">OP09-093 P2 · SP Gold version at ≈$944</div></div></div></td>
         <td class="card-num">OP09-093</td>
         <td class="price-cell mid">≈$944</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥110 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥110 (≈$0.77) </td>
         <td class="price-cell high">≈$2,500–$4,000 est.</td>
         <td><span class="mult mult-fire">~3–4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3504,7 +3529,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP08/OP08-118_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP08-118_p2.png" alt="OP08-118" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP08-118')" title="Look up OP08-118"><div><div class="card-name">Silvers Rayleigh — Manga Rare</div><div class="card-variant">OP08-118 P2 · Secondary character but strong pull demand</div></div></div></td>
         <td class="card-num">OP08-118</td>
         <td class="price-cell high">≈$652</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥80 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥80 (≈$0.56) </td>
         <td class="price-cell high">≈$1,800–$2,500 est.</td>
         <td><span class="mult mult-high">2.5–3.5×</span></td>
         <td><span class="arb-verdict verdict-strong">STRONG GRADE</span></td>
@@ -3514,7 +3539,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB03/EB03-053_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB03-053_p2.png" alt="EB03-053" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('EB03-053')" title="Look up EB03-053"><div><div class="card-name">Nami — Manga Rare (Heroines SEC)</div><div class="card-variant">EB03-053 P2 · Hottest new set · Low PSA 10 pop</div></div></div></td>
         <td class="card-num">EB03-053</td>
         <td class="price-cell high">≈$1,725</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥180 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥180 (≈$1.26) </td>
         <td class="price-cell mega">≈$5,500–$8,000 est.</td>
         <td><span class="mult mult-fire">~4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3533,7 +3558,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP10/OP10-119_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP10-119_p2.png" alt="OP10-119" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP10-119')" title="Look up OP10-119"><div><div class="card-name">Trafalgar Law — Manga Rare</div><div class="card-variant">OP10-119 P2 · Strong Law collector base</div></div></div></td>
         <td class="card-num">OP10-119</td>
         <td class="price-cell high">≈$817</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0.63) </td>
         <td class="price-cell high">≈$2,000–$3,000 est.</td>
         <td><span class="mult mult-high">2.5–3.5×</span></td>
         <td><span class="arb-verdict verdict-strong">STRONG GRADE</span></td>
@@ -3543,7 +3568,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP12/OP12-118_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP12-118_p2.png" alt="OP12-118" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP12-118')" title="Look up OP12-118"><div><div class="card-name">Jewelry Bonney — Manga Rare</div><div class="card-variant">OP12-118 P2 · Opened ≈$500, still climbing</div></div></div></td>
         <td class="card-num">OP12-118</td>
         <td class="price-cell mid">≈$320</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥60 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥60 (≈$0.42) </td>
         <td class="price-cell high">≈$900–$1,500 est.</td>
         <td><span class="mult mult-high">3–5×</span></td>
         <td><span class="arb-verdict verdict-strong">STRONG GRADE</span></td>
@@ -3553,7 +3578,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP11/OP11-118_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP11-118.png" alt="OP11-118" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP11-118')" title="Look up OP11-118"><div><div class="card-name">Monkey D. Luffy — Manga Rare (Gear 4)</div><div class="card-variant">OP11-118 · 4th Luffy Manga Rare · Opened ≈$600</div></div></div></td>
         <td class="card-num">OP11-118</td>
         <td class="price-cell mid">≈$310</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥40 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥40 (≈$0.28) </td>
         <td class="price-cell high">≈$800–$1,500 est.</td>
         <td><span class="mult mult-fire">~3–5×</span></td>
         <td><span class="arb-verdict verdict-strong">STRONG GRADE</span></td>
@@ -3573,7 +3598,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB04/EB04-044_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB04-044.png" alt="EB04-044" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('EB04-044')" title="Look up EB04-044"><div><div class="card-name">Koby — Manga Rare</div><div class="card-variant">EB04-044 · EB-04 Egghead Crisis · JP ¥90,000–¥100,000 (≈$650–$700) · EN still settling · EB never reprinted</div></div></div></td>
         <td class="card-num">EB04-044</td>
         <td class="price-cell mid">≈$400–$600+ EN</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0)k –100k</td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥90 (≈$0.63) –100k</td>
         <td class="price-cell high">≈$1,800–$3,000 est.</td>
         <td><span class="mult mult-fire">~3–5×</span></td>
         <td><span class="arb-verdict verdict-ok">⚠️ WATCH — still settling</span></td>
@@ -3582,7 +3607,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div class="card-name">Dracule Mihawk — Manga Rare</div><div class="card-variant">OP14-118/119 · Newest set · Low pop, still pricing in</div></td>
         <td class="card-num">OP14-119</td>
         <td class="price-cell high">≈$1,100</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥130 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥130 (≈$0.91) </td>
         <td class="price-cell high">≈$3,000–$5,000 est.</td>
         <td><span class="mult mult-fire">~3–4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3592,7 +3617,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP04/OP04-083_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP04-083_p1.png" alt="OP04-083" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP04-083')" title="Look up OP04-083"><div><div class="card-name">Sabo — Manga Rare</div><div class="card-variant">OP04-083 P1 · ASL Brotherhood · PRB-01 Comic Parallel also exists</div></div></div></td>
         <td class="card-num">OP04-083</td>
         <td class="price-cell high">≈$680–$1,281</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥80 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥80 (≈$0.56) </td>
         <td class="price-cell high">≈$3,000–$4,500 est.</td>
         <td><span class="mult mult-fire">~3–4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3602,7 +3627,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://en.onepiece-cardgame.com/images/cardlist/card/OP04-083_r1.png" data-fallback="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP04/OP04-083_EN.webp" alt="OP04-083" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP04-083')" title="Look up OP04-083"><div><div class="card-name">Sabo — Comic Parallel Manga</div><div class="card-variant">OP04-083 R1 · PRB-01 comic parallel reprint · PRB never reprinted</div></div></div></td>
         <td class="card-num">OP04-083</td>
         <td class="price-cell mid">≈$399–$750</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥80 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥80 (≈$0.56) </td>
         <td class="price-cell high">≈$2,500–$3,500 est.</td>
         <td><span class="mult mult-fire">~3–4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3622,7 +3647,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP09/OP09-051_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-051_p2.png" alt="OP09-051" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('OP09-051')" title="Look up OP09-051"><div><div class="card-name">Buggy — Manga Rare (R)</div><div class="card-variant">OP09-051 P2 · SP Gold in OP14 at $2,775 · Base manga at $938</div></div></div></td>
         <td class="card-num">OP09-051</td>
         <td class="price-cell mid">≈$938</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥110 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥110 (≈$0.77) </td>
         <td class="price-cell high">≈$2,500–$3,500 est.</td>
         <td><span class="mult mult-high">2.5–3.5×</span></td>
         <td><span class="arb-verdict verdict-strong">STRONG GRADE</span></td>
@@ -3632,7 +3657,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td><div style="display:flex;align-items:center;gap:8px"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB02/EB02-061_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB02-061_p2.png" alt="EB02-061" loading="lazy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="this.src=this.dataset.fallback;this.onerror=null" onclick="openCardSearch('EB02-061')" title="Look up EB02-061"><div><div class="card-name">Monkey D. Luffy — Manga Rare (Gear 2)</div><div class="card-variant">EB02-061 P2 · Anime 25th set · High box EV set</div></div></div></td>
         <td class="card-num">EB02-061</td>
         <td class="price-cell high">≈$1,607</td>
-        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥85 (≈$0)k </td>
+        <td style="color:#f59e0b;font-size:0.75rem;text-align:right;padding:7px 10px;white-space:nowrap">¥85 (≈$0.59) </td>
         <td class="price-cell mega">≈$4,500–$6,500 est.</td>
         <td><span class="mult mult-fire">~3–4×</span></td>
         <td><span class="arb-verdict verdict-fire">GRADE IMMEDIATELY</span></td>
@@ -3740,199 +3765,225 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
     <div style="overflow-x:auto">
     <table class="price-table" style="min-width:700px">
       <thead><tr>
-        <th>Set</th><th>Name</th><th>Release</th>
-        <th>Booster Box</th><th>Case (6 boxes)</th><th>Boxes/Case</th>
-        <th>Box EV</th><th>Notes</th>
+        <th>Set</th>
+        <th>Name</th>
+        <th>Release</th>
+        <th style="text-align:right">Box Price</th>
+        <th style="text-align:right">Case Price</th>
+        <th style="text-align:center">Boxes</th>
+        <th style="text-align:right">Box EV</th>
+        <th>Notes</th>
       </tr></thead>
       <tbody>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-01</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Romance Dawn</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Dec 2022</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$1,790–$5k</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$21k–$68k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-01</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Romance Dawn</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2022</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$1,790–$5,675</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$21.5k–$68.1k</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Wave 1 Blue ~$5,675; Wave 2 White ~$1,790; case sold for $80k</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$452/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Wave 1 Blue ~$5,675 / Wave 2 White ~$1,790 · Full case sold for $80k</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-02</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Paramount War</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Mar 2023</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$480–$560</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$5k–$6k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-02</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Paramount War</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Mar 2023</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$480–$560</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$5,760–$6,720</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Ace/Whitebeard MRs; scarcity driving appreciation</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$246/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Ace/Whitebeard MRs · Early-era scarcity driving appreciation</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-03</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Pillars of Strength</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Jun 2023</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$700–$790</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$8k–$9k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-03</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Pillars of Strength</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Jun 2023</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$700–$790</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$8,400–$9,480</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Block 1 rotation Apr 2026; Sogeking/Sabo SP anchor value</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$172/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Block 1 rotation Apr 2026 · Sogeking/Sabo SP anchor value</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-04</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Kingdoms of Intrigue</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Sep 2023</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$510–$580</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$6k–$6k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-04</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Kingdoms of Intrigue</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Sep 2023</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$510–$580</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$6,120–$6,960</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Block 1 rotation; Sabo SEC★ collector demand</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$176/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Block 1 rotation · Sabo SEC★ collector demand</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-05</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Awakening of the New Era</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Dec 2023</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$940–$1k</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$11k–$12k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-05</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Awakening of the New Era</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2023</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$940–$1,050</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$11.3k–$12.6k</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Gear 5 Luffy MR (~$13k PSA10); strongest investment set</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$176/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Gear 5 Luffy MR (~$13k PSA10) · Strongest investment set</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-06</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Wings of the Captain</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Mar 2024</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$270–$320</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$3k–$3k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-06</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Wings of the Captain</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Mar 2024</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$270–$320</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$3,240–$3,840</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Zoro MR + first TR; steady climber</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$351/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Zoro MR + first Treasure Rare · Steady climber</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-07</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">500 Years in the Future</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Jun 2024</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$260–$300</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$3k–$3k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-07</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">500 Years in the Future</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Jun 2024</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$260–$300</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$3,120–$3,600</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Boa Hancock SP chase; reliable appreciation</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$176/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Boa Hancock SP chase · Reliable appreciation</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-08</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Two Legends</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Sep 2024</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$190–$220</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$2k–$2k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-08</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Two Legends</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Sep 2024</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$190–$220</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$2,280–$2,640</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Rayleigh MR; solid entry point</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$205/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Rayleigh MR · Solid entry point</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-09</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Emperors in the New World</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Dec 2024</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$570–$640</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$6k–$7k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-09</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Emperors in the New World</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2024</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$570–$640</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$6,840–$7,680</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Gold Manga Roger (~$3,500 raw / $45k BGS10); 2nd Anniv.</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$663/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Gold Manga Roger (~$3,500 raw / $45k BGS10) · 2nd Anniversary</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-10</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Royal Blood</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Mar 2025</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$185–$215</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$2k–$2k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-10</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Royal Blood</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Mar 2025</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$185–$215</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$2,220–$2,580</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Law MR; lowest-priced English box; minimal downside</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$169/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Law MR · Lowest-priced English box · Minimal downside</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-11</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">A Fist of Divine Speed</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Jun 2025</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$360–$410</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$4k–$4k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-11</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">A Fist of Divine Speed</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Jun 2025</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$360–$410</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$4,320–$4,920</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Gold/Silver SP Luffy; Comic Parallel Snakeman; 3-chase set</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$169/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Gold/Silver SP Luffy · Snakeman Comic Parallel · 3-chase set</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-12</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Legacy of the Master</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Sep 2025</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$205–$240</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$2k–$2k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-12</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Legacy of the Master</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Sep 2025</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$205–$240</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$2,460–$2,880</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Blackbeard Gold SP; Bonney MR; still finding floor</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$148/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Blackbeard Gold/Silver SP · Bonney MR · Still finding floor</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-13</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Carrying On His Will</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Dec 2025</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$510–$580</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$6k–$6k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-13</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Carrying On His Will</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2025</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$510–$580</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$6,120–$6,960</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Red SAA Luffy/Ace/Sabo + Demon Pack; highest EV potential</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$535/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Red SAA Luffy/Ace/Sabo + Demon Pack · Highest EV potential</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-14</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">The Azure Sea's Seven</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Mar 2026</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$200–$230</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$2k–$2k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-14</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">The Azure Sea's Seven</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Mar 2026</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$200–$230</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$2,400–$2,760</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Mihawk MR + Buggy Gold SP; cheapest chase set; upside flagged</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$535/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Mihawk MR + Buggy Gold SP · Cheapest chase set · Strong upside</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-15</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Adventure on Kami's Island</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Apr 2026</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$120–$145</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$1k–$1k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-15</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Adventure on Kami's Island</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Apr 2026</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$120–$145</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$1,440–$1,740</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">⚠️ Very new — prices actively settling</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$200/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">⚠️ Very new — prices actively settling</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#a78bfa">EB-01</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Memorial Collection</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Dec 2023</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$340–$420</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$4k–$5k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #a78bfa55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#a78bfa">EB-01</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Memorial Collection</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2023</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$340–$420</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$4,080–$5,040</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Chopper MR ($1,973 raw); premium extra booster</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$413/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Chopper MR ($1,973 raw) · Premium extra booster</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#a78bfa">EB-02</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Anime 25th Collection</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Jun 2024</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$220–$310</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$2k–$3k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #a78bfa55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#a78bfa">EB-02</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Anime 25th Collection</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Jun 2024</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$220–$310</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$2,640–$3,720</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Luffy SP Gold Leader; anniversary set; 26 SP types</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$695/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Luffy SP Gold Leader · Anniversary set · 26 SP types</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#a78bfa">EB-03</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Heroines Edition</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Dec 2024</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$290–$340</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$3k–$4k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #a78bfa55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#a78bfa">EB-03</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Heroines Edition</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2024</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$290–$340</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$3,480–$4,080</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Nami MR ($1,725); #1 TCGPlayer seller Feb 2026</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$700/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Nami MR ($1,725 raw) · #1 TCGPlayer seller Feb 2026</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#a78bfa">EB-04</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">Heroines: New World</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Apr 2025</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$130–$175</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$1k–$2k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #a78bfa55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#a78bfa">EB-04</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Heroines: New World</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Apr 2025</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$130–$175</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$1,560–$2,100</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">Still settling; Nami SEC★ is chase card</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$350/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Still settling · Nami SEC★ chase card</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#f0d080">PRB-01</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">The Best (Premium)</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Jun 2024</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$800–$950</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$8k–$9k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #f0d08055;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#f0d080">PRB-01</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">The Best (Premium)</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Jun 2024</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$800–$950</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$8,000–$9,500</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">10</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">10-box case; Manga God Pack (~$9k+); reprints OP01–06</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$149/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">10-box case · Manga God Pack (~$9k+) · Reprints OP-01 to OP-06</td>
     </tr>
     <tr>
-      <td><span style="background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3);border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#f0d080">PRB-02</span></td>
-      <td style="font-weight:600;color:#eef2f8;font-family:'Barlow Condensed',sans-serif">The Best Vol. 2</td>
-      <td style="color:#6b6b90;font-size:.72rem;font-family:'Barlow Condensed',sans-serif">Dec 2024</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080">$500–$650</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa">$5k–$6k</td>
+      <td><span style="background:rgba(232,184,75,.08);border:1px solid #f0d08055;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#f0d080">PRB-02</span></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">The Best Vol. 2</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2024</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$500–$650</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$5,000–$6,500</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">10</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#6b6b90">10-box case; God Pack chase (~$5k+); new alt arts</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$200/box</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">10-box case · Sanji MR debut · Gold Don!! packs · New alt arts</td>
     </tr>
   </tbody>
     </table>
@@ -3945,6 +3996,8 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       for current single prices before opening sealed product.
     </div>
   </div>
+</div>
+
 </div>
 
 <div class="set-section" id="casroi">
@@ -4659,7 +4712,7 @@ document.addEventListener('click', function(e) {
           <div class="csm-meta-grid" id="csm-meta"></div>
           <!-- Variants -->
           <div id="csm-var-section" style="display:none;margin-top:8px">
-            <div style="font-family:'Barlow Condensed',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#f0b429;margin-bottom:5px">Variants detected</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#f0b429;margin-bottom:5px">All Versions (EN + JP)</div>
             <div class="csm-var-bar" id="csm-var-bar"></div>
           </div>
           <!-- Pricing -->
@@ -4692,7 +4745,24 @@ document.addEventListener('click', function(e) {
 // CARD LOOKUP MODAL — all functions global (no IIFE) so onclick works
 // ══════════════════════════════════════════════════════════════════════════
 
-const EN_CDN = 'https://en.onepiece-cardgame.com/images/cardlist/card';
+const EN_CDN  = 'https://en.onepiece-cardgame.com/images/cardlist/card';
+const LIM_CDN = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece';
+// Convert card code + suffix to Limitless CDN URL (hotlink-friendly)
+function limUrl(code, suf) {
+  if (!suf) suf = '';
+  const baseCode = code + suf;
+  const folder   = code.match(/^([A-Z]+\d+)/)?.[1] || 'OP01';
+  if (code.startsWith('P-')) return `${LIM_CDN}/P/${baseCode}_EN.webp`;
+  return `${LIM_CDN}/${folder}/${baseCode}_EN.webp`;
+}
+function limUrlJP(code, suf) {
+  if (!suf) suf = '';
+  const baseCode = code + suf;
+  const folder   = code.match(/^([A-Z]+\d+)/)?.[1] || 'OP01';
+  if (code.startsWith('P-')) return `${LIM_CDN}/P/${baseCode}_JP.webp`;
+  return `${LIM_CDN}/${folder}/${baseCode}_JP.webp`;
+}
+
 const JP_CDN = 'https://www.onepiece-cardgame.com/images/cardlist/card';
 
 // ── PRICE DATABASE ────────────────────────────────────────────────────────
@@ -4751,9 +4821,12 @@ const META_DB = {
 const VARIANT_LABELS = {
   '_p1': 'Parallel Foil',
   '_p2': 'Manga Alt Art',
-  '_p3': 'Red Super Alt Art',
+  '_p3': 'Red SAA / SP Silver',
   '_p4': 'Promo / TC Stamp',
-  '_p5': 'SP Gold Signature',
+  '_p5': 'SP Gold',
+  '_p6': 'SP Silver (Anniv.)',
+  '_p7': 'Anniversary Gold',
+  '_p8': 'Anniversary Special',
   '_r1': 'Reprint (PRB-01)',
   '_r2': 'Reprint (PRB-02)',
 };
@@ -4930,10 +5003,12 @@ function csmRender(code, suffix) {
   // Images — render directly into DOM, no Image() probing
   const imgsEl = document.getElementById('csm-imgs');
   if (imgsEl) {
-    const enSrc = `${EN_CDN}/${code}${suffix}.png`;
-    const jpSrc = `${JP_CDN}/${code}${suffix}.png`;
-    imgsEl.innerHTML = csmImgPanel('🇺🇸 English', 'csm-lang-en', enSrc, code) +
-                       csmImgPanel('🇯🇵 Japanese','csm-lang-jp', jpSrc, code);
+    const enSrc = limUrl(code, suffix);
+    const enFb  = `${EN_CDN}/${code}${suffix}.png`;
+    const jpSrc = limUrlJP(code, suffix);
+    const jpFb  = `${JP_CDN}/${code}${suffix}.png`;
+    imgsEl.innerHTML = csmImgPanel('🇺🇸 English', 'csm-lang-en', enSrc, enFb, code) +
+                       csmImgPanel('🇯🇵 Japanese','csm-lang-jp', jpSrc, jpFb, code);
     // Wire zoom
     imgsEl.querySelectorAll('.csm-card-img').forEach(img => {
       img.addEventListener('click', () => csmZoom(img));
@@ -4941,11 +5016,11 @@ function csmRender(code, suffix) {
   }
 }
 
-function csmImgPanel(lang, badgeCls, src, code) {
+function csmImgPanel(lang, badgeCls, src, fb, code) {
   return `<div class="csm-img-panel">
     <span class="csm-lang-badge ${badgeCls}">${lang}</span>
     <img class="csm-card-img" src="${src}" alt="${lang} ${code}"
-      onerror="this.parentElement.querySelector('.csm-img-missing') && (this.parentElement.querySelector('.csm-img-missing').style.display='flex'); this.style.display='none'">
+      onerror="if(this.src!=='${fb}'){this.src='${fb}'}else{this.parentElement.querySelector('.csm-img-missing')&&(this.parentElement.querySelector('.csm-img-missing').style.display='flex');this.style.display='none'}">
     <div class="csm-img-missing" style="display:none;width:180px;height:252px;border-radius:8px;border:2px dashed #2a2a4a;background:#0d0d1a;align-items:center;justify-content:center;color:#3a3a5a;font-size:.75rem;text-align:center;padding:20px">
       ${lang === '🇯🇵 Japanese' ? 'JP image not<br>available' : 'Card image<br>not available'}
     </div>
@@ -4955,7 +5030,7 @@ function csmImgPanel(lang, badgeCls, src, code) {
 
 // ── Probe variants (background, non-blocking) ─────────────────────────────
 function csmProbeVariants(code) {
-  const suffixes = ['_p1','_p2','_p3','_p4','_p5','_r1','_r2'];
+  const suffixes = ['_p1','_p2','_p3','_p4','_p5','_p6','_p7','_p8','_r1','_r2'];
   const found = [];
   let pending = suffixes.length;
 
@@ -4968,20 +5043,43 @@ function csmProbeVariants(code) {
     img.onerror = () => {
       if (--pending === 0) csmShowVariants(code, found);
     };
-    img.src = `${EN_CDN}/${code}${suf}.png`;
+    img.src = limUrl(code, suf);  // Limitless CDN — actually allows hotlinking
   });
 }
 
 function csmShowVariants(code, found) {
-  if (csmCurrentCode !== code || !found.length) return;
+  if (csmCurrentCode !== code) return;
   const varSec = document.getElementById('csm-var-section');
   const varBar = document.getElementById('csm-var-bar');
   if (!varSec || !varBar) return;
-  const allV = [{suf:'', label:'Base'},...found.map(s=>({suf:s, label: VARIANT_LABELS[s] || s}))];
-  varBar.innerHTML = allV.map(v =>
-    `<button class="csm-var-btn${v.suf === csmCurrentVar ? ' active' : ''}"
-      onclick="csmSwitchVar('${v.suf}')">${v.label}</button>`
-  ).join('');
+
+  // Show ALL variant images in a gallery — base + every found variant
+  const allV = [{suf:'', label:'Base'}, ...found.map(s => ({suf:s, label: VARIANT_LABELS[s] || s}))];
+
+  varBar.innerHTML = allV.map(v => {
+    const enSrc  = limUrl(code, v.suf);
+    const enFb   = `${EN_CDN}/${code}${v.suf}.png`;
+    const jpSrc  = limUrlJP(code, v.suf);
+    const jpFb   = `${JP_CDN}/${code}${v.suf}.png`;
+    return `<div class="csm-var-card">
+      <div class="csm-var-label">${v.label}</div>
+      <div class="csm-var-imgs">
+        <div class="csm-var-img-wrap">
+          <span class="csm-var-flag">🇺🇸 EN</span>
+          <img class="csm-var-img" src="${enSrc}" alt="EN ${v.label}"
+            onerror="if(this.src!=='${enFb}'){this.src='${enFb}'}else{this.closest('.csm-var-img-wrap').style.display='none'}"
+            onclick="csmZoom(this)" loading="lazy">
+        </div>
+        <div class="csm-var-img-wrap">
+          <span class="csm-var-flag">🇯🇵 JP</span>
+          <img class="csm-var-img" src="${jpSrc}" alt="JP ${v.label}"
+            onerror="if(this.src!=='${jpFb}'){this.src='${jpFb}'}else{this.closest('.csm-var-img-wrap').style.display='none'}"
+            onclick="csmZoom(this)" loading="lazy">
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
   varSec.style.display = 'block';
 }
 
