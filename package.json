@@ -1,18 +1,22 @@
 {
   "name": "optcg-price-site",
   "version": "1.0.0",
-  "description": "One Piece TCG price guide — Fulcrum Cards",
+  "description": "One Piece TCG price guide \u2014 Fulcrum Cards",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "netlify dev"
+    "dev": "netlify dev",
+    "generate-set-tab": "node scripts/generate-set-tab.mjs",
+    "patch-index": "node scripts/patch-index.mjs",
+    "refresh-prices": "node scripts/refresh-prices.mjs"
   },
   "dependencies": {
     "@netlify/blobs": "^8.1.0",
     "@netlify/functions": "^2.8.2"
   },
   "devDependencies": {
-    "netlify-cli": "^17.0.0"
+    "netlify-cli": "^17.0.0",
+    "@anthropic-ai/sdk": "^0.39.0"
   },
   "engines": {
     "node": ">=18.0.0"
