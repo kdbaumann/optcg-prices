@@ -1,17 +1,33 @@
+# ── Netlify configuration for Fulcrum Cards OPTCG Price Guide ─────────────────
+
 [build]
   publish = "public"
-  command = "node scripts/download-all-images.mjs"
 
 [functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
+  directory        = "netlify/functions"
+  node_bundler     = "esbuild"
 
-# Prices refresh every day at 6am UTC (midnight US Central)
-[[scheduled-functions]]
-  name = "refresh-prices"
-  cron = "0 6 * * *"
+# ── Security headers on all pages ─────────────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options           = "SAMEORIGIN"
+    X-Content-Type-Options    = "nosniff"
+    Referrer-Policy           = "strict-origin-when-cross-origin"
 
-# Images sync every Sunday at 4am UTC — checks for new sets + re-downloads stale images
-[[scheduled-functions]]
-  name = "sync-images"
-  cron = "0 4 * * 0"
+# ── Long cache for static assets (images, fonts) ──────────────────────────────
+[[headers]]
+  for = "/*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ── Short cache for the HTML itself (picks up price updates) ──────────────────
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
