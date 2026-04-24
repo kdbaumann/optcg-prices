@@ -603,6 +603,47 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
 .csm-var-img { width:90px; border-radius:6px; border:1px solid var(--border);
   cursor:zoom-in; transition:transform .15s; }
 .csm-var-img:hover { transform:scale(1.06); border-color:var(--gold); }
+
+/* variant card price row */
+.csm-var-prices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+  justify-content: center;
+}
+.csm-var-en-price {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: .82rem;
+  color: #4ade80;
+}
+.csm-var-psa {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .68rem;
+  color: #a78bfa;
+  white-space: nowrap;
+}
+.csm-var-buy {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px;
+  background: rgba(245,158,11,.18);
+  border: 1px solid rgba(245,158,11,.5);
+  border-radius: 3px;
+  color: #f59e0b;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .65rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  transition: background .12s;
+}
+.csm-var-buy:hover { background: rgba(245,158,11,.35); }
+
 </style>
 </head>
 <body>
@@ -4461,6 +4502,87 @@ const PRICE_DB = {
   'P-098': { name:'Buggy',             en:'$20–$40',   psa:'$100',     jp:'¥3,000 (≈$21)',    note:'Event Pack Vol.8 (current)' },
   'P-099': { name:'Monkey D. Luffy',   en:'$20–$45',   psa:'$110',     jp:'¥3,200 (≈$22)',    note:'Event Pack Vol.8 (current)' },
 };
+// ── Per-variant pricing ────────────────────────────────────────────────────────
+// Keyed by cardCode, then by suffix ('' = base, '_p1' = parallel, etc.)
+// Each entry: { en: 'EN price', psa: 'PSA 10 est', label: 'variant name', buy: true }
+const VARIANT_PRICES = {
+  'OP13-118': {
+    '':    { en:'$200',    label:'Base Parallel' },
+    '_p2': { en:'$1,949',  psa:'$5,500',   label:'Manga Alt Art' },
+    '_p3': { en:'$7,950',  psa:'$24,100',  label:'Red SAA' },
+  },
+  'OP13-119': {
+    '':    { en:'$150',    label:'Base Parallel' },
+    '_p2': { en:'$1,200',  psa:'$3,500',   label:'Manga Alt Art' },
+    '_p3': { en:'$4,420',  psa:'$12,000',  label:'Red SAA' },
+    '_p4': { en:'$800',    psa:'$2,000',   label:'TC Promo Top 16' },
+  },
+  'OP13-120': {
+    '':    { en:'$150',    label:'Base Parallel' },
+    '_p2': { en:'$1,100',  psa:'$3,200',   label:'Manga Alt Art' },
+    '_p3': { en:'$4,750',  psa:'$14,000',  label:'Red SAA' },
+  },
+  'OP09-118': {
+    '':    { en:'$3,574',  psa:'$10,000',  label:'Gold Manga MR' },
+    '_p2': { en:'$200',    label:'Manga Art (base)' },
+  },
+  'OP05-119': {
+    '':    { en:'$3,500',  psa:'$14,000',  label:'Manga Rare' },
+    '_p1': { en:'$150',    label:'Parallel Foil' },
+    '_p4': { en:'$800',    psa:'$2,200',   label:'TC Promo' },
+  },
+  'OP01-120': {
+    '':    { en:'$1,644',  psa:'$4,500',   label:'Manga Rare' },
+    '_p1': { en:'$300',    psa:'$900',     label:'Parallel Foil' },
+  },
+  'OP01-003': {
+    '':    { en:'$200',    label:'Base Leader' },
+    '_p1': { en:'$833',    psa:'$2,800',   label:'Parallel Leader' },
+  },
+  'OP06-118': {
+    '':    { en:'$1,928',  psa:'$6,750',   label:'Manga Rare' },
+    '_p1': { en:'$250',    psa:'$700',     label:'Parallel Foil' },
+    '_r1': { en:'$450',    psa:'$1,200',   label:'PRB-01 Reprint' },
+  },
+  'EB01-006': {
+    '':    { en:'$700',    psa:'$2,450',   label:'Manga Rare' },
+    '_p1': { en:'$180',    psa:'$500',     label:'Parallel Foil' },
+    '_r1': { en:'$350',    psa:'$1,000',   label:'PRB-01 Reprint' },
+  },
+  'EB02-061': {
+    '':    { en:'$3,000',  psa:'$9,000',   label:'Manga Rare' },
+    '_p1': { en:'$200',    psa:'$600',     label:'Parallel Foil' },
+  },
+  'EB03-053': {
+    '':    { en:'$1,000',  psa:'$3,500',   label:'Manga Rare — Nami' },
+    '_p1': { en:'$200',    psa:'$600',     label:'Parallel Foil' },
+  },
+  'OP11-004': {
+    '':    { en:'$80',     label:'Base Card' },
+    '_p4': { en:'$600',    psa:'$1,800',   label:'TC Promo Top 16' },
+    '_p5': { en:'$2,200',  psa:'$6,500',   label:'SP Gold' },
+  },
+  'OP12-031': {
+    '':    { en:'$180',    label:'Base Card' },
+    '_p3': { en:'$1,800',  psa:'$5,400',   label:'SP Silver' },
+    '_p5': { en:'$2,500',  psa:'$7,500',   label:'SP Gold' },
+  },
+  'ST01-013': {
+    '':    { en:'$80',     label:'Base Zoro' },
+    '_p1': { en:'$400',    psa:'$1,200',   label:'Parallel Foil' },
+    '_p4': { en:'$3,500',  psa:'$8,000',   label:'TC 2023 Top 8' },
+  },
+  'OP09-004': {
+    '':    { en:'$400',    psa:'$1,200',   label:'Shanks MR' },
+    '_p2': { en:'$600',    psa:'$1,800',   label:'Manga Alt Art' },
+  },
+  'OP14-001': {
+    '':    { en:'$120',    label:'Base Leader' },
+    '_p5': { en:'$2,649',  psa:'$10,000',  label:'SP Gold 3rd Anniv.' },
+  },
+};
+
+
 
 // ── CARD METADATA ──────────────────────────────────────────────────────────
 const META_DB = {
@@ -4734,8 +4856,12 @@ function csmShowVariants(code, found) {
     const enFb   = `${EN_CDN}/${code}${v.suf}.png`;
     const jpSrc  = limUrlJP(code, v.suf);
     const jpFb   = `${JP_CDN}/${code}${v.suf}.png`;
+    const vp     = (VARIANT_PRICES[code] || {})[v.suf] || {};
+    const enPrice = vp.en  || '';
+    const psaEst  = vp.psa || '';
+    const buyUrl  = tcgUrl(code + v.suf, vp.label || v.label);
     return `<div class="csm-var-card">
-      <div class="csm-var-label">${v.label}</div>
+      <div class="csm-var-label">${v.label || 'Base'}</div>
       <div class="csm-var-imgs">
         <div class="csm-var-img-wrap">
           <span class="csm-var-flag">🇺🇸 EN</span>
@@ -4750,6 +4876,12 @@ function csmShowVariants(code, found) {
             onclick="csmZoom(this)" loading="lazy">
         </div>
       </div>
+      ${enPrice ? `<div class="csm-var-prices">
+        <span class="csm-var-en-price">${enPrice} EN</span>
+        ${psaEst ? `<span class="csm-var-psa">PSA 10 ≈${psaEst}</span>` : ''}
+        <a class="csm-var-buy" href="${buyUrl}" target="_blank" rel="noopener sponsored"
+           onclick="event.stopPropagation()">🛒 Buy</a>
+      </div>` : ''}
     </div>`;
   }).join('');
 
