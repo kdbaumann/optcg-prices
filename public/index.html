@@ -644,6 +644,155 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
 }
 .csm-var-buy:hover { background: rgba(245,158,11,.35); }
 
+
+.csm-price-buy {
+  display: block;
+  margin-top: 5px;
+  padding: 3px 8px;
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 3px;
+  color: #f59e0b;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .65rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  transition: background .12s;
+}
+.csm-price-buy:hover { background: rgba(245,158,11,.3); }
+
+
+/* ── Sealed Product Panel ─────────────────────────────────────────────────── */
+#sealed-panel-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.82);
+  backdrop-filter: blur(4px);
+  z-index: 8500;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#sealed-panel-overlay.visible { display: flex; }
+#sealed-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  animation: fadeInUp .18s ease;
+}
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(12px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.sealed-panel-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: color .12s;
+}
+.sealed-panel-close:hover { color: var(--text); }
+.sealed-panel-badge {
+  display: inline-block;
+  background: rgba(232,184,75,.12);
+  border: 1px solid rgba(232,184,75,.35);
+  border-radius: 4px;
+  padding: 2px 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.sealed-panel-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.sealed-panel-release {
+  font-size: .72rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.sealed-panel-prices {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.sealed-price-box {
+  flex: 1;
+  min-width: 120px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  text-align: center;
+}
+.sealed-price-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.sealed-price-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--gold-light);
+}
+.sealed-price-val.ev-green { color: #4ade80; }
+.sealed-panel-note {
+  font-size: .72rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  padding: 8px 10px;
+  background: rgba(255,255,255,.03);
+  border-radius: 6px;
+  border-left: 2px solid var(--border);
+}
+.sealed-buy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #0a0a1a;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  transition: filter .15s, transform .1s;
+  width: 100%;
+  box-sizing: border-box;
+}
+.sealed-buy-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
 </style>
 </head>
 <body>
@@ -3395,17 +3544,17 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <th>Notes</th>
       </tr></thead>
       <tbody>
-    <tr>
+    <tr onclick="openSealedPanel('OP-01')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-01</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Romance Dawn</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2022</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$1,790–$5,675</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$21.5k–$68.1k</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$250–$400</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$3k–$4.8k</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$452/box</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Wave 1 Blue ~$5,675 / Wave 2 White ~$1,790 · Full case sold for $80k</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">White Bottom ~$250–$400 · Blue Bottom (Wave 1) $3,500–$5,000 · case note varies by print</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-02')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-02</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Paramount War</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Mar 2023</td>
@@ -3415,27 +3564,27 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$246/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Ace/Whitebeard MRs · Early-era scarcity driving appreciation</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-03')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-03</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Pillars of Strength</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Jun 2023</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$700–$790</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$8,400–$9,480</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$200–$250</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$2.4k–$3k</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$172/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Block 1 rotation Apr 2026 · Sogeking/Sabo SP anchor value</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-04')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-04</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Kingdoms of Intrigue</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Sep 2023</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$510–$580</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$6,120–$6,960</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$180–$220</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$2.2k–$2.6k</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$176/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Block 1 rotation · Sabo SEC★ collector demand</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-05')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-05</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Awakening of the New Era</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2023</td>
@@ -3445,17 +3594,17 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$176/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Gear 5 Luffy MR (~$13k PSA10) · Strongest investment set</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-06')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-06</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Wings of the Captain</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Mar 2024</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$270–$320</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$3,240–$3,840</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$138–$165</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$1.7k–$2.0k</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$351/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Zoro MR + first Treasure Rare · Steady climber</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-07')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-07</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">500 Years in the Future</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Jun 2024</td>
@@ -3465,7 +3614,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$176/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Boa Hancock SP chase · Reliable appreciation</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-08')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-08</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Two Legends</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Sep 2024</td>
@@ -3475,7 +3624,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$205/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Rayleigh MR · Solid entry point</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-09')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-09</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Emperors in the New World</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2024</td>
@@ -3485,17 +3634,17 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$663/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Gold Manga Roger (~$3,500 raw / $45k BGS10) · 2nd Anniversary</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-10')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-10</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Royal Blood</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Mar 2025</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$185–$215</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$2,220–$2,580</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$130–$160</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$1.6k–$1.9k</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$169/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Law MR · Lowest-priced English box · Minimal downside</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-11')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-11</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">A Fist of Divine Speed</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Jun 2025</td>
@@ -3505,17 +3654,17 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$169/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Gold/Silver SP Luffy · Snakeman Comic Parallel · 3-chase set</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-12')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-12</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Legacy of the Master</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Sep 2025</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$205–$240</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$2,460–$2,880</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$140–$175</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$1.7k–$2.1k</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$148/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Blackbeard Gold/Silver SP · Bonney MR · Still finding floor</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-13')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-13</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Carrying On His Will</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2025</td>
@@ -3525,17 +3674,17 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$535/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Red SAA Luffy/Ace/Sabo + Demon Pack · Highest EV potential</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-14')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-14</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">The Azure Sea's Seven</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Mar 2026</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$200–$230</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$2,400–$2,760</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$175–$210</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$2.1k–$2.5k</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$535/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Mihawk MR + Buggy Gold SP · Cheapest chase set · Strong upside</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('OP-15')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-15</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Adventure on Kami's Island</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Apr 2026</td>
@@ -3545,7 +3694,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$200/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">⚠️ Very new — prices actively settling</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('EB-01')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #a78bfa55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#a78bfa">EB-01</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Memorial Collection</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2023</td>
@@ -3555,7 +3704,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$413/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Chopper MR ($1,973 raw) · Premium extra booster</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('EB-02')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #a78bfa55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#a78bfa">EB-02</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Anime 25th Collection</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Jun 2024</td>
@@ -3565,17 +3714,17 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$695/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Luffy SP Gold Leader · Anniversary set · 26 SP types</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('EB-03')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #a78bfa55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#a78bfa">EB-03</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Heroines Edition</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2024</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$290–$340</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$3,480–$4,080</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$270–$320</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$3.2k–$3.8k</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$700/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Nami MR ($1,725 raw) · #1 TCGPlayer seller Feb 2026</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('EB-04')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #a78bfa55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#a78bfa">EB-04</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Heroines: New World</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Apr 2025</td>
@@ -3585,7 +3734,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$350/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">Still settling · Nami SEC★ chase card</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('PRB-01')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #f0d08055;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#f0d080">PRB-01</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">The Best (Premium)</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Jun 2024</td>
@@ -3595,7 +3744,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$149/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">10-box case · Manga God Pack (~$9k+) · Reprints OP-01 to OP-06</td>
     </tr>
-    <tr>
+    <tr onclick="openSealedPanel('PRB-02')" style="cursor:pointer" onmouseover="this.style.background='rgba(245,158,11,.04)'" onmouseout="this.style.background=''">
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #f0d08055;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#f0d080">PRB-02</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">The Best Vol. 2</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2024</td>
@@ -4359,6 +4508,12 @@ document.addEventListener('click', function(e) {
 
 <!-- ══ CARD SEARCH FLOATING BUTTON ═══════════════════════════════════ -->
 
+
+<!-- ── SEALED PRODUCT PANEL ──────────────────────────────────────────── -->
+<div id="sealed-panel-overlay" onclick="if(event.target===this)closeSealedPanel()">
+  <div id="sealed-panel"></div>
+</div>
+
 <!-- ══ CARD SEARCH MODAL ═══════════════════════════════════════════════ -->
 <div id="card-search-modal">
   <div id="csm-inner">
@@ -4580,7 +4735,80 @@ const VARIANT_PRICES = {
     '':    { en:'$120',    label:'Base Leader' },
     '_p5': { en:'$2,649',  psa:'$10,000',  label:'SP Gold 3rd Anniv.' },
   },
+
+  // ── TC / CS Tournament Prize Cards ──────────────────────────────────────────
+  'ST01-013': {
+    '':    { en:'$80',     label:'Base Zoro' },
+    '_p1': { en:'$400',    psa:'$1,200',   label:'Top 64 Stamp (Parallel)' },
+    '_p4': { en:'$3,500',  psa:'$21,600',  label:'Top 8 TC 2023 Wave 1 ★' },
+  },
+  'OP13-016': {
+    '':    { en:'$12',     label:'Base Garp' },
+    '_p1': { en:'$80',     label:'Top 64 TC Stamp' },
+    '_p4': { en:'$350',    psa:'$1,200',   label:'Top 8 TC Mar 2026' },
+  },
+  'OP13-119': {
+    '':    { en:'$150',    label:'Base Parallel' },
+    '_p2': { en:'$1,200',  psa:'$3,500',   label:'Manga Alt Art' },
+    '_p3': { en:'$4,420',  psa:'$12,000',  label:'Red SAA' },
+    '_p4': { en:'$287',    psa:'$800',     label:'TC 2026 Top 16 Stamp' },
+  },
+  'OP12-031': {
+    '':    { en:'$180',    label:'Base Card' },
+    '_p3': { en:'$1,800',  psa:'$5,400',   label:'SP Silver' },
+    '_p5': { en:'$2,500',  psa:'$7,500',   label:'SP Gold' },
+    '_p4': { en:'$1,100',  psa:'$3,500',   label:'TC Nov 2025 Top 8 ★' },
+  },
+  'OP11-010': {
+    '':    { en:'$50',     label:'Base Zoro' },
+    '_p4': { en:'$900',    psa:'$2,800',   label:'TC Aug 2025 Top 8 ★' },
+    '_p1': { en:'$120',    label:'Top 64 Stamp' },
+  },
+  'OP12-015': {
+    '':    { en:'$40',     label:'Base Luffy' },
+    '_p4': { en:'$220',    psa:'$650',     label:'TC Nov 2025 Top 64' },
+  },
+  'OP11-004': {
+    '':    { en:'$80',     label:'Base Card' },
+    '_p4': { en:'$180',    psa:'$500',     label:'TC Aug 2025 Top 64' },
+    '_p5': { en:'$2,200',  psa:'$6,500',   label:'SP Gold 3rd Anniv.' },
+  },
+  'ST04-003': {
+    '':    { en:'$200',    label:'Base Kaido' },
+    '_p2': { en:'$4,000',  psa:'$12,000',  label:'CS 2023 Finals 2nd Place Trophy' },
+  },
+  'OP04-039': {
+    '':    { en:'$80',     label:'Base Rebecca' },
+    '_p2': { en:'$6,000',  psa:'$18,000',  label:'CS 2023/24-25 Finals 1st Trophy' },
+  },
+  'OP02-099': {
+    '':    { en:'$1,300',  psa:'$3,500',   label:'Sakazuki Promo' },
+    '_p4': { en:'$937',    psa:'$2,800',   label:'CS 2023 Regional Stamp' },
+  },
+  'OP02-096': {
+    '':    { en:'$1,000',  psa:'$5,450',   label:'Kuzan Alt Art' },
+    '_p4': { en:'$584',    psa:'$1,750',   label:'CS 2023 Regional Stamp' },
+  },
+  'OP02-097': {
+    '':    { en:'$800',    label:'Kizaru Alt Art' },
+    '_p4': { en:'$500',    psa:'$1,500',   label:'CS 2023 Regional Stamp' },
+  },
+  'OP03-013': {
+    '':    { en:'$300',    label:'Marco Promo' },
+    '_p4': { en:'$145',    label:'TC Prize Stamp' },
+  },
+  'ST01-001': {
+    '':    { en:'$120',    label:'Base Luffy' },
+    '_p1': { en:'$350',    label:'Parallel Leader' },
+    '_p2': { en:'$8,000',  psa:'$25,000',  label:'CS Finals Serial # ★★' },
+  },
+  'OP12-020': {
+    '':    { en:'$50',     label:'Base Zoro' },
+    '_p1': { en:'$800',    psa:'$2,500',   label:'Serial # TC Nov 2025' },
+  },
+
 };
+
 
 
 
@@ -4758,8 +4986,7 @@ function csmRender(code, suffix) {
     if (price.en)  html += `<div class="csm-price-box"><div class="csm-p-label">🇺🇸 EN Raw NM</div><div class="csm-p-val p-en">${price.en}</div></div>`;
     if (price.psa) html += `<div class="csm-price-box"><div class="csm-p-label">PSA 10 Est.</div><div class="csm-p-val p-psa">${price.psa}</div></div>`;
     if (price.jp)  html += `<div class="csm-price-box"><div class="csm-p-label">🇯🇵 JP Market</div><div class="csm-p-val p-jp">${price.jp}</div></div>`;
-    if (!html)     html  = `<div class="csm-price-box"><div class="csm-p-label">EN Pricing</div><div class="csm-p-val p-na">Check TCGPlayer</div></div>
-                            <div class="csm-price-box"><div class="csm-p-label">JP Pricing</div><div class="csm-p-val p-na">Check Snkrdunk</div></div>`;
+    if (!html)     html  = `<div class="csm-price-box"><div class="csm-p-label">EN Pricing</div><div class="csm-p-val p-na">Check TCGPlayer</div></div>`;
     if (price.note) html += `<div style="grid-column:1/-1;font-size:.68rem;color:var(--muted);padding:4px 2px;line-height:1.6">📌 ${price.note}</div>`;
     priceEl.innerHTML = html;
   }
@@ -4954,6 +5181,81 @@ function openCardLookup(code) {
 // ════════════════════════════════════════════════════════════════════════════
 
 
+const SEALED_DB = {
+  'OP-01': { name:'Romance Dawn', release:'Dec 2022', boxPrice:'$250–$400', casePrice:'$3k–$4.8k', boxes:'12', boxEV:'$452/box', note:'White Bottom ~$250–$400 · Blue Bottom (Wave 1) $3,500–$5,000 · case note varies by print', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=romance+dawn+booster+box&view=grid' },
+  'OP-02': { name:'Paramount War', release:'Mar 2023', boxPrice:'$480–$560', casePrice:'$5,760–$6,720', boxes:'12', boxEV:'$246/box', note:'Ace/Whitebeard MRs · Early-era scarcity driving appreciation', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=paramount+war+booster+box&view=grid' },
+  'OP-03': { name:'Pillars of Strength', release:'Jun 2023', boxPrice:'$200–$250', casePrice:'$2.4k–$3k', boxes:'12', boxEV:'$172/box', note:'Block 1 rotation Apr 2026 · Sogeking/Sabo SP anchor value', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=pillars+strength+booster+box&view=grid' },
+  'OP-04': { name:'Kingdoms of Intrigue', release:'Sep 2023', boxPrice:'$180–$220', casePrice:'$2.2k–$2.6k', boxes:'12', boxEV:'$176/box', note:'Block 1 rotation · Sabo SEC★ collector demand', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=kingdoms+intrigue+booster+box&view=grid' },
+  'OP-05': { name:'Awakening of the New Era', release:'Dec 2023', boxPrice:'$940–$1,050', casePrice:'$11.3k–$12.6k', boxes:'12', boxEV:'$176/box', note:'Gear 5 Luffy MR (~$13k PSA10) · Strongest investment set', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=awakening+new+era+booster+box&view=grid' },
+  'OP-06': { name:'Wings of the Captain', release:'Mar 2024', boxPrice:'$138–$165', casePrice:'$1.7k–$2.0k', boxes:'12', boxEV:'$351/box', note:'Zoro MR + first Treasure Rare · Steady climber', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=wings+captain+booster+box&view=grid' },
+  'OP-07': { name:'500 Years in the Future', release:'Jun 2024', boxPrice:'$260–$300', casePrice:'$3,120–$3,600', boxes:'12', boxEV:'$176/box', note:'Boa Hancock SP chase · Reliable appreciation', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=500+years+future+booster+box&view=grid' },
+  'OP-08': { name:'Two Legends', release:'Sep 2024', boxPrice:'$190–$220', casePrice:'$2,280–$2,640', boxes:'12', boxEV:'$205/box', note:'Rayleigh MR · Solid entry point', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=two+legends+booster+box&view=grid' },
+  'OP-09': { name:'Emperors in the New World', release:'Dec 2024', boxPrice:'$570–$640', casePrice:'$6,840–$7,680', boxes:'12', boxEV:'$663/box', note:'Gold Manga Roger (~$3,500 raw / $45k BGS10) · 2nd Anniversary', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=emperors+new+world+booster+box&view=grid' },
+  'OP-10': { name:'Royal Blood', release:'Mar 2025', boxPrice:'$130–$160', casePrice:'$1.6k–$1.9k', boxes:'12', boxEV:'$169/box', note:'Law MR · Lowest-priced English box · Minimal downside', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=royal+blood+booster+box&view=grid' },
+  'OP-11': { name:'A Fist of Divine Speed', release:'Jun 2025', boxPrice:'$360–$410', casePrice:'$4,320–$4,920', boxes:'12', boxEV:'$169/box', note:'Gold/Silver SP Luffy · Snakeman Comic Parallel · 3-chase set', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=fist+divine+speed+booster+box&view=grid' },
+  'OP-12': { name:'Legacy of the Master', release:'Sep 2025', boxPrice:'$140–$175', casePrice:'$1.7k–$2.1k', boxes:'12', boxEV:'$148/box', note:'Blackbeard Gold/Silver SP · Bonney MR · Still finding floor', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=legacy+master+booster+box&view=grid' },
+  'OP-13': { name:'Carrying On His Will', release:'Dec 2025', boxPrice:'$510–$580', casePrice:'$6,120–$6,960', boxes:'12', boxEV:'$535/box', note:'Red SAA Luffy/Ace/Sabo + Demon Pack · Highest EV potential', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=carrying+his+will+booster+box&view=grid' },
+  'OP-14': { name:'The Azure Sea\u2019s Seven', release:'Mar 2026', boxPrice:'$175–$210', casePrice:'$2.1k–$2.5k', boxes:'12', boxEV:'$535/box', note:'Mihawk MR + Buggy Gold SP · Cheapest chase set · Strong upside', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=azure+sea+seven+booster+box&view=grid' },
+  'OP-15': { name:'Adventure on Kami\u2019s Island', release:'Apr 2026', boxPrice:'$120–$145', casePrice:'$1,440–$1,740', boxes:'12', boxEV:'$200/box', note:'⚠️ Very new — prices actively settling', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=adventure+kamis+island+booster+box&view=grid' },
+  'EB-01': { name:'Memorial Collection', release:'Dec 2023', boxPrice:'$340–$420', casePrice:'$4,080–$5,040', boxes:'12', boxEV:'$413/box', note:'Chopper MR ($1,973 raw) · Premium extra booster', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=memorial+collection+booster+box&view=grid' },
+  'EB-02': { name:'Anime 25th Collection', release:'Jun 2024', boxPrice:'$220–$310', casePrice:'$2,640–$3,720', boxes:'12', boxEV:'$695/box', note:'Luffy SP Gold Leader · Anniversary set · 26 SP types', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=anime+25th+anniversary+booster+box&view=grid' },
+  'EB-03': { name:'Heroines Edition', release:'Dec 2024', boxPrice:'$270–$320', casePrice:'$3.2k–$3.8k', boxes:'12', boxEV:'$700/box', note:'Nami MR ($1,725 raw) · #1 TCGPlayer seller Feb 2026', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=heroines+edition+booster+box&view=grid' },
+  'EB-04': { name:'Heroines: New World', release:'Apr 2025', boxPrice:'$130–$175', casePrice:'$1,560–$2,100', boxes:'12', boxEV:'$350/box', note:'Still settling · Nami SEC★ chase card', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=heroines+new+world+booster+box&view=grid' },
+  'PRB-01': { name:'The Best (Premium)', release:'Jun 2024', boxPrice:'$800–$950', casePrice:'$8,000–$9,500', boxes:'10', boxEV:'$149/box', note:'10-box case · Manga God Pack (~$9k+) · Reprints OP-01 to OP-06', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=one+piece+card+best+premium+booster&view=grid' },
+  'PRB-02': { name:'The Best Vol. 2', release:'Dec 2024', boxPrice:'$500–$650', casePrice:'$5,000–$6,500', boxes:'10', boxEV:'$200/box', note:'10-box case · Sanji MR debut · Gold Don!! packs · New alt arts', tcgUrl:'https://www.tcgplayer.com/search/one-piece-card-game/product?q=one+piece+card+best+vol+2+booster&view=grid' },
+};
+
+
+// ── Sealed Product Info Panel ─────────────────────────────────────────────────
+function openSealedPanel(setId) {
+  const data = SEALED_DB[setId];
+  if (!data) return;
+
+  const overlay = document.getElementById('sealed-panel-overlay');
+  const panel   = document.getElementById('sealed-panel');
+  if (!overlay || !panel) return;
+
+  const affUrl = data.tcgUrl.startsWith('http') ? 
+    (TCG_AFF_BASE ? TCG_AFF_BASE + '?u=' + encodeURIComponent(data.tcgUrl) : data.tcgUrl)
+    : data.tcgUrl;
+
+  panel.innerHTML = `
+    <button class="sealed-panel-close" onclick="closeSealedPanel()">✕</button>
+    <div class="sealed-panel-badge">${setId}</div>
+    <div class="sealed-panel-name">${data.name}</div>
+    <div class="sealed-panel-release">Released ${data.release}</div>
+
+    <div class="sealed-panel-prices">
+      <div class="sealed-price-box">
+        <div class="sealed-price-label">📦 Booster Box</div>
+        <div class="sealed-price-val">${data.boxPrice}</div>
+      </div>
+      <div class="sealed-price-box">
+        <div class="sealed-price-label">📦×${data.boxes} Case</div>
+        <div class="sealed-price-val">${data.casePrice}</div>
+      </div>
+      <div class="sealed-price-box">
+        <div class="sealed-price-label">📈 Box EV</div>
+        <div class="sealed-price-val ev-green">${data.boxEV}</div>
+      </div>
+    </div>
+
+    ${data.note ? `<div class="sealed-panel-note">📌 ${data.note}</div>` : ''}
+
+    <a class="sealed-buy-btn" href="${affUrl}" target="_blank" rel="noopener sponsored">
+      🛒 Buy ${setId} on TCGPlayer →
+    </a>
+  `;
+
+  overlay.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSealedPanel() {
+  const overlay = document.getElementById('sealed-panel-overlay');
+  if (overlay) overlay.classList.remove('visible');
+  document.body.style.overflow = '';
+}
 // ── Tab navigation — showSet ───────────────────────────────────────────────
 function showSet(id, btn) {
   // Hide all sections
@@ -5351,7 +5653,11 @@ function roiRender(){
         <div class="ssub" style="color:#4ade80">net: ${roiF$(c.gradeRev-c.grTotalCost)}</div>
         <div class="ssub" style="color:#4a5568;font-size:8px">case+fees: ${roiF$(c.grTotalCost)}</div>
       </td>
-      <td><span class="rarity ${topP?.rarity||''}">${topLabel}</span><br><span class="ssub">${topRate}</span><br></td>`;
+      <td>
+        <span class="rarity ${topP?.rarity||''}">${topLabel}</span><br>
+        <span class="ssub">${topRate}</span><br>
+
+      </td>`;
 
     tr.addEventListener('click',e=>{if(e.target.tagName!=='BUTTON') roiToggle(r.id);});
     body.appendChild(tr);
@@ -5496,47 +5802,7 @@ function roiViewHits(setId) {
   }, 60);
 }
 
-// ── Add Buy badges to top-10 card rows after render ──────────────────────────
-function addBuyBadgesToRows() {
-  document.querySelectorAll('tr[onclick*="openCardLookup"]').forEach(tr => {
-    // Extract card code from the onclick attribute
-    const oc = tr.getAttribute('onclick') || '';
-    const cm = oc.match(/openCardLookup\('([^']+)'\)/);
-    if (!cm) return;
-    const code = cm[1];
-
-    // Find the price cell (last td with a dollar amount)
-    const tds = tr.querySelectorAll('td');
-    let priceCell = null;
-    tds.forEach(td => {
-      if (td.textContent.trim().startsWith('$')) priceCell = td;
-    });
-    if (!priceCell) return;
-
-    // Don't add twice
-    if (priceCell.querySelector('.row-buy-btn')) return;
-
-    const buyUrl = tcgUrl(code, '');
-    const badge  = document.createElement('a');
-    badge.className   = 'row-buy-btn';
-    badge.href        = buyUrl;
-    badge.target      = '_blank';
-    badge.rel         = 'noopener sponsored';
-    badge.textContent = '🛒 Buy';
-    badge.onclick     = e => e.stopPropagation();
-    priceCell.appendChild(document.createElement('br'));
-    priceCell.appendChild(badge);
-  });
-}
-
-// Run after each showSet call so badges appear on newly visible rows
-const _origShowSet = showSet;
-window.showSet = function(id, btn) {
-  _origShowSet(id, btn);
-  setTimeout(addBuyBadgesToRows, 50);
-};
-// Also run on initial load
-document.addEventListener('DOMContentLoaded', () => setTimeout(addBuyBadgesToRows, 100));
+// Card rows open modal on click — Buy button is inside the modal
 </script>
 
 
