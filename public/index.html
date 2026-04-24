@@ -267,6 +267,19 @@
     white-space: nowrap;
   }
   .price-cell.mega { color: var(--gold-light); font-size: 1.15rem; }
+/* Grading table: EN price on top, JP ¥ below — ensure stacking */
+.price-cell > div, .grade-cell > div {
+  display: block;
+  line-height: 1.3;
+}
+.price-cell > div + div {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #f59e0b;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
   .price-cell.high { color: #4ade80; }
   .price-cell.mid  { color: #86efac; }
 
@@ -4125,6 +4138,65 @@ function positionPopup(thumb) {
   popup.style.left = left + 'px';
   popup.style.top  = top  + 'px';
 }
+/* ── TCGPlayer Buy Button ─────────────────────────────────────────────────── */
+.csm-buy-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #0a0a1a;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  transition: filter .15s, transform .1s;
+  border: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+.csm-buy-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.csm-buy-icon { font-size: 1.1rem; }
+.csm-buy-text { flex: 1; }
+.csm-buy-price {
+  background: rgba(0,0,0,.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: .9rem;
+}
+.csm-buy-arrow { opacity: .7; }
+.csm-research-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+/* small inline buy badge on card rows */
+.row-buy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  background: rgba(245,158,11,.15);
+  border: 1px solid rgba(245,158,11,.4);
+  border-radius: 3px;
+  color: #f59e0b;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .62rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  vertical-align: middle;
+  transition: background .12s;
+}
+.row-buy-btn:hover { background: rgba(245,158,11,.3); }
+
 
 function showPopup(thumb) {
   clearTimeout(hideTimer);
@@ -4312,6 +4384,25 @@ document.addEventListener('click', function(e) {
 // ══════════════════════════════════════════════════════════════════════════
 
 const EN_CDN  = 'https://en.onepiece-cardgame.com/images/cardlist/card';
+
+// ── TCGPlayer Affiliate Configuration ─────────────────────────────────────────
+// Sign up at: http://app.impact.com/campaign-campaign-info-v2/TCGplayer.brand
+// After approval, Impact gives you a URL like:
+//   https://tcgplayer.pxf.io/c/XXXXXXX/YYYYYY/21411
+// Paste your Impact click URL base below (leave empty until you have it)
+const TCG_AFF_BASE = '';  // e.g. 'https://tcgplayer.pxf.io/c/5900626/2045842/21411'
+
+// Build a TCGPlayer product search URL, optionally wrapped in your affiliate link
+function tcgUrl(cardCode, cardName) {
+  const q   = encodeURIComponent(cardCode + (cardName ? ' ' + cardName : ''));
+  const dest = 'https://www.tcgplayer.com/search/one-piece-card-game/product?q=' + q +
+               '&view=grid&inStock=true';
+  if (!TCG_AFF_BASE) return dest;
+  // Impact affiliate wrapper — appends destination as ?u= parameter
+  return TCG_AFF_BASE + '?u=' + encodeURIComponent(dest);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 const LIM_CDN = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece';
 // Convert card code + suffix to Limitless CDN URL (hotlink-friendly)
 function limUrl(code, suf) {
@@ -4554,16 +4645,32 @@ function csmRender(code, suffix) {
   // External links
   const linksEl = document.getElementById('csm-links');
   if (linksEl) {
-    const enc = encodeURIComponent(code);
-    linksEl.innerHTML = [
-      ['TCGPlayer',     `https://www.tcgplayer.com/search/one-piece-card-game/product?q=${enc}`],
-      ['OPCardlist',    `https://www.opcardlist.com`],
-      ['Limitless',     `https://onepiece.limitlesstcg.com/cards/${code.toLowerCase()}`],
-      ['PSA Pop',       `https://www.psacard.com/pop/trading-card-games/one-piece-card-game/149549`],
-      ['eBay Sold',     `https://www.ebay.com/sch/i.html?_nkw=one+piece+${enc}&LH_Sold=1&LH_Complete=1`],
-      ['Snkrdunk',      `https://snkrdunk.com/en/`],
-      ['Bandai EN',     `https://en.onepiece-cardgame.com/cardlist/?search=true&keyword_type=contains&keyword_name=${enc}`],
-    ].map(([l,h]) => `<a class="csm-link" href="${h}" target="_blank" rel="noopener">${l} ↗</a>`).join('');
+    const enc      = encodeURIComponent(code);
+    const priceName = price.name || meta.name || '';
+    const buyUrl   = tcgUrl(code, priceName);
+    const enPrice  = price.en || '';
+
+    // Prominent BUY button at top, then research links below
+    linksEl.innerHTML =
+      // ── Primary CTA ──
+      `<a class="csm-buy-btn" href="${buyUrl}" target="_blank" rel="noopener sponsored"
+          title="Buy on TCGPlayer — prices from multiple sellers">
+        <span class="csm-buy-icon">🛒</span>
+        <span class="csm-buy-text">Buy on TCGPlayer</span>
+        ${enPrice ? `<span class="csm-buy-price">${enPrice}</span>` : ''}
+        <span class="csm-buy-arrow">→</span>
+      </a>` +
+      // ── Research links ──
+      `<div class="csm-research-links">` +
+      [
+        ['OPCardlist',  `https://opcardlist.com`],
+        ['Limitless',   `https://onepiece.limitlesstcg.com/cards/${code.toLowerCase()}`],
+        ['eBay Sold',   `https://www.ebay.com/sch/i.html?_nkw=one+piece+tcg+${enc}&LH_Sold=1&LH_Complete=1`],
+        ['PSA Pop',     `https://www.psacard.com/pop/trading-card-games/one-piece-card-game/149549`],
+        ['Snkrdunk 🇯🇵',`https://snkrdunk.com/en/`],
+        ['Bandai DB',   `https://en.onepiece-cardgame.com/cardlist/?search=true&keyword_type=contains&keyword_name=${enc}`],
+      ].map(([l,h]) => `<a class="csm-link" href="${h}" target="_blank" rel="noopener">${l} ↗</a>`).join('') +
+      `</div>`;
   }
 
   // Images — render directly into DOM, no Image() probing
@@ -4910,6 +5017,19 @@ const ROI_SETS = [
     {label:'TR + SEC Alt Art',rarity:'r-tr',perCase:4,rawVal:40,psa10:100,
       note:'TR ~1/case + ~3 valuable SEC AA'},
   ]},
+{id:'OP-15',name:"Adventure on Kami's Island",type:'op',
+  caseCost:1680,boxCnt:12,parEV:200,grCnt:6,psa10m:3.0,
+  priceConf:'est',caseSrc:"Very new Apr'26 · est. ~$130–$145/box · prices settling",
+  pulls:[
+    {label:'MR Luffy / Zoro ★★★ (0.55%/pack)',rarity:'r-mr',perCase:1.58,rawVal:600,psa10:1800,
+      note:'~1.6/case · prices actively settling — check OPCardlist for current market'},
+    {label:'SEC Alt Art (multiple)',rarity:'r-sec',perCase:4,rawVal:60,psa10:150,
+      note:'Standard SEC distribution · monitor for chase breakout'},
+    {label:'TR Treasure Rare',rarity:'r-tr',perCase:1,rawVal:80,psa10:200,note:''},
+    {label:'Parallel Foil leaders',rarity:'r-sp',perCase:1.2,rawVal:120,psa10:360,
+      note:'Early price estimates — verify before grading decisions'},
+  ]},
+
 {id:'EB-01',name:'Memorial Collection',type:'eb',
   caseCost:4704,boxCnt:12,parEV:413,grCnt:14,psa10m:3.5,
   priceConf:'conf',caseSrc:'OPCardlist parEV $413/box · ~$392/box est.',
@@ -4947,6 +5067,19 @@ const ROI_SETS = [
       note:'~2/case · high avg value in this set'},
     {label:'SEC Alt Art',rarity:'r-sec',perCase:4,rawVal:50,psa10:125,note:''},
   ]},
+{id:'EB-04',name:'Heroines: New World',type:'eb',
+  caseCost:1980,boxCnt:12,parEV:350,grCnt:10,psa10m:3.5,
+  priceConf:'est',caseSrc:"~$130–$175/box · case est. ~$1,980",
+  pulls:[
+    {label:'MR Koby / Perona ★★★ (0.55%/pack)',rarity:'r-mr',perCase:1.58,rawVal:800,psa10:2800,
+      note:'~1.6/case · Koby MR confirmed chase card · monitor OPCardlist'},
+    {label:'SEC★ Nami Alt Art (ultra-rare)',rarity:'r-sec',perCase:0.5,rawVal:1200,psa10:4200,
+      note:'Sub-1/case pull rate · highest-value single in EB-04'},
+    {label:'SP regular (multiple types)',rarity:'r-sp',perCase:1.5,rawVal:250,psa10:625,
+      note:'EB sets typically have strong SP distribution'},
+    {label:'Alt Art foils',rarity:'r-tr',perCase:3,rawVal:45,psa10:112,note:''},
+  ]},
+
 {id:'PRB-01',name:'Card The Best',type:'prb',
   caseCost:8500,boxCnt:10,parEV:149,grCnt:5,psa10m:3.5,
   priceConf:'est',caseSrc:'10-box case · est. ~$850/box',
@@ -4957,6 +5090,21 @@ const ROI_SETS = [
       note:'Various high-value reprints'},
     {label:'SEC / parallel reprints',rarity:'r-sec',perCase:2,rawVal:80,psa10:200,
       note:'Luffy ST01-012 reprint commands premium'},
+  ]},
+
+
+{id:'PRB-02',name:'Card The Best Vol. 2',type:'prb',
+  caseCost:5750,boxCnt:10,parEV:200,grCnt:5,psa10m:3.5,
+  priceConf:'est',caseSrc:"10-box case · est. ~$500–$650/box · OP-07–OP-12 reprints",
+  pulls:[
+    {label:'Manga God Pack (10 MR reprints) ★★★★★',rarity:'r-gp',perCase:0.07,rawVal:7000,psa10:null,
+      lottery:true,note:'~1/10–20 cases · Sanji MR + high-value OP-07–12 reprints · sell as set'},
+    {label:'Gold Don!! Pack (lottery)',rarity:'r-gp',perCase:0.10,rawVal:2000,psa10:null,
+      lottery:true,note:'Unique to PRB-02 · Gold foil Don!! cards · collector item'},
+    {label:'MR Sanji debut reprint / others',rarity:'r-mr',perCase:1.58,rawVal:600,psa10:1800,
+      note:'~1.6/case · Sanji MR is the flagship pull for this set'},
+    {label:'SP / Alt Art reprints (OP-07–OP-12)',rarity:'r-sp',perCase:1.0,rawVal:350,psa10:875,
+      note:'Various high-value reprints from Blocks 2–3'},
   ]},
 ];
 
@@ -5071,7 +5219,7 @@ function roiRender(){
         <div class="ssub" style="color:#4ade80">net: ${roiF$(c.gradeRev-c.grTotalCost)}</div>
         <div class="ssub" style="color:#4a5568;font-size:8px">case+fees: ${roiF$(c.grTotalCost)}</div>
       </td>
-      <td><span class="rarity ${topP?.rarity||''}">${topLabel}</span><br><span class="ssub">${topRate}</span><br><div style='margin-top:4px'><button onclick="event.stopPropagation();roiViewHits(r.id)" style='font-family:Barlow Condensed,sans-serif;font-size:.62rem;font-weight:700;padding:3px 8px;background:transparent;border:1px solid rgba(96,165,250,.4);color:#60a5fa;border-radius:3px;cursor:pointer'>📋 View All Hits</button></div></td>`;
+      <td><span class="rarity ${topP?.rarity||''}">${topLabel}</span><br><span class="ssub">${topRate}</span><br></td>`;
 
     tr.addEventListener('click',e=>{if(e.target.tagName!=='BUTTON') roiToggle(r.id);});
     body.appendChild(tr);
@@ -5115,14 +5263,7 @@ function roiRender(){
       </table>
       <div class="warn-note">⚠ Rates are community averages across many case openings. Bandai does not publish official pull rates. High-variance: any single case may return 0 or 3× expected value. Card prices as of Feb–Apr 2026.</div>
       <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-        <a href="#" onclick="event.preventDefault();roiViewHits(r.id)"
-          style="display:inline-flex;align-items:center;gap:5px;padding:6px 14px;
-          background:rgba(232,184,75,.08);border:1px solid var(--gold);border-radius:4px;
-          font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;
-          color:var(--gold);text-decoration:none;letter-spacing:.05em;text-transform:uppercase"
-          onclick="event.stopPropagation()">
-          📋 All Hits for ${r.id} →
-        </a>
+
         <a href="#" onclick="event.preventDefault();var _m=r.pulls[0]?.label?.match(/[A-Z0-9]+-\d{3}/);if(_m)openCardSearch(_m[0])" 
          
           style="display:inline-flex;align-items:center;gap:5px;padding:6px 14px;
@@ -5222,6 +5363,48 @@ function roiViewHits(setId) {
     if (section) section.scrollIntoView({behavior:'smooth', block:'start'});
   }, 60);
 }
+
+// ── Add Buy badges to top-10 card rows after render ──────────────────────────
+function addBuyBadgesToRows() {
+  document.querySelectorAll('tr[onclick*="openCardLookup"]').forEach(tr => {
+    // Extract card code from the onclick attribute
+    const oc = tr.getAttribute('onclick') || '';
+    const cm = oc.match(/openCardLookup\('([^']+)'\)/);
+    if (!cm) return;
+    const code = cm[1];
+
+    // Find the price cell (last td with a dollar amount)
+    const tds = tr.querySelectorAll('td');
+    let priceCell = null;
+    tds.forEach(td => {
+      if (td.textContent.trim().startsWith('$')) priceCell = td;
+    });
+    if (!priceCell) return;
+
+    // Don't add twice
+    if (priceCell.querySelector('.row-buy-btn')) return;
+
+    const buyUrl = tcgUrl(code, '');
+    const badge  = document.createElement('a');
+    badge.className   = 'row-buy-btn';
+    badge.href        = buyUrl;
+    badge.target      = '_blank';
+    badge.rel         = 'noopener sponsored';
+    badge.textContent = '🛒 Buy';
+    badge.onclick     = e => e.stopPropagation();
+    priceCell.appendChild(document.createElement('br'));
+    priceCell.appendChild(badge);
+  });
+}
+
+// Run after each showSet call so badges appear on newly visible rows
+const _origShowSet = showSet;
+window.showSet = function(id, btn) {
+  _origShowSet(id, btn);
+  setTimeout(addBuyBadgesToRows, 50);
+};
+// Also run on initial load
+document.addEventListener('DOMContentLoaded', () => setTimeout(addBuyBadgesToRows, 100));
 </script>
 
 

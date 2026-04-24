@@ -1,146 +1,133 @@
 // netlify/functions/update-prices.mjs
 // ─────────────────────────────────────────────────────────────────────────────
 // Scheduled function — runs daily at 6 AM UTC.
-// Fetches the top-card market price for every tracked set from OPCardlist,
-// writes the result to Netlify Blobs so the site-reader function can serve it.
-//
-// The schedule is defined at the bottom of this file via `export const config`.
-// No dashboard toggle needed — Netlify picks it up automatically on deploy.
+// Fetches top card market prices from OPCardlist and stores in Netlify Blobs.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { getStore } from '@netlify/blobs';
 
-// ── Sets to fetch ─────────────────────────────────────────────────────────────
+// Sets confirmed to exist on OPCardlist (as of Apr 2026).
+// Add op-14, op-15, eb-04, prb-02 once OPCardlist indexes them.
 const SETS = [
   'op-01','op-02','op-03','op-04','op-05','op-06','op-07','op-08',
-  'op-09','op-10','op-11','op-12','op-13','op-14','op-15',
-  'eb-01','eb-02','eb-03','eb-04','prb-01','prb-02'
+  'op-09','op-10','op-11','op-12','op-13',
+  'eb-01','eb-02','eb-03',
+  'prb-01',
 ];
 
-// OPCardlist URL pattern — each set page lists top cards with prices
+// Newer sets — try these but expect 404 until OPCardlist indexes them
+const SETS_EXPERIMENTAL = ['op-14','op-15','eb-04','prb-02'];
+
 const OPCARDLIST_BASE = 'https://opcardlist.com';
 
-// ── Fetch one set's top-card data from OPCardlist ─────────────────────────────
-async function fetchSetPrices(setCode) {
+async function fetchSetPrices(setCode, silent404 = false) {
   const url = `${OPCARDLIST_BASE}/${setCode}`;
   const res = await fetch(url, {
     headers: {
-      'User-Agent': 'Mozilla/5.0 (compatible; FulcrumPriceBot/1.0; +https://fulcrumcards.com)',
+      'User-Agent': 'Mozilla/5.0 (compatible; FulcrumPriceBot/1.0)',
       'Accept': 'text/html',
     },
-    // 15-second timeout per set
     signal: AbortSignal.timeout(15_000),
   });
 
-  if (!res.ok) throw new Error(`HTTP ${res.status} for ${setCode}`);
-  const html = await res.text();
+  if (res.status === 404) {
+    if (!silent404) console.log(`[update-prices] ${setCode}: not yet indexed on OPCardlist (404)`);
+    return [];
+  }
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-  // OPCardlist renders card rows with data attributes like:
-  //   data-card-id="OP13-118" and market prices in spans/divs
-  // We extract the top 3 cards and their prices for robustness.
+  const html = await res.text();
   const results = [];
 
-  // Match card code + price pairs — OPCardlist uses consistent markup
-  // Pattern: card code in a link/span, price immediately following as $X,XXX
-  const cardBlocks = html.matchAll(
-    /data-card-id="([A-Z0-9]+-\d+[^"]*)"[^>]*>[\s\S]{0,800}?\$(\d[\d,]+)/g
-  );
+  // OPCardlist renders cards as rows with the card code visible in links/spans
+  // and prices like $1,234 or $12,345 nearby.
+  // Strategy: find all card code patterns and the nearest dollar amount after them.
 
-  for (const match of cardBlocks) {
-    const code  = match[1].trim();
-    const price = parseInt(match[2].replace(/,/g, ''), 10);
-    if (code && price > 0) {
-      results.push({ code, price });
-    }
-    if (results.length >= 5) break;  // top 5 per set is enough
+  // Pattern 1: explicit data-card-id attributes
+  for (const m of html.matchAll(/data-card-id="([A-Z0-9]+-\d+)"[\s\S]{0,600}?\$(\d[\d,]+)/g)) {
+    const code  = m[1].trim();
+    const price = parseInt(m[2].replace(/,/g, ''), 10);
+    if (code && price >= 10) results.push({ code, price });
+    if (results.length >= 10) break;
   }
 
-  // Fallback: simpler price extraction if structured attrs aren't present
+  // Pattern 2: card codes appearing near prices in the HTML stream
   if (results.length === 0) {
-    const priceMatches = [...html.matchAll(/\$(\d[\d,]+)/g)];
-    const codeMatches  = [...html.matchAll(/([A-Z]{2}\d{2}-\d{3})/g)];
-    if (codeMatches[0] && priceMatches[0]) {
-      results.push({
-        code:  codeMatches[0][1],
-        price: parseInt(priceMatches[0][1].replace(/,/g, ''), 10),
-      });
+    const chunks = html.split(/(?=[A-Z]{2}\d{2}-\d{3})/);
+    for (const chunk of chunks.slice(1, 12)) {
+      const codeM  = chunk.match(/^([A-Z]{2}\d{2}-\d{3})/);
+      const priceM = chunk.match(/\$(\d[\d,]+)/);
+      if (codeM && priceM) {
+        const price = parseInt(priceM[1].replace(/,/g, ''), 10);
+        if (price >= 10) results.push({ code: codeM[1], price });
+      }
     }
   }
 
   return results;
 }
 
-// ── Main handler ──────────────────────────────────────────────────────────────
 export default async () => {
   const started = new Date().toISOString();
   console.log(`[update-prices] Starting run at ${started}`);
 
-  // Open the site-wide blob store (auto-configured by Netlify in production)
   const store = getStore('card-prices');
-
   const allPrices = {};
-  const errors    = [];
-  const setResults = {};
+  const errors = [];
 
-  // Fetch each set with a small delay to be polite to OPCardlist
+  // Fetch confirmed sets
   for (const setCode of SETS) {
     try {
       const cards = await fetchSetPrices(setCode);
-      setResults[setCode] = cards.length;
-
       for (const { code, price } of cards) {
-        // Only write if we don't already have a price, or the new one is higher
-        // (OPCardlist lists highest-value cards first, so first hit wins)
         if (!allPrices[code]) {
-          allPrices[code] = {
-            en:      `$${price.toLocaleString('en-US')}`,
-            updated: started,
-          };
+          allPrices[code] = { en: `$${price.toLocaleString('en-US')}`, updated: started };
         }
       }
-
-      console.log(`[update-prices] ${setCode}: ${cards.length} cards fetched`);
+      console.log(`[update-prices] ${setCode}: ${cards.length} card${cards.length !== 1 ? 's' : ''} fetched`);
     } catch (err) {
       console.error(`[update-prices] ERROR ${setCode}: ${err.message}`);
       errors.push({ set: setCode, error: err.message });
     }
-
-    // 200ms pause between requests
     await new Promise(r => setTimeout(r, 200));
   }
 
-  // Build the final payload
+  // Try newer sets silently — no error logged if they 404
+  for (const setCode of SETS_EXPERIMENTAL) {
+    try {
+      const cards = await fetchSetPrices(setCode, true);
+      if (cards.length > 0) {
+        for (const { code, price } of cards) {
+          if (!allPrices[code]) {
+            allPrices[code] = { en: `$${price.toLocaleString('en-US')}`, updated: started };
+          }
+        }
+        console.log(`[update-prices] ${setCode}: ${cards.length} cards fetched (newly indexed!)`);
+      }
+    } catch (err) {
+      // Silently ignore — these sets just aren't on OPCardlist yet
+    }
+    await new Promise(r => setTimeout(r, 200));
+  }
+
+  const cardCount = Object.keys(allPrices).length;
+
   const payload = {
-    _updated:  started,
-    _setCount: SETS.length,
-    _cardCount: Object.keys(allPrices).length,
-    _errors:   errors,
+    _updated:   started,
+    _cardCount: cardCount,
+    _errors:    errors,
     ...allPrices,
   };
 
-  // Write to Netlify Blobs — key "prices" in the "card-prices" store
   await store.setJSON('prices', payload, {
-    metadata: {
-      updatedAt:  started,
-      cardCount:  String(Object.keys(allPrices).length),
-      errorCount: String(errors.length),
-    },
+    metadata: { updatedAt: started, cardCount: String(cardCount) },
   });
 
-  console.log(
-    `[update-prices] Done. ${Object.keys(allPrices).length} card prices written. ` +
-    `${errors.length} set errors.`
-  );
+  console.log(`[update-prices] Done. ${cardCount} prices stored. ${errors.length} errors.`);
 
   return new Response(JSON.stringify({
-    status:    'ok',
-    updated:   started,
-    cardCount: Object.keys(allPrices).length,
-    errors,
-  }), {
-    headers: { 'Content-Type': 'application/json' },
-  });
+    status: 'ok', updated: started, cardCount, errors,
+  }), { headers: { 'Content-Type': 'application/json' } });
 };
 
-// Runs every day at 6:00 AM UTC
 export const config = { schedule: '0 6 * * *' };
