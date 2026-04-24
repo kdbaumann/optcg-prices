@@ -594,7 +594,20 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
 #csm-var-section > div { font-size:.72rem; color:var(--muted); margin-bottom:8px;
   font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.08em; }
 #csm-var-bar { display:flex; flex-wrap:wrap; gap:16px; }
-.csm-var-card { display:flex; flex-direction:column; align-items:center; gap:4px; }
+.csm-var-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 200px;
+  min-width: 170px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 8px 10px;
+  transition: border-color .15s;
+}
+.csm-var-card:hover { border-color: rgba(245,158,11,.4); }
 .csm-var-label { font-size:.65rem; font-family:'Barlow Condensed',sans-serif; font-weight:700;
   color:var(--gold); text-transform:uppercase; letter-spacing:.06em; text-align:center; }
 .csm-var-imgs { display:flex; gap:6px; }
@@ -607,42 +620,51 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
 /* variant card price row */
 .csm-var-prices {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
-  gap: 5px;
-  margin-top: 5px;
-  justify-content: center;
+  gap: 4px;
+  margin-top: 6px;
+  width: 100%;
 }
 .csm-var-en-price {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 800;
-  font-size: .82rem;
+  font-size: .9rem;
   color: #4ade80;
+  text-align: center;
 }
 .csm-var-psa {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: .68rem;
+  font-size: .65rem;
   color: #a78bfa;
   white-space: nowrap;
+  text-align: center;
 }
 .csm-var-buy {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 3px;
-  padding: 2px 8px;
-  background: rgba(245,158,11,.18);
+  justify-content: center;
+  gap: 4px;
+  padding: 5px 12px;
+  background: linear-gradient(135deg, rgba(245,158,11,.25), rgba(217,119,6,.25));
   border: 1px solid rgba(245,158,11,.5);
-  border-radius: 3px;
+  border-radius: 4px;
   color: #f59e0b;
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: .65rem;
+  font-size: .7rem;
   font-weight: 700;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: .04em;
-  transition: background .12s;
+  transition: background .12s, border-color .12s;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 2px;
 }
-.csm-var-buy:hover { background: rgba(245,158,11,.35); }
+.csm-var-buy:hover {
+  background: linear-gradient(135deg, rgba(245,158,11,.4), rgba(217,119,6,.4));
+  border-color: #f59e0b;
+}
 
 
 .csm-price-buy {
@@ -5079,14 +5101,18 @@ function csmShowVariants(code, found) {
   const allV = [{suf:'', label:'Base'}, ...found.map(s => ({suf:s, label: VARIANT_LABELS[s] || s}))];
 
   varBar.innerHTML = allV.map(v => {
-    const enSrc  = limUrl(code, v.suf);
-    const enFb   = `${EN_CDN}/${code}${v.suf}.png`;
-    const jpSrc  = limUrlJP(code, v.suf);
-    const jpFb   = `${JP_CDN}/${code}${v.suf}.png`;
-    const vp     = (VARIANT_PRICES[code] || {})[v.suf] || {};
+    const enSrc   = limUrl(code, v.suf);
+    const enFb    = `${EN_CDN}/${code}${v.suf}.png`;
+    const jpSrc   = limUrlJP(code, v.suf);
+    const jpFb    = `${JP_CDN}/${code}${v.suf}.png`;
+    const vp      = (VARIANT_PRICES[code] || {})[v.suf] || {};
     const enPrice = vp.en  || '';
     const psaEst  = vp.psa || '';
-    const buyUrl  = tcgUrl(code + v.suf, vp.label || v.label);
+    // Build a clean TCGPlayer search: base code + human-readable variant label
+    // e.g. "OP13-118 Red SAA" — no internal suffix codes like _p3
+    const searchLabel = vp.label || v.label || '';
+    const buyUrl  = tcgUrl(code, searchLabel);
+
     return `<div class="csm-var-card">
       <div class="csm-var-label">${v.label || 'Base'}</div>
       <div class="csm-var-imgs">
@@ -5103,12 +5129,15 @@ function csmShowVariants(code, found) {
             onclick="csmZoom(this)" loading="lazy">
         </div>
       </div>
-      ${enPrice ? `<div class="csm-var-prices">
-        <span class="csm-var-en-price">${enPrice} EN</span>
-        ${psaEst ? `<span class="csm-var-psa">PSA 10 ≈${psaEst}</span>` : ''}
+      <div class="csm-var-prices">
+        ${enPrice
+          ? `<span class="csm-var-en-price">${enPrice}</span>
+             ${psaEst ? `<span class="csm-var-psa">PSA 10 ≈${psaEst}</span>` : ''}`
+          : `<span class="csm-var-en-price" style="color:#6b6b90;font-size:.7rem">Price: check →</span>`
+        }
         <a class="csm-var-buy" href="${buyUrl}" target="_blank" rel="noopener sponsored"
            onclick="event.stopPropagation()">🛒 Buy</a>
-      </div>` : ''}
+      </div>
     </div>`;
   }).join('');
 
@@ -5865,7 +5894,7 @@ function roiViewHits(setId) {
     </div>
 
     <div style="border-top:1px solid #1e1e38;padding-top:14px;font-size:.62rem;color:#4a4a6a;line-height:1.8">
-      <p>© 2025–2026 <strong style="color:#6b6b90">Fulcrum Cards</strong> <span style="color:#3a3a5a;font-size:.55rem">· Build Apr 22 2026 · v10</span>. All original site content, layout, data compilations, and pricing analysis are the intellectual property of Fulcrum Cards.</p>
+      <p>© 2025–2026 <strong style="color:#6b6b90">Fulcrum Cards</strong> <span style="color:#3a3a5a;font-size:.55rem">· Build Apr 24 2026 · v10.1</span>. All original site content, layout, data compilations, and pricing analysis are the intellectual property of Fulcrum Cards.</p>
       <p style="margin-top:4px">
         <strong style="color:#6b6b90">Image &amp; card content disclaimer:</strong>
         Card images, card names, set names, artwork, and game content are the property of
