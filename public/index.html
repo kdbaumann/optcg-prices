@@ -815,6 +815,18 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
 }
 .sealed-buy-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
+
+/* Box prices table — PRB set names get enough space */
+.price-table td:nth-child(2) { min-width: 160px; }
+.price-table td:nth-child(1) { white-space: nowrap; }
+
+
+/* Grading Arbitrage table column sizing */
+.arb-table td:first-child,
+.arb-table th:first-child { font-size: .7rem; }
+.arb-table td:nth-child(2) { word-break: break-word; }
+.arb-table td:nth-child(3) { font-size: .72rem; font-family: 'Barlow Condensed', sans-serif; }
+
 </style>
 </head>
 <body>
@@ -2623,17 +2635,17 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
   <table class="card-table">
     <thead><tr data-img-id="prb02_gg_event" data-bandai="OP05-119_p5"><th>#</th><th>Card</th><th>Card #</th><th>Rarity</th><th style="text-align:right;padding:8px 10px">🇺🇸 EN Price</th><th class="grade-hdr g-psa">PSA 10</th><th class="grade-hdr g-bgs">BGS 10</th><th class="grade-hdr g-bl">BGS BL</th></tr></thead>
     <tbody>
-      <tr style="cursor:pointer" onclick="openCardLookup('OP06-119')" data-img-id="prb02_sanji_manga"><td class="rank-num top3">1</td><td><div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP06/OP06-119_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP06-119_p1.png" alt="Vinsmoke Sanji" loading="lazy" data-img-id="prb02_sanji_manga" data-card-name="Vinsmoke Sanji" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('OP06-119')" title="Look up OP06-119"><div class="card-name-text"><div class="card-name">Vinsmoke Sanji</div><div class="card-variant">Manga Rare (OP06-119) — first-ever Sanji Manga Alt Art · TCGBulk market $1,916 · Buylist $1,150</div></div></div></td><td class="card-num">OP06-119</td><td><span class="rarity-badge r-sec">SEC MANGA</span></td><td class="price-cell high">$1,150–$1,916</td>
+      <tr style="cursor:pointer" onclick="openCardLookup('OP06-119')" data-img-id="prb02_sanji_manga"><td class="rank-num top3">1</td><td><div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP06/OP06-119_p1_EN.webp" style="width:40px;height:56px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP06-119_p1.png" alt="Vinsmoke Sanji" loading="lazy" data-img-id="prb02_sanji_manga" data-card-name="Vinsmoke Sanji" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('OP06-119')" title="Look up OP06-119"><div class="card-name-text"><div class="card-name">Vinsmoke Sanji</div><div class="card-variant">Manga Rare (OP06-119) — first-ever Sanji Manga Alt Art · TCGBulk market $1,916 · Buylist $1,150</div></div></div></td><td class="card-num">OP06-119</td><td><span class="rarity-badge r-sec">SEC MANGA</span></td><td class="price-cell high">$1,150–$1,916</td>
         <td class="grade-cell g-psa">$2,000</td>
         <td class="grade-cell g-bgs">$3,000</td>
         <td class="grade-cell g-bl">$4,000</td>
       </tr>
-      <tr style="cursor:pointer" onclick="openCardLookup('OP05-119')" data-img-id="prb02_luffy_sp" data-bandai="EB02-061_p1"><td class="rank-num top<div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP05/OP05-119_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP05-119_p2.png" alt="Gum-Gum Giant" loading="lazy" data-img-id="prb02_gg_event" data-card-name="Gum-Gum Giant" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('OP05-119')" title="Look up OP05-119"><div class="card-name-text">3">2</td><td><div class="card-name">Gum-Gum Giant</div><div class="card-variant">Manga Event Alt Art (Gear 5 Luffy) — foil</div></div>-stamped event card, top EN chase event in PRB-02</div></td><td class="card-num">PRB02-EVENT</td><td><span class="rarity-badge r-sec">MANGA EVENT</span></td><td class="price-cell mid">≈$400–$600</td>
+      <tr style="cursor:pointer" onclick="openCardLookup('OP05-119')" data-img-id="prb02_luffy_sp" data-bandai="EB02-061_p1"><td class="rank-num top<div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP05/OP05-119_p2_EN.webp" style="width:40px;height:56px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP05-119_p2.png" alt="Gum-Gum Giant" loading="lazy" data-img-id="prb02_gg_event" data-card-name="Gum-Gum Giant" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('OP05-119')" title="Look up OP05-119"><div class="card-name-text">3">2</td><td><div class="card-name">Gum-Gum Giant</div><div class="card-variant">Manga Event Alt Art (Gear 5 Luffy) — foil</div></div>-stamped event card, top EN chase event in PRB-02</div></td><td class="card-num">PRB02-EVENT</td><td><span class="rarity-badge r-sec">MANGA EVENT</span></td><td class="price-cell mid">≈$400–$600</td>
         <td class="grade-cell g-psa">$10,000</td>
         <td class="grade-cell g-bgs">$14,500</td>
         <td class="grade-cell g-bl">$20,000</td>
       </tr>
-      <tr style="cursor:pointer" onclick="openCardLookup('EB02-061')" data-img-id="prb02_shanks_don"><td class="rank-num top3">3</td><td><div class="c<div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB02/EB02-061_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB02-061_p2.png" alt="Monkey D. Luffy" loading="lazy" data-img-id="prb02_luffy_sp" data-card-name="Monkey D. Luffy" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('EB02-061')" title="Look up EB02-061"><div class="card-name-text">ard-name">Monkey D. Luffy</div><div class="card-variant">SP reprint (EB02-061) — Anime 25th art, c</div></div>ompetitive staple reprint</div></td><td class="card-num">EB02-061</td><td><span class="rarity-badge r-sp">SP</span></td><td class="price-cell mid">≈$300–$500</td>
+      <tr style="cursor:pointer" onclick="openCardLookup('EB02-061')" data-img-id="prb02_shanks_don"><td class="rank-num top3">3</td><td><div class="c<div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/EB02/EB02-061_p2_EN.webp" style="width:40px;height:56px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/EB02-061_p2.png" alt="Monkey D. Luffy" loading="lazy" data-img-id="prb02_luffy_sp" data-card-name="Monkey D. Luffy" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('EB02-061')" title="Look up EB02-061"><div class="card-name-text">ard-name">Monkey D. Luffy</div><div class="card-variant">SP reprint (EB02-061) — Anime 25th art, c</div></div>ompetitive staple reprint</div></td><td class="card-num">EB02-061</td><td><span class="rarity-badge r-sp">SP</span></td><td class="price-cell mid">≈$300–$500</td>
         <td class="grade-cell g-psa">$10,000</td>
         <td class="grade-cell g-bgs">$14,500</td>
         <td class="grade-cell g-bl">$20,000</td>
@@ -2648,22 +2660,22 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td class="grade-cell g-bgs g-est">≈$800</td>
         <td class="grade-cell g-bl g-est">≈$1,200</td>
       </tr>
-      <tr style="cursor:pointer" onclick="openCardLookup('OP06-047')" data-img-id="prb02_zoro_par" data-bandai="PRB02-006_p2"><td class="rank-num"><div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP06/OP06-047_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP06-047_p1.png" alt="Charlotte Pudding" loading="lazy" data-img-id="prb02_pudding_sp" data-card-name="Charlotte Pudding" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('OP06-047')" title="Look up OP06-047"><div class="card-name-text">6</td><td><div class="card-name">Charlotte Pudding</div><div class="card-varian</div></div>t">SP reprint (OP06-047) — competitive blue staple</div></td><td class="card-num">OP06-047</td><td><span class="rarity-badge r-sp">SP</span></td><td class="price-cell mid">≈$150–$250</td>
+      <tr style="cursor:pointer" onclick="openCardLookup('OP06-047')" data-img-id="prb02_zoro_par" data-bandai="PRB02-006_p2"><td class="rank-num"><div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP06/OP06-047_p1_EN.webp" style="width:40px;height:56px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP06-047_p1.png" alt="Charlotte Pudding" loading="lazy" data-img-id="prb02_pudding_sp" data-card-name="Charlotte Pudding" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('OP06-047')" title="Look up OP06-047"><div class="card-name-text">6</td><td><div class="card-name">Charlotte Pudding</div><div class="card-varian</div></div>t">SP reprint (OP06-047) — competitive blue staple</div></td><td class="card-num">OP06-047</td><td><span class="rarity-badge r-sp">SP</span></td><td class="price-cell mid">≈$150–$250</td>
         <td class="grade-cell g-psa g-est">≈$400</td>
         <td class="grade-cell g-bgs g-est">≈$700</td>
         <td class="grade-cell g-bl g-est">≈$1,000</td>
       </tr>
-      <tr style="cursor:pointer" onclick="openCardLookup('PRB02-006')" data-img-id="prb02_shanks_sp" data-bandai="ST16-004_p1"><td class="rank-<div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/PRB02/PRB02-006_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/PRB02-006_p2.png" alt="Roronoa Zoro" loading="lazy" data-img-id="prb02_zoro_par" data-card-name="Roronoa Zoro" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('PRB02-006')" title="Look up PRB02-006"><div class="card-name-text">num">7</td><td><div class="card-name">Roronoa Zoro</div><div class="card</div></div>-variant">PRB-02 exclusive parallel (PRB02-006 P2)</div></td><td class="card-num">PRB02-006</td><td><span class="rarity-badge r-par">PARALLEL</span></td><td class="price-cell mid">≈$100–$200</td>
+      <tr style="cursor:pointer" onclick="openCardLookup('PRB02-006')" data-img-id="prb02_shanks_sp" data-bandai="ST16-004_p1"><td class="rank-<div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/PRB02/PRB02-006_p2_EN.webp" style="width:40px;height:56px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/PRB02-006_p2.png" alt="Roronoa Zoro" loading="lazy" data-img-id="prb02_zoro_par" data-card-name="Roronoa Zoro" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('PRB02-006')" title="Look up PRB02-006"><div class="card-name-text">num">7</td><td><div class="card-name">Roronoa Zoro</div><div class="card</div></div>-variant">PRB-02 exclusive parallel (PRB02-006 P2)</div></td><td class="card-num">PRB02-006</td><td><span class="rarity-badge r-par">PARALLEL</span></td><td class="price-cell mid">≈$100–$200</td>
         <td class="grade-cell g-psa g-est">≈$300</td>
         <td class="grade-cell g-bgs g-est">≈$400</td>
         <td class="grade-cell g-bl g-est">≈$700</td>
       </tr>
-      <tr style="cursor:pointer" onclick="openCardLookup('ST16-004')" data-img-id="prb02_wb_sp" data-bandai="ST15-002_p1"><td class="ran<div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/ST16/ST16-004_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST16-004_p1.png" alt="Shanks" loading="lazy" data-img-id="prb02_shanks_sp" data-card-name="Shanks" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('ST16-004')" title="Look up ST16-004"><div class="card-name-text">k-num">8</td><td><div class="card-name">Shanks</div><div class="card-var</div></div>iant">SP reprint (ST16-004) — Alternate Art SP</div></td><td class="card-num">ST16-004</td><td><span class="rarity-badge r-sp">SP</span></td><td class="price-cell mid">≈$100–$175</td>
+      <tr style="cursor:pointer" onclick="openCardLookup('ST16-004')" data-img-id="prb02_wb_sp" data-bandai="ST15-002_p1"><td class="ran<div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/ST16/ST16-004_p1_EN.webp" style="width:40px;height:56px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST16-004_p1.png" alt="Shanks" loading="lazy" data-img-id="prb02_shanks_sp" data-card-name="Shanks" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('ST16-004')" title="Look up ST16-004"><div class="card-name-text">k-num">8</td><td><div class="card-name">Shanks</div><div class="card-var</div></div>iant">SP reprint (ST16-004) — Alternate Art SP</div></td><td class="card-num">ST16-004</td><td><span class="rarity-badge r-sp">SP</span></td><td class="price-cell mid">≈$100–$175</td>
         <td class="grade-cell g-psa g-est">≈$300</td>
         <td class="grade-cell g-bgs g-est">≈$400</td>
         <td class="grade-cell g-bl g-est">≈$700</td>
       </tr>
-      <tr style="cursor:pointer" onclick="openCardLookup('ST15-002')" data-img-id="prb02_godpack"><td class="rank-num">9</td><td><div class="car<div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/ST15/ST15-002_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST15-002_p1.png" alt="Edward Newgate" loading="lazy" data-img-id="prb02_wb_sp" data-card-name="Edward Newgate" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('ST15-002')" title="Look up ST15-002"><div class="card-name-text">d-name">Edward Newgate</div><div class="card-variant"</div></div>>SP reprint (ST15-002)</div></td><td class="card-num">ST15-002</td><td><span class="rarity-badge r-sp">SP</span></td><td class="price-cell mid">≈$75–$150</td>
+      <tr style="cursor:pointer" onclick="openCardLookup('ST15-002')" data-img-id="prb02_godpack"><td class="rank-num">9</td><td><div class="car<div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/ST15/ST15-002_p1_EN.webp" style="width:40px;height:56px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/ST15-002_p1.png" alt="Edward Newgate" loading="lazy" data-img-id="prb02_wb_sp" data-card-name="Edward Newgate" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('ST15-002')" title="Look up ST15-002"><div class="card-name-text">d-name">Edward Newgate</div><div class="card-variant"</div></div>>SP reprint (ST15-002)</div></td><td class="card-num">ST15-002</td><td><span class="rarity-badge r-sp">SP</span></td><td class="price-cell mid">≈$75–$150</td>
         <td class="grade-cell g-psa g-est">≈$200</td>
         <td class="grade-cell g-bgs g-est">≈$300</td>
         <td class="grade-cell g-bl g-est">≈$500</td>
@@ -2712,7 +2724,7 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <tr style="cursor:pointer" onclick="openCardLookup('OP13-091')" data-img-id="demon_mars" data-bandai="OP13-091_p2"><td class="rank-num top3">3</td><td><div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP13/OP13-091_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-091_p2.png" alt="St. Marcus Mars" loading="lazy" data-img-id="demon_mars" data-card-name="St. Marcus Mars" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('OP13-091')" title="Look up OP13-091"><div class="card-name-text"><div class="card-name">St. Marcus Mars</div><div class="card-variant">Red Alternate Art — Demon Pack Exclusive</div></div></div></td><td class="card-num">OP13-091</td><td><span class="rarity-badge r-sec">DEMON PACK</span></td><td class="price-cell high">≈$512</td></tr>
       <tr style="cursor:pointer" onclick="openCardLookup('OP13-084')" data-img-id="demon_jupeter" data-bandai="OP13-084_p2"><td class="rank-num">4</td><td><div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP13/OP13-084_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-084_p2.png" alt="St. Shepherd Ju Peter" loading="lazy" data-img-id="demon_jupeter" data-card-name="St. Shepherd Ju Peter" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('OP13-084')" title="Look up OP13-084"><div class="card-name-text"><div class="card-name">St. Shepherd Ju Peter</div><div class="card-variant">Red Alternate Art — Demon Pack Exclusive</div></div></div></td><td class="card-num">OP13-084</td><td><span class="rarity-badge r-sec">DEMON PACK</span></td><td class="price-cell mid">≈$500</td></tr>
       <tr style="cursor:pointer" onclick="openCardLookup('OP13-089')" data-img-id="demon_warcury" data-bandai="OP13-089_p2"><td class="rank-num">5</td><td><div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP13/OP13-089_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-089_p2.png" alt="St. Topman Warcury" loading="lazy" data-img-id="demon_warcury" data-card-name="St. Topman Warcury" onerror="this.src=this.dataset.fallback;this.removeAttribute('onerror')" onclick="openCardSearch('OP13-089')" title="Look up OP13-089"><div class="card-name-text"><div class="card-name">St. Topman Warcury</div><div class="card-variant">Red Alternate Art — Demon Pack Exclusive</div></div></div></td><td class="card-num">OP13-089</td><td><span class="rarity-badge r-sec">DEMON PACK</span></td><td class="price-cell mid">≈$468</td></tr>
-      <tr style="cursor:pointer" onclick="openCardLookup('OP13-079')" data-img-id="demon_imu" data-bandai="OP13-079_p2"><td class="rank-num">6</td><td><div class="card-name-cell"><img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP13/OP13-079_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-079_p2.png" alt="Imu" loading="lazy" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.display='none';}" style="width:40px;height:56px;object-fit:cover;border-radius:5px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onclick="openCardSearch('OP13-079')" title="Look up OP13-079"><div class="card-name-text"><div class="card-name">Imu</div><div class="card-variant">Alternate Art Leader — Demon Pack Exclusive</div></div></div></td><td class="card-num">OP13-079</td><td><span class="rarity-badge r-sec">DEMON PACK</span></td><td class="price-cell mid">≈$40–58</td></tr>
+      <tr style="cursor:pointer" onclick="openCardLookup('OP13-079')" data-img-id="demon_imu" data-bandai="OP13-079_p2"><td class="rank-num">6</td><td><div class="card-name-cell"><img class="card-thumb" src="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-079_p2.png" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-079_p1.png" alt="Imu (Demon Pack alt art)" loading="lazy" style="width:40px;height:56px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP13/OP13-079_EN.webp'}else{this.style.opacity='.2';this.onerror=null;}" onclick="openCardSearch('OP13-079')"><div class="card-name-text"><div class="card-name">Imu</div><div class="card-variant">Alternate Art Leader — Demon Pack Exclusive</div></div></div></td><td class="card-num">OP13-079</td><td><span class="rarity-badge r-sec">DEMON PACK</span></td><td class="price-cell mid">≈$40–58</td></tr>
       <tr><td class="rank-num" colspan="4" style="color:#f87171;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.85rem">FULL DEMON PACK (all 6 cards together)</td><td class="price-cell mega">≈$2,000–$2,500</td></tr>
     </tbody>
   </table>
@@ -3107,6 +3119,16 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
 
   <div style="overflow-x:auto;margin-bottom:24px">
   <table class="arb-table" style="min-width:820px">
+  <colgroup>
+    <col style="width:55px">    <!-- Set -->
+    <col style="min-width:220px;max-width:320px"> <!-- Card name -->
+    <col style="width:85px">    <!-- Card # -->
+    <col style="width:140px">   <!-- EN Raw / JP ¥ -->
+    <col style="width:150px">   <!-- PSA 10 / JP PSA -->
+    <col style="width:55px">    <!-- Mult -->
+    <col style="width:90px">    <!-- Target Buy -->
+    <col>                       <!-- Signal -->
+  </colgroup>
     <thead><tr>
       <th>Set</th>
       <th>Card</th>
@@ -3265,6 +3287,16 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
 
   <div style="overflow-x:auto;margin-bottom:16px">
   <table class="arb-table" style="min-width:820px">
+  <colgroup>
+    <col style="width:55px">    <!-- Set -->
+    <col style="min-width:220px;max-width:320px"> <!-- Card name -->
+    <col style="width:85px">    <!-- Card # -->
+    <col style="width:140px">   <!-- EN Raw / JP ¥ -->
+    <col style="width:150px">   <!-- PSA 10 / JP PSA -->
+    <col style="width:55px">    <!-- Mult -->
+    <col style="width:90px">    <!-- Target Buy -->
+    <col>                       <!-- Signal -->
+  </colgroup>
     <thead><tr>
       <th>Set</th>
       <th>Card</th>
@@ -3570,8 +3602,8 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
       <td><span style="background:rgba(232,184,75,.08);border:1px solid #e8b84b55;border-radius:3px;padding:2px 7px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;color:#e8b84b">OP-01</span></td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#eef2f8">Romance Dawn</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;color:#6b6b90;white-space:nowrap">Dec 2022</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$250–$400</td>
-      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$3k–$4.8k</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#f0d080;text-align:right;white-space:nowrap">$2,400–$3,250</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;color:#60a5fa;text-align:right;white-space:nowrap">$29k–$39k</td>
       <td style="font-family:'Barlow Condensed',sans-serif;color:#6b6b90;text-align:center">12</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-weight:600;color:#4ade80;text-align:right;white-space:nowrap">$452/box</td>
       <td style="font-family:'Barlow Condensed',sans-serif;font-size:.68rem;color:#9090b0">White Bottom ~$250–$400 · Blue Bottom (Wave 1) $3,500–$5,000 · case note varies by print</td>
@@ -4186,6 +4218,127 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td class="grade-cell g-psa">$2,500</td>
         <td class="grade-cell g-bgs">$3,800</td>
         <td class="grade-cell g-bl">$5,200</td>
+      </tr>
+    
+      <tr onclick="openCardSearch('OP07-001')" style="cursor:pointer">
+        <td class="rank-num">11</td>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP07/OP07-001_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP07-001_p1.png" alt="Monkey D. Luffy" loading="lazy" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.opacity='.2';this.onerror=null;}" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onclick="event.stopPropagation();openCardSearch('OP07-001')">
+          <div><div class="card-name">Monkey D. Luffy</div><div class="card-variant">Leader Parallel</div></div>
+        </div></td>
+        <td class="card-code-cell">OP07-001</td>
+        <td><span class="rarity-badge rarity-c">C PAR</span></td>
+        <td class="price-range">$2–$5</td>
+        <td class="card-note">OP-07 Luffy leader parallel — 500 Years arc; growing demand</td>
+        <td class="price-psa7">$300</td><td class="price-psa9">$450</td><td class="price-psa10">$650</td>
+      </tr>
+      <tr onclick="openCardSearch('OP09-065')" style="cursor:pointer">
+        <td class="rank-num">12</td>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP09/OP09-065_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-065_p1.png" alt="Monkey D. Luffy" loading="lazy" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.opacity='.2';this.onerror=null;}" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onclick="event.stopPropagation();openCardSearch('OP09-065')">
+          <div><div class="card-name">Monkey D. Luffy</div><div class="card-variant">SR Parallel — 2nd Anniv.</div></div>
+        </div></td>
+        <td class="card-code-cell">OP09-065</td>
+        <td><span class="rarity-badge rarity-c">SR PAR</span></td>
+        <td class="price-range">$3–$8</td>
+        <td class="card-note">OP-09 anniversary Luffy SR parallel — rising with set appreciation</td>
+        <td class="price-psa7">$400</td><td class="price-psa9">$600</td><td class="price-psa10">$850</td>
+      </tr>
+      <tr onclick="openCardSearch('OP01-060')" style="cursor:pointer">
+        <td class="rank-num">13</td>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP01/OP01-060_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP01-060_p1.png" alt="Sanji" loading="lazy" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.opacity='.2';this.onerror=null;}" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onclick="event.stopPropagation();openCardSearch('OP01-060')">
+          <div><div class="card-name">Sanji</div><div class="card-variant">Parallel Foil</div></div>
+        </div></td>
+        <td class="card-code-cell">OP01-060</td>
+        <td><span class="rarity-badge rarity-c">UC PAR</span></td>
+        <td class="price-range">$2–$5</td>
+        <td class="card-note">OP-01 Sanji parallel — beloved character drives steady demand</td>
+        <td class="price-psa7">$300</td><td class="price-psa9">$450</td><td class="price-psa10">$630</td>
+      </tr>
+      <tr onclick="openCardSearch('OP02-025')" style="cursor:pointer">
+        <td class="rank-num">14</td>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP02/OP02-025_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP02-025_p1.png" alt="Portgas D. Ace" loading="lazy" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.opacity='.2';this.onerror=null;}" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onclick="event.stopPropagation();openCardSearch('OP02-025')">
+          <div><div class="card-name">Portgas D. Ace</div><div class="card-variant">UC Parallel — OP-02</div></div>
+        </div></td>
+        <td class="card-code-cell">OP02-025</td>
+        <td><span class="rarity-badge rarity-c">UC PAR</span></td>
+        <td class="price-range">$2–$5</td>
+        <td class="card-note">Ace OP-02 parallel — complements MR Ace demand from same set</td>
+        <td class="price-psa7">$280</td><td class="price-psa9">$420</td><td class="price-psa10">$580</td>
+      </tr>
+      <tr onclick="openCardSearch('OP03-022')" style="cursor:pointer">
+        <td class="rank-num">15</td>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP03/OP03-022_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP03-022_p1.png" alt="Brook" loading="lazy" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.opacity='.2';this.onerror=null;}" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onclick="event.stopPropagation();openCardSearch('OP03-022')">
+          <div><div class="card-name">Brook</div><div class="card-variant">UC Parallel — OP-03</div></div>
+        </div></td>
+        <td class="card-code-cell">OP03-022</td>
+        <td><span class="rarity-badge rarity-c">UC PAR</span></td>
+        <td class="price-range">$1–$4</td>
+        <td class="card-note">Brook parallel — cult favorite; OP-03 rotation premium</td>
+        <td class="price-psa7">$200</td><td class="price-psa9">$300</td><td class="price-psa10">$420</td>
+      </tr>
+      <tr onclick="openCardSearch('OP01-078')" style="cursor:pointer">
+        <td class="rank-num">16</td>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP01/OP01-078_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP01-078_p1.png" alt="Jinbe" loading="lazy" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.opacity='.2';this.onerror=null;}" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onclick="event.stopPropagation();openCardSearch('OP01-078')">
+          <div><div class="card-name">Jinbe</div><div class="card-variant">Parallel Foil — OP-01</div></div>
+        </div></td>
+        <td class="card-code-cell">OP01-078</td>
+        <td><span class="rarity-badge rarity-c">UC PAR</span></td>
+        <td class="price-range">$1–$3</td>
+        <td class="card-note">OP-01 Jinbe parallel — Straw Hat crew collector demand</td>
+        <td class="price-psa7">$180</td><td class="price-psa9">$260</td><td class="price-psa10">$360</td>
+      </tr>
+      <tr onclick="openCardSearch('OP05-080')" style="cursor:pointer">
+        <td class="rank-num">17</td>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP05/OP05-080_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP05-080_p1.png" alt="Trafalgar D. Water Law" loading="lazy" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.opacity='.2';this.onerror=null;}" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onclick="event.stopPropagation();openCardSearch('OP05-080')">
+          <div><div class="card-name">Trafalgar D. Water Law</div><div class="card-variant">UC Parallel — OP-05</div></div>
+        </div></td>
+        <td class="card-code-cell">OP05-080</td>
+        <td><span class="rarity-badge rarity-c">UC PAR</span></td>
+        <td class="price-range">$1–$3</td>
+        <td class="card-note">Law parallel from flagship investment set — benefits from OP-05 appreciation</td>
+        <td class="price-psa7">$160</td><td class="price-psa9">$240</td><td class="price-psa10">$340</td>
+      </tr>
+      <tr onclick="openCardSearch('OP01-024')" style="cursor:pointer">
+        <td class="rank-num">18</td>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP01/OP01-024_p1_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP01-024_p1.png" alt="Usopp" loading="lazy" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.opacity='.2';this.onerror=null;}" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onclick="event.stopPropagation();openCardSearch('OP01-024')">
+          <div><div class="card-name">Usopp</div><div class="card-variant">Parallel Foil — OP-01</div></div>
+        </div></td>
+        <td class="card-code-cell">OP01-024</td>
+        <td><span class="rarity-badge rarity-c">UC PAR</span></td>
+        <td class="price-range">$1–$3</td>
+        <td class="card-note">OP-01 Usopp parallel — full crew set collecting driver</td>
+        <td class="price-psa7">$160</td><td class="price-psa9">$240</td><td class="price-psa10">$330</td>
+      </tr>
+      <tr onclick="openCardSearch('OP09-004')" style="cursor:pointer">
+        <td class="rank-num">19</td>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP09/OP09-004_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP09-004_p2.png" alt="Shanks" loading="lazy" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.opacity='.2';this.onerror=null;}" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onclick="event.stopPropagation();openCardSearch('OP09-004')">
+          <div><div class="card-name">Shanks</div><div class="card-variant">Manga Rare — OP-09 2nd Anniv.</div></div>
+        </div></td>
+        <td class="card-code-cell">OP09-004</td>
+        <td><span class="rarity-badge rarity-mr">MR</span></td>
+        <td class="price-range">$400–$600</td>
+        <td class="card-note">Shanks 2nd Anniversary Manga Rare — strong long-term appreciation</td>
+        <td class="price-psa7">$1,200</td><td class="price-psa9">$1,800</td><td class="price-psa10">$2,500</td>
+      </tr>
+      <tr onclick="openCardSearch('OP13-080')" style="cursor:pointer">
+        <td class="rank-num">20</td>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <img class="card-thumb" src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP13/OP13-080_p2_EN.webp" data-fallback="https://en.onepiece-cardgame.com/images/cardlist/card/OP13-080_p2.png" alt="Demon Pack — Warcury" loading="lazy" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.style.opacity='.2';this.onerror=null;}" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0" onclick="event.stopPropagation();openCardSearch('OP13-080')">
+          <div><div class="card-name">Warcury (Demon Pack)</div><div class="card-variant">Demon Pack Alt Art — OP-13</div></div>
+        </div></td>
+        <td class="card-code-cell">OP13-080</td>
+        <td><span class="rarity-badge rarity-sp">SP PAR</span></td>
+        <td class="price-range">$80–$150</td>
+        <td class="card-note">Demon Pack Gorosei — Gege Akutami (Jujutsu Kaisen) artwork; ultra-rare lottery</td>
+        <td class="price-psa7">$450</td><td class="price-psa9">$700</td><td class="price-psa10">$1,000</td>
       </tr>
     </tbody>
   </table>
@@ -4836,15 +4989,88 @@ const VARIANT_PRICES = {
 
 // ── CARD METADATA ──────────────────────────────────────────────────────────
 const META_DB = {
-  'OP01-120': {set:'OP-01 Romance Dawn',    rarity:'SEC★ Manga Rare',  color:'Red',   type:'Leader',    cost:'L',  power:'5000'},
-  'OP05-119': {set:'OP-05 Awakening',       rarity:'SEC★ Manga Rare',  color:'Red',   type:'Character', cost:'10', power:'10000'},
-  'OP09-118': {set:'OP-09 Emperors',        rarity:'SEC★ Gold Manga',  color:'Red',   type:'Character', cost:'8',  power:'9000'},
-  'OP13-118': {set:'OP-13 Carrying On',     rarity:'Red SAA (_p3 = $7,950 / _p2 = $1,949)',color:'Red',type:'Leader',cost:'L',power:'5000'},
-  'OP06-118': {set:'OP-06 Wings',           rarity:'SEC★ Manga Rare',  color:'Green', type:'Character', cost:'9',  power:'10000'},
-  'EB01-006': {set:'EB-01 Memorial Coll.',  rarity:'SEC★ Manga Rare',  color:'Blue',  type:'Character', cost:'3',  power:'4000'},
-  'EB02-061': {set:'EB-02 Anime 25th',      rarity:'SP Gold Leader',   color:'Red',   type:'Leader',    cost:'L',  power:'5000'},
-  'ST01-013': {set:'ST-01 Straw Hat Crew',  rarity:'SR (TC Top 8 stamp)', color:'Green', type:'Character', cost:'4', power:'5000'},
+  // ── OP-01 ─────────────────────────────────────────────────────────────────
+  'OP01-001': {set:'OP-01 Romance Dawn', rarity:'Leader', color:'Red', type:'Character', cost:'—', power:'5000'},
+  'OP01-002': {set:'OP-01 Romance Dawn', rarity:'Super Rare', color:'Green', type:'Character', cost:'5', power:'6000'},
+  'OP01-003': {set:'OP-01 Romance Dawn', rarity:'Leader', color:'Red', type:'Leader', cost:'—', power:'5000'},
+  'OP01-016': {set:'OP-01 Romance Dawn', rarity:'Super Rare', color:'Blue', type:'Character', cost:'3', power:'3000'},
+  'OP01-025': {set:'OP-01 Romance Dawn', rarity:'SEC Alt Art', color:'Red', type:'Character', cost:'7', power:'9000'},
+  'OP01-060': {set:'OP-01 Romance Dawn', rarity:'SEC Alt Art', color:'Purple', type:'Character', cost:'7', power:'8000'},
+  'OP01-078': {set:'OP-01 Romance Dawn', rarity:'SEC Alt Art', color:'Black', type:'Character', cost:'8', power:'10000'},
+  'OP01-120': {set:'OP-01 Romance Dawn', rarity:'SEC★ Manga Rare', color:'Red', type:'Leader', cost:'—', power:'5000'},
+  // ── OP-02 ─────────────────────────────────────────────────────────────────
+  'OP02-013': {set:'OP-02 Paramount War', rarity:'SEC★ Manga Rare', color:'Red', type:'Character', cost:'6', power:'7000'},
+  'OP02-096': {set:'OP-02 Paramount War', rarity:'Super Rare', color:'Blue', type:'Character', cost:'8', power:'8000'},
+  'OP02-097': {set:'OP-02 Paramount War', rarity:'Super Rare', color:'Yellow', type:'Character', cost:'8', power:'8000'},
+  'OP02-099': {set:'OP-02 Paramount War', rarity:'Super Rare', color:'Purple', type:'Character', cost:'5', power:'6000'},
+  // ── OP-03 ─────────────────────────────────────────────────────────────────
+  'OP03-013': {set:'OP-03 Pillars of Strength', rarity:'Super Rare', color:'Purple', type:'Character', cost:'4', power:'5000'},
+  'OP03-099': {set:'OP-03 Pillars of Strength', rarity:'Super Rare', color:'Green', type:'Character', cost:'6', power:'8000'},
+  'OP03-022': {set:'OP-03 Pillars of Strength', rarity:'SEC Alt Art', color:'Purple', type:'Character', cost:'5', power:'6000'},
+  'OP03-077': {set:'OP-03 Pillars of Strength', rarity:'SEC Alt Art', color:'Black', type:'Character', cost:'6', power:'7000'},
+  'OP03-122': {set:'OP-03 Pillars of Strength', rarity:'SEC★ Manga Rare', color:'Green', type:'Character', cost:'5', power:'6000'},
+  // ── OP-04 ─────────────────────────────────────────────────────────────────
+  'OP04-039': {set:'OP-04 Kingdoms of Intrigue', rarity:'Super Rare', color:'Yellow', type:'Character', cost:'3', power:'4000'},
+  'OP04-083': {set:'OP-04 Kingdoms of Intrigue', rarity:'SEC★ Manga Rare', color:'Red', type:'Character', cost:'5', power:'6000'},
+  // ── OP-05 ─────────────────────────────────────────────────────────────────
+  'OP05-001': {set:'OP-05 Awakening of the New Era', rarity:'Leader', color:'Red', type:'Leader', cost:'—', power:'5000'},
+  'OP05-060': {set:'OP-05 Awakening of the New Era', rarity:'SEC Alt Art', color:'Blue', type:'Character', cost:'6', power:'7000'},
+  'OP05-069': {set:'OP-05 Awakening of the New Era', rarity:'SEC★ Manga Rare', color:'Purple', type:'Character', cost:'7', power:'8000'},
+  'OP05-119': {set:'OP-05 Awakening of the New Era', rarity:'SEC★ Manga Rare', color:'Red', type:'Leader', cost:'—', power:'5000'},
+  // ── OP-06 ─────────────────────────────────────────────────────────────────
+  'OP06-047': {set:'OP-06 Wings of the Captain', rarity:'Treasure Rare', color:'Green', type:'Character', cost:'4', power:'5000'},
+  'OP06-118': {set:'OP-06 Wings of the Captain', rarity:'SEC★ Manga Rare', color:'Green', type:'Character', cost:'7', power:'8000'},
+  'OP06-119': {set:'OP-06 Wings of the Captain', rarity:'SEC Alt Art', color:'Purple', type:'Character', cost:'7', power:'8000'},
+  // ── OP-07 ─────────────────────────────────────────────────────────────────
+  'OP07-051': {set:'OP-07 500 Years in the Future', rarity:'SEC★ Manga Rare', color:'Yellow', type:'Character', cost:'7', power:'8000'},
+  'OP07-109': {set:'OP-07 500 Years in the Future', rarity:'Super Rare', color:'Red', type:'Character', cost:'6', power:'7000'},
+  // ── OP-08 ─────────────────────────────────────────────────────────────────
+  'OP08-118': {set:'OP-08 Two Legends', rarity:'SEC★ Manga Rare', color:'Purple', type:'Character', cost:'6', power:'7000'},
+  // ── OP-09 ─────────────────────────────────────────────────────────────────
+  'OP09-004': {set:'OP-09 Emperors in the New World', rarity:'SEC Manga Rare (Gold)', color:'Red', type:'Leader', cost:'—', power:'5000'},
+  'OP09-051': {set:'OP-09 Emperors in the New World', rarity:'SEC Manga Rare (Gold)', color:'Yellow', type:'Character', cost:'7', power:'8000'},
+  'OP09-065': {set:'OP-09 Emperors in the New World', rarity:'Super Rare', color:'Red', type:'Character', cost:'5', power:'6000'},
+  'OP09-076': {set:'OP-09 Emperors in the New World', rarity:'Super Rare', color:'Red', type:'Leader', cost:'—', power:'5000'},
+  'OP09-093': {set:'OP-09 Emperors in the New World', rarity:'SEC Manga Rare (Gold)', color:'Black', type:'Character', cost:'7', power:'9000'},
+  'OP09-118': {set:'OP-09 Emperors in the New World', rarity:'SEC★ Gold Manga Rare', color:'Red', type:'Character', cost:'5', power:'6000'},
+  'OP09-119': {set:'OP-09 Emperors in the New World', rarity:'Super Rare', color:'Red', type:'Leader', cost:'—', power:'5000'},
+  // ── OP-10 ─────────────────────────────────────────────────────────────────
+  'OP10-119': {set:'OP-10 Royal Blood', rarity:'SEC★ Manga Rare', color:'Purple', type:'Character', cost:'7', power:'8000'},
+  // ── OP-11 ─────────────────────────────────────────────────────────────────
+  'OP11-004': {set:'OP-11 A Fist of Divine Speed', rarity:'Super Rare', color:'Red', type:'Character', cost:'5', power:'6000'},
+  'OP11-010': {set:'OP-11 A Fist of Divine Speed', rarity:'Super Rare', color:'Green', type:'Character', cost:'4', power:'5000'},
+  'OP11-118': {set:'OP-11 A Fist of Divine Speed', rarity:'SEC★ Manga Rare', color:'Red', type:'Character', cost:'5', power:'7000'},
+  'OP11-119': {set:'OP-11 A Fist of Divine Speed', rarity:'Treasure Rare', color:'Blue', type:'Character', cost:'3', power:'3000'},
+  // ── OP-12 ─────────────────────────────────────────────────────────────────
+  'OP12-015': {set:'OP-12 Legacy of the Master', rarity:'Super Rare', color:'Red', type:'Character', cost:'5', power:'6000'},
+  'OP12-020': {set:'OP-12 Legacy of the Master', rarity:'Super Rare', color:'Green', type:'Character', cost:'4', power:'5000'},
+  'OP12-031': {set:'OP-12 Legacy of the Master', rarity:'Super Rare / SP Gold/Silver', color:'Black', type:'Character', cost:'7', power:'8000'},
+  'OP12-118': {set:'OP-12 Legacy of the Master', rarity:'SEC★ Manga Rare', color:'Purple', type:'Character', cost:'5', power:'6000'},
+  // ── OP-13 ─────────────────────────────────────────────────────────────────
+  'OP13-016': {set:'OP-13 Carrying On His Will', rarity:'Super Rare', color:'Blue', type:'Character', cost:'6', power:'7000'},
+  'OP13-118': {set:'OP-13 Carrying On His Will', rarity:'Red Super Alt Art (SEC★)', color:'Red', type:'Leader', cost:'—', power:'5000'},
+  'OP13-119': {set:'OP-13 Carrying On His Will', rarity:'Red Super Alt Art (SEC★)', color:'Red', type:'Character', cost:'6', power:'7000'},
+  'OP13-120': {set:'OP-13 Carrying On His Will', rarity:'Red Super Alt Art (SEC★)', color:'Red', type:'Character', cost:'5', power:'6000'},
+  // ── OP-14 ─────────────────────────────────────────────────────────────────
+  'OP14-001': {set:'OP-14 The Azure Sea\u2019s Seven', rarity:'Leader / SP Gold', color:'Blue', type:'Leader', cost:'—', power:'5000'},
+  'OP14-079': {set:'OP-14 The Azure Sea\u2019s Seven', rarity:'SEC★ Manga Rare', color:'Blue', type:'Character', cost:'7', power:'8000'},
+  // ── EB sets ───────────────────────────────────────────────────────────────
+  'EB01-006': {set:'EB-01 Memorial Collection', rarity:'SEC★ Manga Rare', color:'Blue', type:'Character', cost:'4', power:'5000'},
+  'EB02-061': {set:'EB-02 Anime 25th Collection', rarity:'SEC★ Manga Rare', color:'Red', type:'Leader', cost:'—', power:'5000'},
+  'EB03-024': {set:'EB-03 Heroines Edition', rarity:'SEC★ Manga Rare', color:'Yellow', type:'Character', cost:'4', power:'5000'},
+  'EB03-026': {set:'EB-03 Heroines Edition', rarity:'SEC★ Manga Rare', color:'Yellow', type:'Character', cost:'6', power:'7000'},
+  'EB03-053': {set:'EB-03 Heroines Edition', rarity:'SEC★ Manga Rare', color:'Blue', type:'Leader', cost:'—', power:'5000'},
+  'EB03-055': {set:'EB-03 Heroines Edition', rarity:'SEC★ Manga Rare', color:'Green', type:'Character', cost:'5', power:'6000'},
+  'EB03-061': {set:'EB-03 Heroines Edition', rarity:'SEC★ Manga Rare', color:'Purple', type:'Character', cost:'6', power:'7000'},
+  'EB04-044': {set:'EB-04 Heroines: New World', rarity:'SEC★ Manga Rare', color:'Blue', type:'Character', cost:'3', power:'4000'},
+  // ── ST starter sets ───────────────────────────────────────────────────────
+  'ST01-001': {set:'ST-01 Straw Hat Crew', rarity:'Leader', color:'Red', type:'Leader', cost:'—', power:'5000'},
+  'ST01-013': {set:'ST-01 Straw Hat Crew', rarity:'Super Rare', color:'Green', type:'Character', cost:'4', power:'5000'},
+  'ST04-003': {set:'ST-04 Animal Kingdom Pirates', rarity:'Super Rare', color:'Purple', type:'Character', cost:'9', power:'12000'},
+  // ── PRB ───────────────────────────────────────────────────────────────────
+  'PRB01-001': {set:'PRB-01 Card The Best', rarity:'Manga Rare Reprint', color:'Red', type:'Leader', cost:'—', power:'5000'},
 };
+
 
 // ── VARIANT LABELS ─────────────────────────────────────────────────────────
 const VARIANT_LABELS = {
@@ -5113,7 +5339,7 @@ function csmShowVariants(code, found) {
     const searchLabel = vp.label || v.label || '';
     const buyUrl  = tcgUrl(code, searchLabel);
 
-    return `<div class="csm-var-card">
+    return `<div class="csm-var-card" onclick="csmRender('${code}','${v.suf}')" style="cursor:pointer" title="Click to view this version">
       <div class="csm-var-label">${v.label || 'Base'}</div>
       <div class="csm-var-imgs">
         <div class="csm-var-img-wrap">
@@ -5309,7 +5535,7 @@ const ROI_SETS = [
 // Pull rates: Manga Rare ~0.55%/pack = 1/7.6 boxes = ~1.6/case · SP ~1/10 boxes = ~1.2/case
 // Anniversary Gold SP ~0.07%/pack = 1/59 boxes = ~1/5 cases · Silver ~0.09% = ~1/4 cases
 {id:'OP-01',name:'Romance Dawn',type:'op',
-  caseCost:2400,boxCnt:12,parEV:452,grCnt:8,psa10m:3.5,
+  caseCost:34000,boxCnt:12,parEV:452,grCnt:8,psa10m:3.5,
   priceConf:'conf',caseSrc:'StockX ~$200/box verified Apr 2026',
   pulls:[
     {label:'Manga Rare (Shanks ★★★ / Luffy / Nami)',rarity:'r-mr',perCase:1.58,rawVal:650,psa10:2300,
@@ -5320,7 +5546,7 @@ const ROI_SETS = [
       note:'Sell raw, mostly $5–25 range. OPCardlist SR avg $2.60'},
   ]},
 {id:'OP-02',name:'Paramount War',type:'op',
-  caseCost:1560,boxCnt:12,parEV:246,grCnt:7,psa10m:3.0,
+  caseCost:6200,boxCnt:12,parEV:246,grCnt:7,psa10m:3.0,
   priceConf:'est',caseSrc:'eBay completed ~$130/box Apr 2026',
   pulls:[
     {label:'Manga Rare (Ace ★★ / Whitebeard)',rarity:'r-mr',perCase:1.58,rawVal:380,psa10:1200,
@@ -5329,7 +5555,7 @@ const ROI_SETS = [
     {label:'SR Parallel pool',rarity:'r-par',perCase:12,rawVal:9,psa10:null,note:'Sell raw'},
   ]},
 {id:'OP-03',name:'Pillars of Strength',type:'op',
-  caseCost:1944,boxCnt:12,parEV:172,grCnt:8,psa10m:3.0,
+  caseCost:2700,boxCnt:12,parEV:172,grCnt:8,psa10m:3.0,
   priceConf:'conf',caseSrc:'StockX buy-now $151 / last sale $173 → ~$162/box',
   pulls:[
     {label:'Manga Rare (Luffy/Nami/Katakuri/Kid)',rarity:'r-mr',perCase:1.58,rawVal:220,psa10:660,
@@ -5339,7 +5565,7 @@ const ROI_SETS = [
     {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:16,psa10:40,note:''},
   ]},
 {id:'OP-04',name:'Kingdoms of Intrigue',type:'op',
-  caseCost:1356,boxCnt:12,parEV:256,grCnt:7,psa10m:2.8,
+  caseCost:2400,boxCnt:12,parEV:256,grCnt:7,psa10m:2.8,
   priceConf:'conf',caseSrc:'OPCardlist parallel EV $256/box · ~$113/box eBay',
   pulls:[
     {label:'Manga Rare (Boa Hancock ★★ / Sabo)',rarity:'r-mr',perCase:1.58,rawVal:300,psa10:840,
@@ -5349,7 +5575,7 @@ const ROI_SETS = [
     {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:15,psa10:38,note:''},
   ]},
 {id:'OP-05',name:'Awakening of the New Era',type:'op',
-  caseCost:1860,boxCnt:12,parEV:176,parEVLottery:435,grCnt:8,psa10m:4.0,
+  caseCost:11880,boxCnt:12,parEV:176,parEVLottery:435,grCnt:8,psa10m:4.0,
   priceConf:'conf',caseSrc:'StockX last sale $155/box · case ~$1,860',
   pulls:[
     {label:'MR Luffy Gear 5 ★★★ (0.55%/pack)',rarity:'r-mr',perCase:1.58,rawVal:3761,psa10:13000,
@@ -5363,7 +5589,7 @@ const ROI_SETS = [
     {label:'SEC Alt Art (×4 valuable)',rarity:'r-sec',perCase:4,rawVal:45,psa10:112,note:''},
   ]},
 {id:'OP-06',name:'Wings of the Captain',type:'op',
-  caseCost:1680,boxCnt:12,parEV:351,grCnt:12,psa10m:3.5,
+  caseCost:3300,boxCnt:12,parEV:351,grCnt:12,psa10m:3.5,
   priceConf:'conf',caseSrc:'StockX avg $142/box · last sale $138 · ~$140/box',
   pulls:[
     {label:'MR Roronoa Zoro ★★★ (0.55%/pack)',rarity:'r-mr',perCase:1.58,rawVal:1928,psa10:6750,
@@ -5375,7 +5601,7 @@ const ROI_SETS = [
     {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:28,psa10:70,note:''},
   ]},
 {id:'OP-07',name:'500 Years in the Future',type:'op',
-  caseCost:1656,boxCnt:12,parEV:176,grCnt:8,psa10m:3.0,
+  caseCost:3120,boxCnt:12,parEV:176,grCnt:8,psa10m:3.0,
   priceConf:'est',caseSrc:'eBay est. ~$138/box · case ~$1,656',
   pulls:[
     {label:'MR Boa Hancock ★★ / Dragon (0.55%/pack)',rarity:'r-mr',perCase:1.58,rawVal:250,psa10:750,
@@ -5386,7 +5612,7 @@ const ROI_SETS = [
     {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:15,psa10:38,note:''},
   ]},
 {id:'OP-08',name:'Two Legends',type:'op',
-  caseCost:1896,boxCnt:12,parEV:205,grCnt:9,psa10m:3.0,
+  caseCost:2400,boxCnt:12,parEV:205,grCnt:9,psa10m:3.0,
   priceConf:'conf',caseSrc:'OPCardlist parEV $205/box · ~$158/box eBay · case ~$1,896',
   pulls:[
     {label:'MR Silvers Rayleigh ★★ (0.55%/pack)',rarity:'r-mr',perCase:1.58,rawVal:652,psa10:2000,
@@ -5397,7 +5623,7 @@ const ROI_SETS = [
     {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:20,psa10:50,note:''},
   ]},
 {id:'OP-09',name:'Emperors in the New World',type:'op',
-  caseCost:7200,boxCnt:12,parEV:663,grCnt:16,psa10m:4.0,
+  caseCost:2400,boxCnt:12,parEV:663,grCnt:16,psa10m:4.0,
   priceConf:'conf',caseSrc:'PokeProfit Mar\'26 ~$600/box · case ~$7,200',
   pulls:[
     {label:'GOLD MR Gol D. Roger ★★★★ (0.07%/pack)',rarity:'r-gold',perCase:0.20,rawVal:3500,psa10:14000,
@@ -5421,7 +5647,7 @@ const ROI_SETS = [
     {label:'SEC Alt Art',rarity:'r-sec',perCase:3,rawVal:18,psa10:45,note:''},
   ]},
 {id:'OP-11',name:'A Fist of Divine Speed',type:'op',
-  caseCost:4620,boxCnt:12,parEV:169,parEVLottery:188,grCnt:7,psa10m:4.0,
+  caseCost:2100,boxCnt:12,parEV:169,parEVLottery:188,grCnt:7,psa10m:4.0,
   priceConf:'conf',caseSrc:'PokeProfit Mar\'26 ~$385/box · case ~$4,620',
   pulls:[
     {label:'SP Gold Luffy 3rd Anniv ★★★★ (0.07%/pack)',rarity:'r-gold',perCase:0.20,rawVal:3196,psa10:12800,
@@ -5436,7 +5662,7 @@ const ROI_SETS = [
       note:'TR ~1/case + ~3 SEC AA'},
   ]},
 {id:'OP-12',name:'Legacy of the Master',type:'op',
-  caseCost:1680,boxCnt:12,parEV:148,grCnt:8,psa10m:3.0,
+  caseCost:1920,boxCnt:12,parEV:148,grCnt:8,psa10m:3.0,
   priceConf:'est',caseSrc:'eBay est. ~$140/box · case ~$1,680',
   pulls:[
     {label:'SP Gold Blackbeard 3rd Anniv ★★★ (0.07%/pack)',rarity:'r-gold',perCase:0.20,rawVal:800,psa10:3200,
@@ -5449,7 +5675,7 @@ const ROI_SETS = [
       note:'TR + ~3 valuable SEC AA'},
   ]},
 {id:'OP-13',name:'Carrying On His Will',type:'op',
-  caseCost:6600,boxCnt:12,parEV:535,parEVLottery:1130,grCnt:10,psa10m:4.0,
+  caseCost:8400,boxCnt:12,parEV:535,parEVLottery:1130,grCnt:10,psa10m:4.0,
   priceConf:'conf',caseSrc:'PokeProfit Mar\'26 ~$550/box · OPCardlist parEV $1,665/box',
   pulls:[
     {label:'Red SAA Luffy ★★★★★ (ultra-rare lottery)',rarity:'r-red',perCase:0.067,rawVal:8490,psa10:22570,
@@ -5468,7 +5694,7 @@ const ROI_SETS = [
       note:'TR ~1/case + regular SPs ~2/case'},
   ]},
 {id:'OP-14',name:"The Azure Sea's Seven",type:'op',
-  caseCost:2880,boxCnt:12,parEV:535,grCnt:16,psa10m:3.5,
+  caseCost:2280,boxCnt:12,parEV:535,grCnt:16,psa10m:3.5,
   priceConf:'conf',caseSrc:"PokeProfit Mar'26 ~$240/box · case ~$2,880",
   pulls:[
     {label:'SP Gold Buggy 3rd Anniv ★★★★ (0.07%/pack)',rarity:'r-gold',perCase:0.20,rawVal:2649,psa10:10000,
@@ -5494,7 +5720,7 @@ const ROI_SETS = [
   ]},
 
 {id:'EB-01',name:'Memorial Collection',type:'eb',
-  caseCost:4704,boxCnt:12,parEV:413,grCnt:14,psa10m:3.5,
+  caseCost:4560,boxCnt:12,parEV:413,grCnt:14,psa10m:3.5,
   priceConf:'conf',caseSrc:'OPCardlist parEV $413/box · ~$392/box est.',
   pulls:[
     {label:'MR Tony Tony Chopper ★★★★ (0.55%/pack)',rarity:'r-mr',perCase:1.58,rawVal:1973,psa10:6900,
@@ -5505,7 +5731,7 @@ const ROI_SETS = [
       note:'EB sets have higher alt art density'},
   ]},
 {id:'EB-02',name:'Anime 25th Collection',type:'eb',
-  caseCost:5604,boxCnt:12,parEV:695,grCnt:20,psa10m:3.5,
+  caseCost:3120,boxCnt:12,parEV:695,grCnt:20,psa10m:3.5,
   priceConf:'conf',caseSrc:'OPCardlist parEV $695/box · ~$467/box est.',
   pulls:[
     {label:'MR Monkey D. Luffy (3 variants) ★★★★ (0.55%)',rarity:'r-mr',perCase:1.58,rawVal:1200,psa10:4200,
@@ -5517,7 +5743,7 @@ const ROI_SETS = [
     {label:'SEC Alt Art',rarity:'r-sec',perCase:4,rawVal:40,psa10:100,note:''},
   ]},
 {id:'EB-03',name:'One Piece Heroines',type:'eb',
-  caseCost:3804,boxCnt:12,parEV:700,parEVLottery:148,grCnt:16,psa10m:3.5,
+  caseCost:3480,boxCnt:12,parEV:700,parEVLottery:148,grCnt:16,psa10m:3.5,
   priceConf:'conf',caseSrc:'User confirmed case $3,800 · OPCardlist parEV $848/box',
   pulls:[
     {label:'MR Nami ★★★★ (0.55%/pack)',rarity:'r-mr',perCase:1.58,rawVal:1725,psa10:6000,
@@ -5531,7 +5757,7 @@ const ROI_SETS = [
     {label:'SEC Alt Art',rarity:'r-sec',perCase:4,rawVal:50,psa10:125,note:''},
   ]},
 {id:'EB-04',name:'Heroines: New World',type:'eb',
-  caseCost:1980,boxCnt:12,parEV:350,grCnt:10,psa10m:3.5,
+  caseCost:1860,boxCnt:12,parEV:350,grCnt:10,psa10m:3.5,
   priceConf:'est',caseSrc:"~$130–$175/box · case est. ~$1,980",
   pulls:[
     {label:'MR Koby / Perona ★★★ (0.55%/pack)',rarity:'r-mr',perCase:1.58,rawVal:800,psa10:2800,
@@ -5544,7 +5770,7 @@ const ROI_SETS = [
   ]},
 
 {id:'PRB-01',name:'Card The Best',type:'prb',
-  caseCost:8500,boxCnt:10,parEV:149,grCnt:5,psa10m:3.5,
+  caseCost:8750,boxCnt:10,parEV:149,grCnt:5,psa10m:3.5,
   priceConf:'est',caseSrc:'10-box case · est. ~$850/box',
   pulls:[
     {label:'Manga God Pack (10 MR reprints) ★★★★★',rarity:'r-gp',perCase:0.07,rawVal:9000,psa10:null,
@@ -5705,7 +5931,19 @@ function roiRender(){
       const lottTag=p.lottery?'<span style="color:#f87171;font-size:8px;margin-left:4px">🎰 LOTTERY</span>':'';
       return `<tr style="${lottStyle}">
         <td><span class="rarity ${p.rarity}">${p.rarity.replace('r-','').toUpperCase()}</span></td>
-        <td class="chase">${p.label}${lottTag}</td>
+        <td class="chase" style="min-width:180px">
+          ${(()=>{const _cm=p.label.match(/([A-Z0-9]+-\d{3})/);
+            if(!_cm) return '';
+            const _c=_cm[1]; const _setM=_c.match(/^([A-Z]+\d+)/);
+            const _s=_setM?_setM[1]:'OP01';
+            const _src=`${LIM_CDN}/${_s}/${_c}_EN.webp`;
+            const _fb=`${EN_CDN}/${_c}.png`;
+            return `<img src="${_src}" alt="${_c}"
+              style="width:36px;height:auto;border-radius:4px;vertical-align:middle;margin-right:6px;cursor:pointer;border:1px solid var(--border)"
+              onerror="if(this.src!=='${_fb}'){this.src='${_fb}'}else{this.style.display='none'}"
+              onclick="event.stopPropagation();openCardSearch('${_c}')"
+              title="Click to look up ${_c}">`;
+          })()}${p.label}${lottTag}</td>
         <td class="r">${roiFrac(p.perCase)}</td>
         <td class="r">${roiF$(p.rawVal)}/card raw</td>
         <td class="r">${psa10txt} PSA10</td>
@@ -5731,15 +5969,7 @@ function roiRender(){
       <div class="warn-note">⚠ Rates are community averages across many case openings. Bandai does not publish official pull rates. High-variance: any single case may return 0 or 3× expected value. Card prices as of Feb–Apr 2026.</div>
       <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
 
-        <a href="#" onclick="event.preventDefault();var _m=r.pulls[0]?.label?.match(/[A-Z0-9]+-\d{3}/);if(_m)openCardSearch(_m[0])" 
-         
-          style="display:inline-flex;align-items:center;gap:5px;padding:6px 14px;
-          background:rgba(96,165,250,.06);border:1px solid #60a5fa;border-radius:4px;
-          font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;
-          color:#60a5fa;text-decoration:none;letter-spacing:.05em;text-transform:uppercase"
-          onclick="event.stopPropagation()">
-          🔍 Lookup Top Card
-        </a>
+
       </div>
     </div></td>`;
     body.appendChild(dr);
@@ -5894,7 +6124,7 @@ function roiViewHits(setId) {
     </div>
 
     <div style="border-top:1px solid #1e1e38;padding-top:14px;font-size:.62rem;color:#4a4a6a;line-height:1.8">
-      <p>© 2025–2026 <strong style="color:#6b6b90">Fulcrum Cards</strong> <span style="color:#3a3a5a;font-size:.55rem">· Build Apr 24 2026 · v10.1</span>. All original site content, layout, data compilations, and pricing analysis are the intellectual property of Fulcrum Cards.</p>
+      <p>© 2025–2026 <strong style="color:#6b6b90">Fulcrum Cards</strong> <span style="color:#3a3a5a;font-size:.55rem">· Build Apr 24 2026 · v10.2</span>. All original site content, layout, data compilations, and pricing analysis are the intellectual property of Fulcrum Cards.</p>
       <p style="margin-top:4px">
         <strong style="color:#6b6b90">Image &amp; card content disclaimer:</strong>
         Card images, card names, set names, artwork, and game content are the property of
