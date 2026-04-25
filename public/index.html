@@ -5867,6 +5867,60 @@ let roiFilt='all', roiSortKey='idx', roiSortDir=1, roiExclLottery=false;
 let roiExpanded=new Set();
 
 // ─── ROI Calc (identical logic to original, just prefixed)
+
+// Standard filler pulls to pad the ROI expand panel to 10 rows
+function roiStandardPulls(r) {
+  const isEB  = r.type === 'eb';
+  const isPRB = r.type === 'prb';
+  const boxCnt = r.boxCnt || 12;
+  const pulls = [];
+
+  // Super Rare: ~1 per box = boxCnt per case
+  pulls.push({
+    label: 'Super Rare (SR) · Various',
+    rarity: 'r-sr', perCase: boxCnt,
+    rawVal: 12, psa10: 40,
+    note: `~${boxCnt}/case · $8–$15 raw · check OPCardlist for set-specific SRs`
+  });
+
+  // SR Parallel Foil: ~2/case
+  pulls.push({
+    label: 'SR Parallel Foil · Various',
+    rarity: 'r-sr', perCase: 2.4,
+    rawVal: 35, psa10: 120,
+    note: '~2.4/case · $20–$60 raw · most valuable bulk grade target'
+  });
+
+  // Treasure Rare or SP if the set likely has one
+  if (!isPRB) {
+    pulls.push({
+      label: isEB ? 'SP Alt Art · Various' : 'Cross-Set SP · Various',
+      rarity: 'r-sp', perCase: 1.0,
+      rawVal: isEB ? 180 : 80, psa10: isEB ? 540 : 240,
+      note: isEB ? '~1/case · EB sets include high-value SP alt arts'
+                 : '~1/case · check OPCardlist for this set\'s SP roster'
+    });
+  }
+
+  // R Parallel Foil: ~6/case
+  pulls.push({
+    label: 'R Parallel Foil · Various',
+    rarity: 'r-c', perCase: 6,
+    rawVal: 6, psa10: 25,
+    note: '~6/case · $3–$10 raw · high-grade grade targets for bulk submissions'
+  });
+
+  // C/UC Parallel: ~18/case — notable ones only
+  pulls.push({
+    label: 'C/UC Parallel · Notable (Luffy/Zoro/Nami)',
+    rarity: 'r-c', perCase: 18,
+    rawVal: 3, psa10: 15,
+    note: '~18/case · key characters $2–$8 raw · PSA 10 $15–$60 depending on card'
+  });
+
+  return pulls;
+}
+
 function roiCalcSet(s){
   const n = s.boxCnt;
 
@@ -5986,7 +6040,9 @@ function roiRender(){
     dr.className='roi-detail'+(isOpen?' open':'');
     dr.id='roi-detail-'+r.id;
 
-    let pullRows=r.pulls.map(p=>{
+    let // Combine real pulls + standard fillers, capped at 10
+    const allPulls = [...r.pulls, ...roiStandardPulls(r)].slice(0, 10);
+    pullRows=allPulls.map(p=>{
       const ev=roiExpCase(p);
       const pct=Math.min(ev.raw/c.caseParEVFull*100,100);
       const pctW=Math.max(pct,2);
@@ -6189,7 +6245,7 @@ function roiViewHits(setId) {
     </div>
 
     <div style="border-top:1px solid #1e1e38;padding-top:14px;font-size:.62rem;color:#4a4a6a;line-height:1.8">
-      <p>© 2025–2026 <strong style="color:#6b6b90">Fulcrum Cards</strong> <span style="color:#3a3a5a;font-size:.55rem">· Build Apr 24 2026 · v10.4</span>. All original site content, layout, data compilations, and pricing analysis are the intellectual property of Fulcrum Cards.</p>
+      <p>© 2025–2026 <strong style="color:#6b6b90">Fulcrum Cards</strong> <span style="color:#3a3a5a;font-size:.55rem">· Build Apr 24 2026 · v10.5</span>. All original site content, layout, data compilations, and pricing analysis are the intellectual property of Fulcrum Cards.</p>
       <p style="margin-top:4px">
         <strong style="color:#6b6b90">Image &amp; card content disclaimer:</strong>
         Card images, card names, set names, artwork, and game content are the property of
