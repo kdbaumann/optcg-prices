@@ -6032,7 +6032,7 @@ function roiRender(){
   body.innerHTML='';
   let sumR=0,sumG=0,bstR=-1e9,bstG=-1e9,wstR=1e9,bsRN='',bsGN='',wsN='';
 
-  rows.forEach(r=>{
+  for (const r of rows) { try {
     const c=r.c;
     const isOpen=roiExpanded.has(r.id);
     const tr=document.createElement('tr');
@@ -6081,9 +6081,9 @@ function roiRender(){
     dr.className='roi-detail'+(isOpen?' open':'');
     dr.id='roi-detail-'+r.id;
 
-    let // Combine real pulls + standard fillers, capped at 10
+    // Combine real pulls + standard fillers, capped at 10
     const allPulls = [...r.pulls, ...roiStandardPulls(r)].slice(0, 10);
-    pullRows=allPulls.map(p=>{
+    let pullRows=allPulls.map(p=>{
       const ev=roiExpCase(p);
       const pct=Math.min(ev.raw/c.caseParEVFull*100,100);
       const pctW=Math.max(pct,2);
@@ -6140,7 +6140,8 @@ function roiRender(){
     if(c.rawROI>bstR){bstR=c.rawROI;bsRN=r.id+' '+r.name;}
     if(c.grROI>bstG){bstG=c.grROI;bsGN=r.id+' '+r.name;}
     if(c.rawROI<wstR){wstR=c.rawROI;wsN=r.id;}
-  });
+  } catch(e) { console.error("[ROI] crash on "+r.id+":", e); }
+  }
 
   const n=rows.length;
   const setEl=id=>document.getElementById(id);
