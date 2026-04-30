@@ -4583,14 +4583,14 @@ function hidePopup() {
 
 // Use capture-phase events on thumbnails — stable, no flicker
 document.addEventListener('mouseenter', e => {
-  if (e.target.classList?.contains('card-thumb')) {
+  if ((e.target.classList && e.target.classList.contains('card-thumb'))) {
     clearTimeout(hideTimer);
     showPopup(e.target);
   }
 }, true);
 
 document.addEventListener('mouseleave', e => {
-  if (e.target.classList?.contains('card-thumb')) hidePopup();
+  if ((e.target.classList && e.target.classList.contains('card-thumb'))) hidePopup();
 }, true);
 
 popup.addEventListener('mouseenter', () => clearTimeout(hideTimer));
@@ -4599,7 +4599,7 @@ popup.addEventListener('mouseleave', hidePopup);
 // Mobile tap
 document.addEventListener('click', e => {
   const t = e.target;
-  if (!t.classList?.contains('card-thumb')) { popup.classList.remove('visible'); return; }
+  if (!(t.classList && t.classList.contains('card-thumb'))) { popup.classList.remove('visible'); return; }
   if (window.matchMedia('(hover:none)').matches) {
     e.stopPropagation();
     if (popup.classList.contains('visible') && popupImg.src === (t.src || t.dataset.fallback)) {
@@ -4816,7 +4816,7 @@ function limUrl(code, suf) {
 function limUrlJP(code, suf) {
   if (!suf) suf = '';
   const baseCode = code + suf;
-  const folder   = code.match(/^([A-Z]+\d+)/)?.[1] || 'OP01';
+  const folder   = (code.match(/^([A-Z]+\d+)/) ? code.match(/^([A-Z]+\d+)/)[1] : 'OP01');
   if (code.startsWith('P-')) return `${LIM_CDN}/P/${baseCode}_JP.webp`;
   return `${LIM_CDN}/${folder}/${baseCode}_JP.webp`;
 }
@@ -5486,10 +5486,10 @@ function csmSwitchVar(suffix) {
   });
   // Update images
   document.querySelectorAll('.csm-card-img').forEach(img => {
-    const isEN = img.closest('.csm-img-panel')?.querySelector('.csm-lang-en');
+    const isEN = (img.closest('.csm-img-panel') ? img.closest('.csm-img-panel').querySelector('.csm-lang-en') : null);
     const cdn  = isEN ? EN_CDN : JP_CDN;
     img.style.display = 'block';
-    const missing = img.parentElement?.querySelector('.csm-img-missing');
+    const missing = (img.parentElement ? img.parentElement.querySelector('.csm-img-missing') : null);
     if (missing) missing.style.display = 'none';
     img.src = `${cdn}/${csmCurrentCode}${suffix}.png`;
   });
@@ -6021,7 +6021,7 @@ function roiRender(){
     else if(roiSortKey==='rawROI'){av=a.c.rawROI;bv=b.c.rawROI;}
     else if(roiSortKey==='grCnt'){av=a.grCnt;bv=b.grCnt;}
     else if(roiSortKey==='grROI'){av=a.c.grROI;bv=b.c.grROI;}
-    else if(roiSortKey==='topChase'){av=a.pulls[0]?.rawVal||0;bv=b.pulls[0]?.rawVal||0;}
+    else if(roiSortKey==='topChase'){av=(a.pulls[0]?a.pulls[0].rawVal:0);bv=(b.pulls[0]?b.pulls[0].rawVal:0);}
     else{av=a.i;bv=b.i;}
     if(typeof av==='string'){av=av.toLowerCase();bv=bv.toLowerCase();}
     return av<bv?-roiSortDir:av>bv?roiSortDir:0;
@@ -6069,7 +6069,7 @@ function roiRender(){
         <div class="ssub" style="color:#4a5568;font-size:8px">case+fees: ${roiF$(c.grTotalCost)}</div>
       </td>
       <td>
-        <span class="rarity ${topP?.rarity||''}">${topLabel}</span><br>
+        <span class="rarity ${(topP ? topP.rarity : '')}">${topLabel}</span><br>
         <span class="ssub">${topRate}</span><br>
 
       </td>`;
