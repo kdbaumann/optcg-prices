@@ -24,10 +24,12 @@ async function fetchSetPrices(setCode, silent404 = false) {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const html = await res.text();
   const results = [];
-  for (const m of html.matchAll(/data-card-id="([A-Z0-9]+-\d+)"[\s\S]{0,600}?\$(\d[\d,]+)/g)) {
-    const price = parseInt(m[2].replace(/,/g, ''), 10);
+  // Captures both base codes (OP01-120) and variant codes (OP01-120_p2, OP05-119_r1, …).
+  // Without the optional suffix the regex would silently strip variant info.
+  for (const m of html.matchAll(/data-card-id="([A-Z0-9]+-\d+(?:_[a-zA-Z]\d+)?)"[\s\S]{0,600}?\$(\d[\d,]+(?:\.\d+)?)/g)) {
+    const price = parseFloat(m[2].replace(/,/g, ''));
     if (m[1] && price >= 10) results.push({ code: m[1].trim(), price });
-    if (results.length >= 10) break;
+    if (results.length >= 30) break;
   }
   return results;
 }
@@ -42,7 +44,9 @@ export default async () => {
     try {
       const cards = await fetchSetPrices(setCode);
       for (const { code, price } of cards) {
-        if (!allPrices[code]) allPrices[code] = { en: `$${price.toLocaleString('en-US')}`, updated: started };
+        // Display whole dollars (cents only add noise on chase cards).
+        const display = price >= 100 ? Math.round(price) : price.toFixed(2);
+        if (!allPrices[code]) allPrices[code] = { en: `$${Number(display).toLocaleString('en-US')}`, updated: started };
       }
       console.log(`[update-prices] ${setCode}: ${cards.length} cards`);
     } catch (err) {
@@ -56,7 +60,8 @@ export default async () => {
       const cards = await fetchSetPrices(setCode, true);
       if (cards.length > 0) {
         for (const { code, price } of cards) {
-          if (!allPrices[code]) allPrices[code] = { en: `$${price.toLocaleString('en-US')}`, updated: started };
+          const display = price >= 100 ? Math.round(price) : price.toFixed(2);
+          if (!allPrices[code]) allPrices[code] = { en: `$${Number(display).toLocaleString('en-US')}`, updated: started };
         }
         console.log(`[update-prices] ${setCode}: ${cards.length} cards (newly indexed!)`);
       }
