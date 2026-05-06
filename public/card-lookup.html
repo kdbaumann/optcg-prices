@@ -423,6 +423,7 @@ body {
 </style>
 </head>
 <body>
+<script src="data/prices.js"></script>
 
 <div class="topbar">
   <div class="logo">ONE PIECE<span>TCG</span></div>
@@ -559,41 +560,22 @@ const VARIANTS = [
 ];
 
 // Known high-value cards with pricing data
-const PRICE_DB = {
-  'OP13-118': { en_raw: '$8,490', en_psa10: '$24,000+', jp_yen: '¥1,200,000+', note: 'Red SAA Luffy — highest value EN card' },
-  'OP13-119': { en_raw: '$4,420–$6,400+', en_psa10: '$12,000+', jp_yen: '¥600,000+', note: 'Red SAA Ace' },
-  'OP13-120': { en_raw: '$4,750–$10,000+', en_psa10: '$14,000+', jp_yen: '¥700,000+', note: 'Red SAA Sabo' },
-  'OP05-119': { en_raw: '$3,500–$5,000', en_psa10: '$14,000+', jp_yen: '¥520,000+', note: 'Gear 5 Luffy SEC' },
-  'OP01-120': { en_raw: '$1,644', en_psa10: '$4,500+', jp_yen: '¥90,000', note: 'Shanks SEC — first ever manga rare' },
-  'OP09-118': { en_raw: '$3,574', en_psa10: '$10,000+', jp_yen: '¥480,000', note: 'Roger Gold Manga Rare' },
-  'OP09-119': { en_raw: '$2,000–$3,000', en_psa10: '$8,000+', jp_yen: '¥190,000', note: 'Luffy Emperor Gold' },
-  'OP06-118': { en_raw: '$2,700', en_psa10: '$8,000+', jp_yen: '¥280,000', note: 'Zoro Manga Rare' },
-  'OP07-051': { en_raw: '≈$2,192', en_psa10: '$6,000+', jp_yen: '¥230,000', note: 'Hancock Manga Rare' },
-  'EB01-006': { en_raw: '$700–$900 (TC)', en_psa10: '$3,000+', jp_yen: '¥280,000', note: 'Chopper Manga Rare — also Treasure Cup promo' },
-  'OP02-099': { en_raw: '$1,300–$1,600', en_psa10: '$3,500+', jp_yen: '¥150,000–¥220,000', note: 'Sakazuki Championship 2023 promo (p2)' },
-  'OP02-096': { en_raw: '$1,000–$1,200', en_psa10: '$5,450', jp_yen: '¥120,000–¥180,000', note: 'Kuzan Championship 2023 promo' },
-  'OP02-097': { en_raw: '$400–$600', en_psa10: '$1,500+', jp_yen: '¥60,000–¥100,000', note: 'Kizaru Championship 2023 promo' },
-  'ST01-013': { en_raw: '$3,000–$5,800 (TC)', en_psa10: '$21,600', jp_yen: '¥400,000–¥700,000', note: 'Zoro Treasure Cup Top 8 — record holder' },
-  'ST01-001': { en_raw: '$5,000–$6,000 (serial)', en_psa10: '$10,000+', jp_yen: '¥700,000+', note: 'Luffy serial # pre-release — first ever serialized card' },
-  'OP14-119': { en_raw: '$1,900+', en_psa10: '$5,000+', jp_yen: '¥130,000', note: 'Mihawk Manga Rare' },
-  'OP12-118': { en_raw: '$800', en_psa10: '$2,500+', jp_yen: '¥60,000', note: 'Bonney Manga Rare' },
-  'OP11-118': { en_raw: '≈$310', en_psa10: '$900+', jp_yen: '¥40,000', note: 'Luffy Gear 4 Manga Rare' },
-  'OP10-119': { en_raw: '$500–$700', en_psa10: '$1,800+', jp_yen: '¥90,000', note: 'Law Manga Rare' },
-  'OP08-118': { en_raw: '$500–$700', en_psa10: '$1,600+', jp_yen: '¥80,000', note: 'Rayleigh Manga Rare' },
-  'EB02-061': { en_raw: '$3,000–$5,000', en_psa10: '$10,000+', jp_yen: '¥85,000', note: 'Luffy SP Leader EB02' },
-  'OP01-003': { en_raw: '$833', en_psa10: '$2,500–$3,500', jp_yen: '¥120,000', note: 'Luffy Leader Parallel — iconic OP-01 card' },
-  'OP01-016': { en_raw: '$454', en_psa10: '$1,200–$1,800', jp_yen: '¥65,000', note: 'Nami SR Parallel — original chase card' },
-  'OP04-083': { en_raw: '$600–$900', en_psa10: '$2,200+', jp_yen: '¥80,000', note: 'Sabo Manga Rare' },
-  'OP09-004': { en_raw: '$1,649', en_psa10: '$4,500+', jp_yen: '¥140,000', note: 'Shanks SR Manga Rare OP-09' },
-  'OP03-122': { en_raw: '$1,949–$3,200', en_psa10: '$7,000+', jp_yen: '¥60,000', note: 'Sogeking Manga Rare — rarest OP-03 card' },
-  'EB04-044': { en_raw: '$400–$600', en_psa10: '$1,500+', jp_yen: '¥90,000–¥100,000', note: 'Koby Manga Rare EB-04' },
-  'OP09-051': { en_raw: '$2,200+', en_psa10: '$7,000+', jp_yen: '¥110,000', note: 'Buggy Gold Manga Rare' },
-  'OP09-093': { en_raw: '$2,400', en_psa10: '$7,500+', jp_yen: '¥110,000', note: 'Teach Gold Manga Rare' },
-  'OP09-119': { en_raw: '≈$2,950', en_psa10: '$8,500+', jp_yen: '¥190,000', note: 'Luffy Gold Emperor SEC' },
-  'EB03-053': { en_raw: '$1,000–$1,500', en_psa10: '$3,500+', jp_yen: '¥180,000', note: 'Nami Heroines SEC' },
-  'EB03-061': { en_raw: '$700–$1,000', en_psa10: '$2,500+', jp_yen: '¥140,000', note: 'Uta Heroines SEC' },
-  'EB03-055': { en_raw: '$500–$800', en_psa10: '$2,000+', jp_yen: '¥120,000', note: 'Robin Heroines SEC' },
-};
+// Build card-lookup PRICE_DB from canonical data (renames en→en_raw etc).
+// Picks highest-priced variant via priceHeadline() in data/prices.js.
+const PRICE_DB = (() => {
+  const out = {};
+  for (const code of Object.keys(window.PRICE_DB || {})) {
+    const h = window.priceHeadline(code);
+    if (!h) continue;
+    out[code] = {
+      en_raw:   h.en,
+      en_psa10: h.psa,
+      jp_yen:   h.jp,
+      note:     h.note,
+    };
+  }
+  return out;
+})();
 
 // Card metadata from Bandai / Limitless
 const META_DB = {

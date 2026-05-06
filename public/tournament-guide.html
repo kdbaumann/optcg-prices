@@ -537,6 +537,7 @@ function tcgUrl(code, name) {
 </script>
 </head>
 <body>
+<script src="data/prices.js"></script>
 
 <!-- TOP BAR -->
 <div class="topbar">
@@ -5004,51 +5005,16 @@ const EN_CDN = 'https://en.onepiece-cardgame.com/images/cardlist/card';
 const JP_CDN = 'https://www.onepiece-cardgame.com/images/cardlist/card';
 
 // ── PRICE DATABASE ────────────────────────────────────────────────────────
-const PRICE_DB = {
-  'OP01-120': { name:'Shanks',          en:'$1,644',    psa:'$4,500+',  jp:'¥90,000 (≈$630)',  note:'OP-01 SEC★ Manga Rare — first-ever manga rare' },
-  'OP01-003': { name:'Monkey D. Luffy', en:'$833',      psa:'$2,800',   jp:'¥120,000 (≈$840)', note:'OP-01 Leader Parallel Foil' },
-  'OP01-016': { name:'Nami',            en:'$454',      psa:'$1,500',   jp:'¥65,000 (≈$455)',  note:'OP-01 SR Parallel' },
-  'OP02-099': { name:'Sakazuki',        en:'$1,300',    psa:'$3,500',   jp:'¥150,000 (≈$1,050)','note':'Championship 2023 stamp' },
-  'OP02-096': { name:'Kuzan',           en:'$1,000',    psa:'$5,450',   jp:'¥120,000 (≈$840)', note:'Championship 2023 stamp' },
-  'OP03-122': { name:'Sogeking',        en:'$1,949',    psa:'$7,000',   jp:'¥60,000 (≈$420)',  note:'OP-03 SEC★ Manga Rare' },
-  'OP04-083': { name:'Sabo',            en:'$600',      psa:'$2,200',   jp:'¥80,000 (≈$560)',  note:'OP-04 SEC★ Manga Rare' },
-  'OP05-119': { name:'Monkey D. Luffy', en:'$3,500',    psa:'$14,000',  jp:'¥520,000 (≈$3,636)','note':'Gear 5 Luffy SEC★ Manga — 1st Anniversary' },
-  'OP06-118': { name:'Roronoa Zoro',    en:'$2,700',    psa:'$8,000',   jp:'¥280,000 (≈$1,958)','note':'OP-06 SEC★ Manga Rare' },
-  'OP07-051': { name:'Boa Hancock',     en:'$2,192',    psa:'$6,000',   jp:'¥230,000 (≈$1,608)','note':'OP-07 SEC★ Manga Rare' },
-  'OP08-118': { name:'Silvers Rayleigh',en:'$500',      psa:'$1,600',   jp:'¥80,000 (≈$560)',  note:'OP-08 SEC★ Manga Rare' },
-  'OP09-118': { name:'Gol D. Roger',    en:'$3,574',    psa:'$10,000',  jp:'¥480,000 (≈$3,357)','note':'OP-09 Gold SEC★ Manga — 2nd Anniversary' },
-  'OP09-119': { name:'Monkey D. Luffy', en:'$2,950',    psa:'$8,500',   jp:'¥190,000 (≈$1,329)','note':'OP-09 Gold Emperor SEC' },
-  'OP09-051': { name:'Buggy',           en:'$2,200',    psa:'$7,000',   jp:'¥110,000 (≈$769)', note:'OP-09 Gold SEC' },
-  'OP09-093': { name:'Marshall D. Teach',en:'$2,400',  psa:'$7,500',   jp:'¥110,000 (≈$769)', note:'OP-09 Gold SEC' },
-  'OP09-004': { name:'Shanks',          en:'$1,649',    psa:'$4,500',   jp:'¥140,000 (≈$979)', note:'OP-09 SR Manga' },
-  'OP10-119': { name:'Trafalgar Law',   en:'$500',      psa:'$1,800',   jp:'¥90,000 (≈$629)',  note:'OP-10 SEC★ Manga Rare' },
-  'OP11-118': { name:'Monkey D. Luffy', en:'$310',      psa:'$900',     jp:'¥40,000 (≈$280)',  note:'OP-11 SEC★ Manga Rare' },
-  'OP12-118': { name:'Jewelry Bonney',  en:'$800',      psa:'$2,500',   jp:'¥60,000 (≈$420)',  note:'OP-12 SEC★ Manga Rare' },
-  'OP12-020': { name:'Roronoa Zoro',    en:'$1,500–$3,000', psa:'$6,000', jp:'¥200,000 (≈$1,399)','note':'Serial # card — TC Top 4 prize' },
-  'OP13-118': { name:'Monkey D. Luffy (Red SAA)', en:'$7,950', psa:'$24,100', jp:'¥1,200,000 (≈$8,391)','note':'RED Super Alt Art — highest-value EN card. _p3 suffix.' },
-  'OP13-119': { name:'Portgas D. Ace (Red SAA)', en:'$4,420', psa:'$12,000', jp:'¥600,000 (≈$4,196)','note':'RED Super Alt Art 3rd Anniversary. _p3 suffix.' },
-  'OP13-120': { name:'Sabo (Red SAA)',  en:'$4,750',    psa:'$14,000',  jp:'¥700,000 (≈$4,895)','note':'RED Super Alt Art 3rd Anniversary. _p3 suffix.' },
-  'OP14-119': { name:'Dracule Mihawk', en:'$1,900',    psa:'$5,000',   jp:'¥130,000 (≈$909)', note:'OP-14 SEC★ Manga Rare' },
-  'EB01-006': { name:'Tony Tony Chopper',en:'$700',    psa:'$3,000',   jp:'¥280,000 (≈$1,958)','note':'EB-01 SEC★ Manga Rare' },
-  'EB02-061': { name:'Monkey D. Luffy', en:'$3,000',   psa:'$10,000',  jp:'¥85,000 (≈$594)',  note:'EB-02 SP Leader — Gear 2 anniversary' },
-  'EB03-053': { name:'Nami',            en:'$1,000',   psa:'$3,500',   jp:'¥180,000 (≈$1,259)','note':'EB-03 SEC★ Manga Heroines' },
-  'EB03-061': { name:'Uta',             en:'$700',     psa:'$2,500',   jp:'¥140,000 (≈$979)', note:'EB-03 SEC★ Manga Heroines' },
-  'ST01-013': { name:'Roronoa Zoro',    en:'$3,000–$5,800', psa:'$21,600', jp:'¥400,000 (≈$2,797)','note':'Treasure Cup Top 8 stamp — record PSA 10' },
-  'ST01-001': { name:'Monkey D. Luffy', en:'$5,000–$6,000', psa:'$10,000+', jp:'¥700,000 (≈$4,895)','note':'First serialized card ever' },
-  'P-028': { name:'Portgas D. Ace',    en:'$30–$60',   psa:'$140',     jp:'¥4,500 (≈$31)',    note:'Event Pack Vol.1 — first event pack' },
-  'P-032': { name:'Sengoku',           en:'$8–$15',    psa:'$40',      jp:'¥1,200 (≈$8)',     note:'EP Vol.1 — 5th card (NOT Zoro)' },
-  'P-033': { name:'Monkey D. Luffy',   en:'$180',      psa:'$500',     jp:'¥25,000 (≈$175)',  note:'Event Pack Vol.2 silver foil' },
-  'P-097': { name:'Shanks',            en:'$25–$60',   psa:'$150',     jp:'¥4,000 (≈$28)',    note:'Event Pack Vol.8 (current)' },
-  'P-098': { name:'Buggy',             en:'$20–$40',   psa:'$100',     jp:'¥3,000 (≈$21)',    note:'Event Pack Vol.8 (current)' },
-  'P-099': { name:'Monkey D. Luffy',   en:'$20–$45',   psa:'$110',     jp:'¥3,200 (≈$22)',    note:'Event Pack Vol.8 (current)' },
-
-  'EB04-001': { name:'Nami',         en:'$800',    psa:'$2,800',  jp:'¥120,000 (≈$839)', note:'SP Gold Leader — Heroines New World' },
-  'EB04-059': { name:'Monkey D. Luffy', en:'$400', psa:'$1,200',  jp:'¥60,000 (≈$420)',  note:'Manga Alt Art — EB-04' },
-  'EB04-060': { name:'Nico Robin',   en:'$500',    psa:'$1,500',  jp:'¥70,000 (≈$490)',  note:'SEC★ Manga Rare — Heroines New World' },
-  'EB04-061': { name:'Nami',         en:'$600',    psa:'$1,800',  jp:'¥90,000 (≈$629)',  note:'SEC★ Manga Rare — Heroines New World (top chase)' },
-  'EB04-062': { name:'Boa Hancock',  en:'$450',    psa:'$1,350',  jp:'¥65,000 (≈$455)',  note:'SEC★ Manga Rare — Heroines New World' },
-  'EB04-044': { name:'Koby',         en:'$800',    psa:'$2,500',  jp:'¥120,000 (≈$839)', note:'SEC★ Manga Rare — EB-04 chase card' },
-};
+// Build flat-shape PRICE_DB from canonical (multi-variant) data in data/prices.js
+// Each entry's headline = highest-priced variant (or the flat entry if no variants).
+const PRICE_DB = (() => {
+  const out = {};
+  for (const code of Object.keys(window.PRICE_DB || {})) {
+    const h = window.priceHeadline(code);
+    if (h) out[code] = h;
+  }
+  return out;
+})();
 
 // ── CARD METADATA ──────────────────────────────────────────────────────────
 const META_DB = {

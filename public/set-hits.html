@@ -534,8 +534,9 @@ function showHits(id, btn){
   function f$(n){ return '$'+Math.round(n).toLocaleString(); }
 }
 
-// URL param: ?set=op05
-const urlSet = new URLSearchParams(window.location.search).get('set') || 'op01';
+// URL param: accepts ?set=op05 or ?set=OP-05 (legacy from old roi-hits.html)
+const urlSet = ((new URLSearchParams(window.location.search).get('set')) || 'op01')
+  .toLowerCase().replace(/-/g, '');
 const matchBtn = [...document.querySelectorAll('.set-pill')].find(b => b.getAttribute('onclick').includes("'"+urlSet+"'"));
 showHits(urlSet, matchBtn || document.querySelector('.set-pill'));
 </script>
