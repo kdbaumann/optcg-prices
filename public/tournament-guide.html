@@ -1349,7 +1349,7 @@ function tcgUrl(code, name) {
   official archived event pages. Click <strong>BANDAI ↗</strong> on any wave to open the original source page.
   Prize structures differ by event size — Top 256 tier only applies when an event has 512+ players.
 </div>
-<div sty<div style="background:#0a1a0a;border:1px solid #1e3a1e;border-radius:10px;padding:16px;margin-bottom:20px">
+<div style="background:#0a1a0a;border:1px solid #1e3a1e;border-radius:10px;padding:16px;margin-bottom:20px">
   <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#4ade80;margin-bottom:10px">🏆 Champion's Prize Journey — What Top Finishers Collect</div>
   <p style="font-size:.71rem;color:#86efac;margin-bottom:10px">Prizes are cumulative — a champion collects at every stage. Based on TC March 2026 format:</p>
   <div style="display:grid;gap:4px;font-size:.68rem">
@@ -5433,12 +5433,6 @@ function csmRenderHistory() {
 // ── Open card in lookup page ─────────────────────────────────────────────
 function openCardLookup(code) {
   if (!code || code === '?') return;
-  window.open('card-lookup.html?code=' + encodeURIComponent(code), '_blank');
-}
-
-// Open card lookup
-function openCardLookup(code) {
-  if (!code) return;
   window.open('card-lookup.html?code=' + encodeURIComponent(code), '_blank');
 }
 // Toggle tier detail
