@@ -44,16 +44,23 @@ const OPC_FALLBACK = /"sku":"([A-Z0-9]+-\d+(?:_[a-zA-Z]\d+)?)"[\s\S]{0,800}?"pri
 
 const LIMITLESS_BASE = 'https://onepiece.limitlesstcg.com';
 
-// Cards in sets OPCardlist doesn't index. Match this list to chase entries in
-// public/data/prices.js for the four experimental sets. When you add a new
-// chase variant for OP-15 / PRB-02 in prices.js, add the code here too.
+// Cards in sets OPCardlist doesn't index. Add codes here ONLY when we've
+// verified that Limitless's `/cards/<code>` page actually carries the chase
+// variant that prices.js stores under that code.
+//
+// EB-04 chase cards (EB04-001 SP Gold, EB04-061 SEC Manga, etc.) are NOT in
+// this list because Limitless's pages for those codes only show the base
+// print and OP-15 reprint — not the EB-04 SP Gold / SEC chase variants.
+// Including them would replace the curated $800/$600 chase prices with
+// low-tier ($58/$44) values on the live site. Until a reliable mapping
+// exists for EB-04 chase variants, those entries stay manually curated in
+// public/data/prices.js.
+//
+// OP14-119 (Mihawk Manga) IS reliable: Limitless's v=2 row matches the
+// _p2 Manga Alt variant prices.js stores, just at a different price point
+// (genuine market movement, picked up by live-prices.js's magnitude check).
 const LIMITLESS_GAP_FILL = [
-  // OP-14
   'OP14-119',
-  // EB-04
-  'EB04-001', 'EB04-044', 'EB04-059', 'EB04-060', 'EB04-061', 'EB04-062',
-  // OP-15: (no entries in prices.js yet)
-  // PRB-02: (no entries in prices.js yet)
 ];
 
 // A handful of cards present in BOTH OPCardlist and Limitless. For each, the

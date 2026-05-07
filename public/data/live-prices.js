@@ -18,8 +18,30 @@
     return m ? { base: m[1], suffix: m[2] || '' } : null;
   }
 
+  function priceNum(s) {
+    if (s == null) return NaN;
+    const n = parseFloat(String(s).replace(/[$,]/g, ''));
+    return Number.isFinite(n) ? n : NaN;
+  }
+
+  // Refuse to overwrite an existing curated price if the live value is much
+  // lower (default >3×). The most common cause of a big drop is that the
+  // live source is reporting a different variant than the static prices.js
+  // entry — e.g. Limitless's "EB04-001" page only carries the OP-15 reprint
+  // ($58) while prices.js holds the SP Gold Leader ($800). Letting the
+  // overwrite go through would put $58 on the live site, which is wrong.
+  function safeToMerge(existingEn, liveEn) {
+    const oldVal = priceNum(existingEn);
+    const newVal = priceNum(liveEn);
+    if (!Number.isFinite(oldVal) || !Number.isFinite(newVal)) return true;
+    if (oldVal <= 0 || newVal <= 0) return true;
+    // Allow growth and reasonable drops; block big drops.
+    if (oldVal / newVal > 3) return false;
+    return true;
+  }
+
   // Update window.PRICE_DB with one live price. Preserves nested-vs-flat shape
-  // of whatever's already in PRICE_DB.
+  // of whatever's already in PRICE_DB. Returns true if a merge was applied.
   function mergeOne(code, livePrice) {
     if (!window.PRICE_DB) return false;
     const parsed = parseCode(code);
@@ -28,16 +50,32 @@
     const entry = window.PRICE_DB[base] || (window.PRICE_DB[base] = {});
 
     if (suffix) {
-      // Targeted variant update — make sure the variant slot exists.
+      // Targeted variant update. Suffix-tagged data is high-confidence
+      // (OPCardlist scrape preserves _pN), so we apply unconditionally —
+      // but if the slot already had an entry, still do the magnitude check.
+      const prev = entry[suffix] && entry[suffix].en;
+      if (prev && !safeToMerge(prev, livePrice)) {
+        console.warn('[live-prices] skip ' + code + suffix + ': $' + priceNum(prev) + ' >> live $' + priceNum(livePrice));
+        return false;
+      }
       if (!entry[suffix] || typeof entry[suffix] !== 'object') {
         entry[suffix] = { label: 'Variant ' + suffix.slice(1).toUpperCase() };
       }
       entry[suffix].en = livePrice;
-    } else if (entry[''] && typeof entry[''] === 'object') {
-      // Nested shape with a '' base variant slot
+      return true;
+    }
+
+    // Top-level (flat or nested-with-empty-string base). Same magnitude check
+    // applies — protects curated chase prices in flat-shape entries from
+    // being downgraded by base-card data shipped under the same code.
+    const prev = entry.en || (entry[''] && entry[''].en);
+    if (prev && !safeToMerge(prev, livePrice)) {
+      console.warn('[live-prices] skip ' + code + ': $' + priceNum(prev) + ' >> live $' + priceNum(livePrice));
+      return false;
+    }
+    if (entry[''] && typeof entry[''] === 'object') {
       entry[''].en = livePrice;
     } else {
-      // Flat shape (or empty entry) — update the top-level en
       entry.en = livePrice;
     }
     return true;
