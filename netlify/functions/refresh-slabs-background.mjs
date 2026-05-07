@@ -134,7 +134,7 @@ export default async () => {
   let response;
   try {
     response = await client.messages.create({
-      model:      'claude-sonnet-4-20250514',
+      model:      'claude-sonnet-4-6',
       max_tokens: 8000,
       tools:      [{ type: 'web_search_20250305', name: 'web_search' }],
       messages:   [{ role: 'user', content: buildPrompt(SLAB_TARGETS) }],
@@ -193,7 +193,7 @@ export default async () => {
     _cardCount:  Object.keys(byCard).length,
     _hits:       nonNullPrices,
     _source:     'claude_web_search',
-    _model:      'claude-sonnet-4-20250514',
+    _model:      'claude-sonnet-4-6',
     _elapsedSec: parseFloat(elapsed),
     _usage:      response.usage,
     ...byCard,
