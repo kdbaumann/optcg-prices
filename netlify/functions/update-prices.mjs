@@ -17,8 +17,9 @@
 //         those sets.
 //      b) Cross-verify: a small sample of cards is fetched from Limitless
 //         and compared against the OPCardlist value. Spreads >25% are
-//         logged and surfaced under payload._conflicts so stale or
-//         wrong-variant data shows up the next time someone looks.
+//         exposed under payload._priceCheck as a per-variant breakdown
+//         from both sources, so a human can spot stale or wrong-variant
+//         entries on review.
 
 import { getStore } from '@netlify/blobs';
 
@@ -55,15 +56,20 @@ const LIMITLESS_GAP_FILL = [
   // PRB-02: (no entries in prices.js yet)
 ];
 
-// A handful of cards present in BOTH OPCardlist and Limitless. Used to
-// sanity-check that the two sources roughly agree. >25% spread flags as a
-// _conflicts entry in the response payload.
+// A handful of cards present in BOTH OPCardlist and Limitless. For each, the
+// function publishes the full per-variant price breakdown from each source
+// under payload._priceCheck. No auto-flagging — Limitless rows are labeled by
+// set/print name while OPCardlist data is keyed by _pN/_rN suffix, which
+// makes apples-to-apples mapping unreliable. Review by hand.
 const LIMITLESS_CROSS_VERIFY = [
   'OP01-120', 'OP05-119', 'OP07-051', 'OP09-118', 'OP13-118',
 ];
 
 // Limitless markup: <a class="card-price usd" href="…tcgplayer…">$1,234.56</a>
 const LIM_USD = /<a[^>]*class="card-price[^"]*usd[^"]*"[^>]*>\s*\$([\d,.]+)\s*<\/a>/g;
+
+// One <tr> on Limitless = one variant. We pull (price, vparam, set/print label).
+const LIM_TR  = /<tr[^>]*>([\s\S]*?)<\/tr>/g;
 
 // ── Generic helpers ───────────────────────────────────────────────────────────
 
@@ -113,26 +119,54 @@ async function fetchSetPrices(setCode, silent404 = false) {
 
 // ── Limitless fetcher ─────────────────────────────────────────────────────────
 
-// Fetches a single card detail page and returns the highest USD price across
-// all variant rows on the page (which is almost always the chase variant).
-// Returns null if the card doesn't exist or no prices are present.
-async function fetchCardFromLimitless(code) {
+// Returns the raw HTML of a Limitless card page (or '' on failure).
+async function fetchLimitlessHtml(code) {
   try {
     const res = await fetch(`${LIMITLESS_BASE}/cards/${code}`, {
       headers: { 'User-Agent': UA },
       signal: AbortSignal.timeout(10_000),
       redirect: 'follow',
     });
-    if (!res.ok) return null;
-    const html = await res.text();
-    const prices = [...html.matchAll(LIM_USD)]
-      .map(m => parseFloat(m[1].replace(/,/g, '')))
-      .filter(p => Number.isFinite(p) && p > 0);
-    if (prices.length === 0) return null;
-    return Math.max(...prices);
+    if (!res.ok) return '';
+    return await res.text();
   } catch {
-    return null;
+    return '';
   }
+}
+
+// Walks each <tr> on a Limitless card page and returns one entry per variant:
+// { price, vparam, label }. label is the print/set name (e.g. "Romance Dawn",
+// "Prize Cards", "One Piece The Best"). vparam is "v=N" or "base".
+// Returns [] if the card doesn't exist on Limitless.
+function parseLimitlessVariants(html) {
+  if (!html) return [];
+  const out = [];
+  for (const trMatch of html.matchAll(LIM_TR)) {
+    const row = trMatch[1];
+    if (!row.includes('card-price') || !row.includes('$')) continue;
+    const usd = row.match(/<a[^>]*class="card-price[^"]*usd[^"]*"[^>]*>\s*\$([\d,.]+)/);
+    if (!usd) continue;
+    const price = parseFloat(usd[1].replace(/,/g, ''));
+    if (!Number.isFinite(price)) continue;
+    const v = row.match(/\?v=(\d+)/);
+    const labelM = row.match(/<a[^>]*>\s*([^<]+?)\s*</);
+    let label = labelM ? labelM[1] : '';
+    label = label.replace(/&#039;/g, "'").replace(/&amp;/g, '&').trim();
+    out.push({
+      vparam: v ? `v=${v[1]}` : 'base',
+      label,
+      price,
+    });
+  }
+  return out;
+}
+
+// Convenience: max USD price across all variants on a Limitless card page.
+async function fetchCardMaxFromLimitless(code) {
+  const html = await fetchLimitlessHtml(code);
+  const variants = parseLimitlessVariants(html);
+  if (variants.length === 0) return null;
+  return Math.max(...variants.map(v => v.price));
 }
 
 // ── Handler ───────────────────────────────────────────────────────────────────
@@ -170,7 +204,7 @@ export default async () => {
   // ── 2a. SECONDARY (gap-fill): Limitless for sets OPCardlist doesn't have ──
   const gapResults = await Promise.allSettled(
     LIMITLESS_GAP_FILL.map(code =>
-      fetchCardFromLimitless(code).then(price => ({ code, price }))
+      fetchCardMaxFromLimitless(code).then(price => ({ code, price }))
     )
   );
   let gapFilled = 0;
@@ -184,39 +218,39 @@ export default async () => {
   }
   console.log(`[update-prices] Limitless gap-fill: ${gapFilled}/${LIMITLESS_GAP_FILL.length}`);
 
-  // ── 2b. SECONDARY (cross-verify): sanity-check OPCardlist values ──
-  const verifyResults = await Promise.allSettled(
+  // ── 2b. SECONDARY (cross-verify): full variant breakdown from both sources ──
+  // We do NOT auto-flag "conflicts" — variant ↔ variant matching across the
+  // two sources is unreliable (Limitless rows are labeled by set/print name,
+  // OPCardlist data is keyed by _pN/_rN suffix). Instead we publish the full
+  // breakdown under payload._priceCheck so a human can compare per variant.
+  const verifyHtmls = await Promise.allSettled(
     LIMITLESS_CROSS_VERIFY.map(code =>
-      fetchCardFromLimitless(code).then(price => ({ code, price }))
+      fetchLimitlessHtml(code).then(html => ({ code, html }))
     )
   );
-  const conflicts = [];
-  for (const r of verifyResults) {
-    if (r.status !== 'fulfilled' || !r.value || !r.value.price) continue;
-    const { code, price: lim } = r.value;
+  const priceCheck = [];
+  for (const r of verifyHtmls) {
+    if (r.status !== 'fulfilled') continue;
+    const { code, html } = r.value;
+    const limVariants = parseLimitlessVariants(html);
+    if (limVariants.length === 0) continue;
 
-    // OPCardlist's highest variant price for this card code (any suffix)
-    let opcMax = 0;
+    const opcVariants = {};
     for (const k of Object.keys(allPrices)) {
-      if (k !== code && !k.startsWith(code + '_')) continue;
-      const v = parseFloat((allPrices[k].en || '').replace(/[$,]/g, ''));
-      if (Number.isFinite(v) && v > opcMax) opcMax = v;
+      if (k === code || k.startsWith(code + '_')) {
+        opcVariants[k] = allPrices[k].en;
+      }
     }
-    if (opcMax === 0) continue;
-
-    const high = Math.max(opcMax, lim);
-    const low  = Math.min(opcMax, lim);
-    const spread = (high - low) / high;
-    if (spread > 0.25) {
-      const entry = {
-        code,
-        opcardlist: fmtUsd(opcMax),
-        limitless:  fmtUsd(lim),
-        spread:     (spread * 100).toFixed(1) + '%',
-      };
-      conflicts.push(entry);
-      console.warn(`[update-prices] CONFLICT ${code}: OPC=${entry.opcardlist} vs Lim=${entry.limitless} (${entry.spread})`);
-    }
+    priceCheck.push({
+      code,
+      opcardlist: opcVariants,
+      limitless: limVariants.map(v => ({
+        vparam: v.vparam,
+        label:  v.label,
+        price:  fmtUsd(v.price),
+      })),
+    });
+    console.log(`[update-prices] price-check ${code}: ${Object.keys(opcVariants).length} OPC variants, ${limVariants.length} Lim variants`);
   }
 
   // ── 3. Write the Blob ──
@@ -224,19 +258,19 @@ export default async () => {
     _updated:    started,
     _cardCount:  Object.keys(allPrices).length,
     _errors:     errors,
-    ...(conflicts.length > 0 ? { _conflicts: conflicts } : {}),
+    ...(priceCheck.length > 0 ? { _priceCheck: priceCheck } : {}),
     ...allPrices,
   };
   await store.setJSON('prices', payload);
-  console.log(`[update-prices] Done. ${Object.keys(allPrices).length} prices stored, ${conflicts.length} conflicts.`);
+  console.log(`[update-prices] Done. ${Object.keys(allPrices).length} prices stored, ${priceCheck.length} cards price-checked.`);
 
   return new Response(
     JSON.stringify({
-      status:     'ok',
-      updated:    started,
-      cardCount:  Object.keys(allPrices).length,
+      status:      'ok',
+      updated:     started,
+      cardCount:   Object.keys(allPrices).length,
       gapFilled,
-      conflicts:  conflicts.length,
+      priceCheck:  priceCheck.length,
       errors,
     }),
     { headers: { 'Content-Type': 'application/json' } }
