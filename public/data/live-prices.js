@@ -11,6 +11,34 @@
 (function () {
   const API = '/api/prices';
 
+  // ── Fix variant card images ────────────────────────────────────────────────
+  // Every row authored with `data-bandai="CODE_pN"` was relying on a runtime
+  // patch (which never existed) to rewrite the <img src> to the variant URL.
+  // Without that, the page falls back to /card-img/<base-code> and shows the
+  // wrong art (base print instead of Manga Alt / Red SAA / etc).
+  //
+  // We do that patch here, on DOMContentLoaded, before any price work runs.
+  function fixVariantImages() {
+    let n = 0;
+    document.querySelectorAll('[data-bandai]').forEach(el => {
+      const variantCode = el.dataset.bandai;
+      if (!variantCode) return;
+      const img = el.querySelector('img');
+      if (!img) return;
+      const want = '/card-img/' + variantCode;
+      if (img.getAttribute('src') === want) return;     // already correct
+      img.setAttribute('src', want);
+      const fb = 'https://en.onepiece-cardgame.com/images/cardlist/card/' + variantCode + '.png';
+      img.setAttribute(
+        'onerror',
+        "if(this.src!=='" + fb + "'){this.src='" + fb + "'}else{this.style.opacity='.2'}"
+      );
+      n++;
+    });
+    if (n > 0) console.log('[live-prices] fixed ' + n + ' variant card images');
+    return n;
+  }
+
   // 'OP01-120_p2'  → { base: 'OP01-120', suffix: '_p2' }
   // 'OP01-120'     → { base: 'OP01-120', suffix: ''     }
   function parseCode(code) {
@@ -161,10 +189,14 @@
   // Make the 🔄 button on index.html work (was previously calling an undefined function).
   window.refreshPrices = refresh;
 
-  // Auto-run once on page load.
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', refresh);
-  } else {
+  // Auto-run once on page load: variant-image fix first, then price refresh.
+  function init() {
+    fixVariantImages();
     refresh();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 })();
