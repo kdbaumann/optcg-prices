@@ -136,6 +136,14 @@
         const pdEntry = window.PRICE_DB && window.PRICE_DB[baseCode];
         const pdVar   = pdEntry && pdEntry[suffix];
 
+        // Skip cards explicitly tagged as tournament/promo in PRICE_DB.
+        // Without this guard, /api/prices's per-set membership index would
+        // surface tournament alt-arts (e.g. OP01-002_p4 3-on-3 Cup stamp) in
+        // the OP-01 top-10 even though they're conceptually promos that
+        // belong in tournament-guide.html.
+        if (pdVar && pdVar.releasedIn === 'promos') continue;
+        if (!pdVar && pdEntry && pdEntry.releasedIn === 'promos') continue;
+
         // Name preference: PRICE_DB > scraper-provided name > base code as last resort.
         // The scraper now captures `name` from OPCardlist's RSC stream so codes
         // that aren't in PRICE_DB (e.g. OP13-080 Imu / Demon Pack) still display

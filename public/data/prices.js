@@ -160,6 +160,108 @@ window.PRICE_DB = {
   'P-097': { releasedIn:'promos', name:'Shanks',            en:'$25–$60', psa:'$150', jp:'¥4,000 (≈$28)',    note:'Event Pack Vol.8 (current)' },
   'P-098': { releasedIn:'promos', name:'Buggy',             en:'$20–$40', psa:'$100', jp:'¥3,000 (≈$21)',    note:'Event Pack Vol.8 (current)' },
   'P-099': { releasedIn:'promos', name:'Monkey D. Luffy',   en:'$20–$45', psa:'$110', jp:'¥3,200 (≈$22)',    note:'Event Pack Vol.8 (current)' },
+
+  // ── Tournament-Pack winners (P-046..049 = Tournament Pack Vol.5+) ─────
+  'P-046': { releasedIn:'promos', name:'Yamato',            en:'$20–$50',   psa:'$120+', note:'Tournament Pack Vol.5 — Winner Alt Art' },
+  'P-047': { releasedIn:'promos', name:'Nico Robin',        en:'$12–$30',   psa:'$70+',  note:'Tournament Pack Vol.5 — Top 16 Alt Art' },
+  'P-048': { releasedIn:'promos', name:'Nami',              en:'$15–$40',   psa:'$80+',  note:'Tournament Pack Vol.5 — Top 8 Alt Art' },
+  'P-049': { releasedIn:'promos', name:'Kaido',             en:'$100–$400', psa:'$600+', note:'Tournament Pack — premium Top 4 Alt Art' },
+
+  // ── Tournament alt-art variants (TC / CS / Regionals stamped promos) ──
+  // All releasedIn:'promos' so they don't pollute main-set top-10s. The
+  // top-level `name` is the character; per-variant `label` describes the
+  // event/placement so the lookup modal and tournament guide can disambiguate.
+  'OP01-002': {
+    name: 'Roronoa Zoro',
+    '_p4': { releasedIn:'promos', en:'$400–$800',     psa:'$2,000',     label:'3-on-3 Cup 2023 — Top 4 stamp' },
+  },
+  'OP01-094': {
+    name: 'Kaido',
+    '_p4': { releasedIn:'promos', en:'$400–$600',     psa:null,         label:'Treasure Cup May–Jun 2024 — Top 8 stamp' },
+  },
+  'OP01-121': {
+    name: 'Yamato',
+    '_p4': { releasedIn:'promos', en:'$80–$200',      psa:'$400+',      label:'Treasure Cup — Top 32 alt-art' },
+  },
+  'OP03-013': {
+    name: 'Marco',
+    '_p4': { releasedIn:'promos', en:'$130–$175',     psa:'$500',       label:'Treasure Cup — Top 8 alt-art' },
+  },
+  'OP03-114': {
+    name: 'Big Mom',
+    '_p2': { releasedIn:'promos', en:'$300–$1,600',   psa:null,         label:'CS 2024-25 W2 — Top 16 stamp' },
+  },
+  'OP03-116': {
+    name: 'Shirahoshi',
+    '_p2': { releasedIn:'promos', en:'$80–$400',      psa:null,         label:'CS 2024-25 W3 — Top 64 stamp' },
+  },
+  'OP04-106': { releasedIn:'promos', name:'Monkey D. Garp', en:'$120–$300', psa:'$600',    note:'Treasure Cup Aug–Sep 2024 — Top 8 alt-art' },
+  'OP04-112': {
+    name: 'Rebecca',
+    '_p2': { releasedIn:'promos', en:'$5,000–$8,000', psa:'$25,000',    label:'CS 2023 Finals — 1st Place trophy (JP)' },
+  },
+  'OP07-109': {
+    name: 'Monkey D. Luffy',
+    '_p2': { releasedIn:'promos', en:'$2,000–$4,000', psa:'$8,000',     label:'Treasure Cup — Top 8 manga alt' },
+  },
+  'OP07-119': {
+    name: 'Portgas D. Ace',
+    '_p2': { releasedIn:'promos', en:'$500–$2,000',   psa:null,         label:'CS 2025-26 — Serial Trophy' },
+  },
+  'OP09-009': {
+    name: 'Benn Beckman',
+    '_p3': { releasedIn:'promos', en:'$300–$1,600',   psa:null,         label:'CS 2025-26 S2 — Top 16 stamp' },
+  },
+  'OP09-013': {
+    name: 'Yasopp',
+    '_p3': { releasedIn:'promos', en:'$80–$400',      psa:null,         label:'CS 2025-26 S2 — Top 64 stamp' },
+  },
+  'OP09-050': {
+    name: 'Nami',
+    '_p2': { releasedIn:'promos', en:'$80–$400',      psa:null,         label:'CS 2025-26 S1 — Top 64 stamp' },
+  },
+  'OP09-061': {
+    name: 'Monkey D. Luffy',
+    '_p2': { releasedIn:'promos', en:'$500–$2,000',   psa:null,         label:'CS 2025-26 — Jumbo Card (Top 8)' },
+  },
+  'OP09-065': {
+    name: 'Sanji',
+    '_p2': { releasedIn:'promos', en:'$500–$2,000',   psa:null,         label:'CS 2025-26 S1 — Top 8 stamp' },
+  },
+  'OP09-076': {
+    name: 'Roronoa Zoro',
+    '_p2': { releasedIn:'promos', en:'$300–$1,600',   psa:null,         label:'CS 2025-26 S1 — Top 16 stamp' },
+  },
+  'OP10-005': {
+    name: 'Sanji',
+    '_p4': { releasedIn:'promos', en:null,            psa:null,         label:'Treasure Cup — alt-art prize' },
+  },
+  'OP11-004': { releasedIn:'promos', name:'Monkey D. Luffy', en:'$120–$250',   psa:'$750',  note:'Treasure Cup Aug 2025 — Top 64 alt-art' },
+  'OP11-010': {
+    name: 'Roronoa Zoro',
+    '_p4': { releasedIn:'promos', en:'$600–$1,200',   psa:'$3,500',     label:'Treasure Cup — Top 8 alt-art' },
+  },
+  'OP11-119': {
+    name: 'Koby',
+    '_p4': { releasedIn:'promos', en:'$150–$300',     psa:'$600+',      label:'Treasure Cup — Top 16 alt-art' },
+  },
+  'OP12-015': { releasedIn:'promos', name:'Monkey D. Luffy', en:'$150–$300',   psa:'$900',  note:'Treasure Cup Nov 2025 — Top 64 alt-art' },
+  'OP12-031': {
+    name: 'Roronoa Zoro',
+    '_p4': { releasedIn:'promos', en:'$800–$1,500',   psa:'$5,400',     label:'Treasure Cup — Top 8 alt-art' },
+  },
+  'OP13-016': {
+    name: 'Monkey D. Garp',
+    '_p4': { releasedIn:'promos', en:'$200–$500',     psa:'$1,500',     label:'Treasure Cup Aug–Sep 2024 — Top 8 alt-art' },
+  },
+  'ST01-120': {
+    name: 'Shanks',
+    '_p2': { releasedIn:'promos', en:'$500–$2,000',   psa:null,         label:'CS 2024-25 — Serial Trophy' },
+  },
+  'ST04-003': {
+    name: 'Kaido',
+    '_p2': { releasedIn:'promos', en:'$4,000–$6,000', psa:'$18,000',    label:'CS 2023 Finals — 2nd Place trophy (JP)' },
+  },
 };
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
