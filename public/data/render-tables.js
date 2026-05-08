@@ -132,14 +132,20 @@
         const apiData  = live[fullCode];
         if (!apiData || !apiData.en) continue;
 
-        // Pull whatever we can from PRICE_DB for nicer display
+        // Pull whatever we can from PRICE_DB for nicer display.
         const pdEntry = window.PRICE_DB && window.PRICE_DB[baseCode];
         const pdVar   = pdEntry && pdEntry[suffix];
+
+        // Name preference: PRICE_DB > scraper-provided name > base code as last resort.
+        // The scraper now captures `name` from OPCardlist's RSC stream so codes
+        // that aren't in PRICE_DB (e.g. OP13-080 Imu / Demon Pack) still display
+        // a real character name.
+        const name = (pdEntry && pdEntry.name) || apiData.name || baseCode;
 
         byKey.set(fullCode, {
           code:    baseCode,
           suffix,
-          name:    (pdEntry && pdEntry.name) || baseCode,
+          name,
           variant: {
             releasedIn: setId,
             en:         apiData.en,

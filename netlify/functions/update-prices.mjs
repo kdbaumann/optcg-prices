@@ -35,9 +35,11 @@ const OPCARDLIST_BASE = 'https://www.opcardlist.com';
 
 // Doubly-escaped Next.js streaming form. Captures e.g. OP01-120 base, plus
 // suffixed variants (_p1 SR Parallel, _p2 Manga Alt, _r1 PRB reprint, …).
-const OPC_PRIMARY = /\\"id\\":\\"([A-Z0-9]+-\d+(?:_[a-zA-Z]\d+)?)\\"[\s\S]{0,2500}?\\"marketPrice\\":\s*([\d.]+)/g;
+// Three capture groups: card id, name (optional, may be absent), market price.
+const OPC_PRIMARY = /\\"id\\":\\"([A-Z0-9]+-\d+(?:_[a-zA-Z]\d+)?)\\"(?:[\s\S]{0,400}?\\"name\\":\\"([^"]+?)\\")?[\s\S]{0,2500}?\\"marketPrice\\":\s*([\d.]+)/g;
 
 // Fallback for any future format change: schema.org Product JSON-LD blocks.
+// Two capture groups: sku, price. (No name in fallback path.)
 const OPC_FALLBACK = /"sku":"([A-Z0-9]+-\d+(?:_[a-zA-Z]\d+)?)"[\s\S]{0,800}?"price":\s*([\d.]+)/g;
 
 // ── Limitless config ──────────────────────────────────────────────────────────
@@ -107,20 +109,21 @@ async function fetchSetPrices(setCode, silent404 = false) {
   const seen = new Set();
   const results = [];
 
-  function consume(pattern) {
+  function consume(pattern, hasName) {
     for (const m of html.matchAll(pattern)) {
-      const code = m[1] && m[1].trim();
+      const code  = m[1] && m[1].trim();
       if (!code || seen.has(code)) continue;
-      const price = parseFloat(m[2]);
+      const name  = hasName ? (m[2] || '') : '';
+      const price = parseFloat(hasName ? m[3] : m[2]);
       if (!Number.isFinite(price) || price < 10) continue;
       seen.add(code);
-      results.push({ code, price });
+      results.push({ code, price, name });
       if (results.length >= 50) return true;
     }
     return false;
   }
 
-  if (!consume(OPC_PRIMARY)) consume(OPC_FALLBACK);
+  if (!consume(OPC_PRIMARY, true)) consume(OPC_FALLBACK, false);
   return results;
 }
 
@@ -210,8 +213,15 @@ export default async () => {
       continue;
     }
     bySet[setCode] = r.value.cards.map(c => c.code);
-    for (const { code, price } of r.value.cards) {
-      if (!allPrices[code]) allPrices[code] = { en: fmtUsd(price), updated: started, source: 'opcardlist' };
+    for (const { code, price, name } of r.value.cards) {
+      if (!allPrices[code]) {
+        allPrices[code] = { en: fmtUsd(price), updated: started, source: 'opcardlist' };
+        if (name) allPrices[code].name = name;
+      } else if (name && !allPrices[code].name) {
+        // Same code seen in multiple set scrapes — keep first price, but pick up
+        // a name on a later pass if the earlier one didn't have it.
+        allPrices[code].name = name;
+      }
     }
     console.log(`[update-prices] ${setCode}: ${r.value.cards.length} cards`);
   }
