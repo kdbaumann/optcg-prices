@@ -54,17 +54,21 @@
 
   // ── Render one row as an HTML string ───────────────────────────────────────
   // item is the {code, suffix, name, variant, price} shape from cardsForSet().
+  // Produces an 8-column row matching the OP-13 / OP-09 / etc. table layout:
+  //   #  ·  Card  ·  Card #  ·  Rarity  ·  EN  ·  PSA 10  ·  BGS 10  ·  BGS BL
+  // BGS 10 and BGS BL show '—' when prices.js doesn't have those values yet.
   function renderRow(item, rank) {
     const fullCode = item.code + (item.suffix || '');
     const v        = item.variant;
-    const en       = v.en  || '—';
-    const psa      = v.psa || '';
+    const en       = v.en    || '—';
+    const psa      = v.psa   || '—';
+    const bgs10    = v.bgs10 || '—';
+    const bgsbl    = v.bgsbl || '—';
     const label    = v.label || '';
     const name     = item.name || label || item.code;
     const display  = label ? `${name} — ${label}` : name;
     const top3     = rank <= 3 ? ' top3' : '';
     const fb       = `https://en.onepiece-cardgame.com/images/cardlist/card/${fullCode}.png`;
-    const note     = v.note || '';
 
     return (
       `<tr style="cursor:pointer" onclick="openCardLookup('${esc(item.code)}')" ` +
@@ -83,7 +87,8 @@
         `<td><span class="rarity-badge ${rarityClass(label)}">${esc(rarityShort(label))}</span></td>` +
         `<td class="price-cell">${esc(en)}</td>` +
         `<td class="grade-cell g-psa">${esc(psa)}</td>` +
-        `<td class="col-notes">${esc(note)}</td>` +
+        `<td class="grade-cell g-bgs">${esc(bgs10)}</td>` +
+        `<td class="grade-cell g-bl">${esc(bgsbl)}</td>` +
       `</tr>`
     );
   }
