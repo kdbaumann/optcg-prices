@@ -14,13 +14,28 @@ function srcUrls(code) {
   const unusual = /_p[6-9]|_p1\d|_r\d/.test(code);
   const isPromo = code.startsWith('P-');
 
+  // Tournament alt-art variants (mostly _p4) frequently aren't published on
+  // either Bandai or Limitless — neither CDN has the file. Fall back to the
+  // base-code art so the row at least shows the right CHARACTER (the user
+  // sees "Luffy" instead of a faded blank). The base art is never the right
+  // alt-art frame, but it's far better UX than a missing image.
+  const baseM = code.match(/^(.+?)(_p\d+|_r\d+)$/);
+  const baseCode = baseM ? baseM[1] : null;
+  const baseFolder = baseCode && baseCode.match(/^([A-Z]+\d+)/)
+    ? baseCode.match(/^([A-Z]+\d+)/)[1]
+    : (baseCode && baseCode.startsWith('P-') ? 'P' : null);
+
+  const baseFallbacks = baseCode
+    ? [`${LIM}/${baseFolder}/${baseCode}_EN.webp`, `${BANDAI}/${baseCode}.png`]
+    : [];
+
   if (isPromo) {
-    return [`${LIM}/P/${code}_EN.webp`, `${BANDAI}/${code}.png`];
+    return [`${LIM}/P/${code}_EN.webp`, `${BANDAI}/${code}.png`, ...baseFallbacks];
   }
   if (unusual || code.endsWith('_p4')) {
-    return [`${BANDAI}/${code}.png`, `${LIM}/${folder}/${code}_EN.webp`];
+    return [`${BANDAI}/${code}.png`, `${LIM}/${folder}/${code}_EN.webp`, ...baseFallbacks];
   }
-  return [`${LIM}/${folder}/${code}_EN.webp`, `${BANDAI}/${code}.png`];
+  return [`${LIM}/${folder}/${code}_EN.webp`, `${BANDAI}/${code}.png`, ...baseFallbacks];
 }
 
 function isRealImage(buf, contentType) {
