@@ -110,22 +110,49 @@
   }
 
   // Walk every row that links to a card via openCardLookup('CODE') and
-  // refresh its visible price cell from priceHeadline(code) — which now
-  // reflects the live data we just merged.
+  // refresh its visible price cell.
+  //
+  // Variant-aware: a row carrying data-bandai="CODE_pN" pins the cell to
+  // that specific variant's price (so different rows for the same card
+  // code can show different variant prices — e.g. OP13-118 _p2 manga at
+  // $1,949 alongside _p3 Red SAA at $8,490). Without data-bandai we fall
+  // back to priceHeadline (highest-priced variant for the code).
+  //
+  // Skips rows the renderer just painted (data-rendered="1") — those are
+  // already drawing from the live PRICE_DB, no DOM rewrite needed.
   function refreshDom() {
     if (!window.priceHeadline) return 0;
     let n = 0;
     document.querySelectorAll('[onclick*="openCardLookup"]').forEach(el => {
+      if (el.dataset && el.dataset.rendered === '1') return;  // renderer-owned
       const m = el.getAttribute('onclick').match(/openCardLookup\(\s*'([^']+)'/);
       if (!m) return;
-      const headline = window.priceHeadline(m[1]);
-      if (!headline || !headline.en) return;
-      // Common price-cell classes across the site
+      const code = m[1];
+
+      // Variant-specific lookup if data-bandai is present and well-formed
+      let priceText = null;
+      const bandai = el.dataset && el.dataset.bandai;
+      if (bandai && bandai.indexOf(code) === 0) {
+        const suffix = bandai.slice(code.length);
+        const entry  = window.PRICE_DB && window.PRICE_DB[code];
+        const variant = entry && entry[suffix];
+        if (variant && typeof variant === 'object' && variant.en) {
+          priceText = variant.en;
+        }
+      }
+      // Fall back to headline for rows without data-bandai or with a slot we
+      // don't have data for.
+      if (!priceText) {
+        const headline = window.priceHeadline(code);
+        if (headline && headline.en) priceText = headline.en;
+      }
+      if (!priceText) return;
+
       const cell = el.querySelector('.price-cell, .col-price, td.col-price, td.price-cell');
       if (!cell) return;
       const cur = cell.textContent.trim();
-      if (cur && cur !== headline.en) {
-        cell.textContent = headline.en;
+      if (cur && cur !== priceText) {
+        cell.textContent = priceText;
         cell.dataset.live = '1';
         n++;
       }
@@ -173,6 +200,14 @@
       const live = data[code] && data[code].en;
       if (live && mergeOne(code, live)) merged++;
     }
+
+    // Re-render any dynamic top-N tables now that PRICE_DB has live prices.
+    // Phase 2 wired this in but no section opts in yet — Phase 3 will.
+    let rendered = 0;
+    if (typeof window.renderAllTopN === 'function') {
+      rendered = window.renderAllTopN() || 0;
+    }
+
     const domUpdates = refreshDom();
 
     let when = 'unknown';
@@ -183,7 +218,7 @@
            : minsAgo < 1440 ? Math.round(minsAgo / 60) + ' hr ago'
            : Math.round(minsAgo / 1440) + ' day(s) ago';
     }
-    setStatus('✅ Live prices: ' + merged + ' cards merged · ' + domUpdates + ' tables refreshed · last scrape ' + when);
+    setStatus('✅ Live prices: ' + merged + ' merged · ' + rendered + ' rows rendered · ' + domUpdates + ' cells refreshed · last scrape ' + when);
   }
 
   // Make the 🔄 button on index.html work (was previously calling an undefined function).
