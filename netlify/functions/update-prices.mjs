@@ -194,6 +194,13 @@ export default async () => {
       fetchSetPrices(setCode, silent).then(cards => ({ setCode, cards }))
     )
   );
+
+  // Per-set membership index. Lets the front-end renderer ask "what cards
+  // are in this set, sorted by current price?" without re-scraping. Set
+  // codes are kebab-case (op-13, eb-04) — front-end normalizes when
+  // looking up a section id like 'op13'.
+  const bySet = {};
+
   for (let i = 0; i < settled.length; i++) {
     const { setCode } = tasks[i];
     const r = settled[i];
@@ -202,6 +209,7 @@ export default async () => {
       console.error(`[update-prices] ERROR ${setCode}: ${errors[errors.length - 1].error}`);
       continue;
     }
+    bySet[setCode] = r.value.cards.map(c => c.code);
     for (const { code, price } of r.value.cards) {
       if (!allPrices[code]) allPrices[code] = { en: fmtUsd(price), updated: started, source: 'opcardlist' };
     }
@@ -265,6 +273,7 @@ export default async () => {
     _updated:    started,
     _cardCount:  Object.keys(allPrices).length,
     _errors:     errors,
+    _bySet:      bySet,
     ...(priceCheck.length > 0 ? { _priceCheck: priceCheck } : {}),
     ...allPrices,
   };

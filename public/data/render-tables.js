@@ -93,23 +93,86 @@
     );
   }
 
+  // ── Set-id normalization: front-end uses "op13", /api/prices uses "op-13" ─
+  function apiSetKey(setId) {
+    return setId.replace(/^(op|eb|prb|st)(\d+)$/, '$1-$2');
+  }
+
+  // Build the top-N candidate list for a given set by COMBINING two sources:
+  //
+  //   1. PRICE_DB (window.cardsForSet) — curated chase variants with rich
+  //      metadata: BGS 10, BGS BL, JP, hand-written labels.
+  //   2. /api/prices _bySet (window.LIVE_PRICES) — every code OPCardlist's
+  //      scrape returned for that set. Comprehensive but bare-bones (just
+  //      EN price, no grades, no labels beyond suffix-derived).
+  //
+  // PRICE_DB entries take precedence (richer metadata). Codes that appear
+  // only in /api/prices get a basic stub. Result is sorted by EN price
+  // descending, then sliced to top N.
+  function candidatesForSet(setId) {
+    const byKey = new Map();   // 'CODE' or 'CODE_pX' → item
+
+    // (1) PRICE_DB pass — primary metadata source
+    if (window.cardsForSet) {
+      for (const item of window.cardsForSet(setId)) {
+        byKey.set(item.code + (item.suffix || ''), item);
+      }
+    }
+
+    // (2) /api/prices pass — fill in everything else from the scrape
+    const live = window.LIVE_PRICES;
+    if (live && live._bySet) {
+      const codes = live._bySet[apiSetKey(setId)] || [];
+      for (const fullCode of codes) {
+        if (byKey.has(fullCode)) continue;   // already have rich data
+        const m = fullCode.match(/^([A-Z]+\d+-\d+)(_[a-zA-Z]\d+)?$/);
+        if (!m) continue;
+        const baseCode = m[1];
+        const suffix   = m[2] || '';
+        const apiData  = live[fullCode];
+        if (!apiData || !apiData.en) continue;
+
+        // Pull whatever we can from PRICE_DB for nicer display
+        const pdEntry = window.PRICE_DB && window.PRICE_DB[baseCode];
+        const pdVar   = pdEntry && pdEntry[suffix];
+
+        byKey.set(fullCode, {
+          code:    baseCode,
+          suffix,
+          name:    (pdEntry && pdEntry.name) || baseCode,
+          variant: {
+            releasedIn: setId,
+            en:         apiData.en,
+            psa:        (pdVar && pdVar.psa)   || '',
+            bgs10:      (pdVar && pdVar.bgs10) || '',
+            bgsbl:      (pdVar && pdVar.bgsbl) || '',
+            label:      (pdVar && pdVar.label) || (suffix ? 'Variant ' + suffix.slice(1).toUpperCase() : 'Base'),
+          },
+          price:   window.priceNum ? window.priceNum(apiData.en) : 0,
+        });
+      }
+    }
+
+    return [...byKey.values()].sort((a, b) => b.price - a.price);
+  }
+
   // ── Mount: find every [data-render-set] tbody and fill it with top-N ──────
   function renderAllTopN(n) {
     n = (typeof n === 'number' && n > 0) ? n : 10;
-    if (!window.cardsForSet) {
-      console.warn('[render-tables] window.cardsForSet missing — load data/prices.js first');
+    if (!window.cardsForSet && !window.LIVE_PRICES) {
+      console.warn('[render-tables] no data sources available — load prices.js or wait for /api/prices');
       return 0;
     }
     let total = 0, sectionCount = 0;
     document.querySelectorAll('[data-render-set]').forEach(target => {
       const setId = target.dataset.renderSet;
       if (!setId) return;
-      const cards = window.cardsForSet(setId);
-      if (!cards.length) {
-        target.innerHTML = '';  // empty section is fine (e.g. OP-15 with no data yet)
+      const cands = candidatesForSet(setId);
+      if (!cands.length) {
+        target.innerHTML = '';     // genuinely empty (e.g. OP-15 before scrape)
         return;
       }
-      const top = cards.slice(0, n);
+      const top = cands.slice(0, n);
       target.innerHTML = top.map((item, i) => renderRow(item, i + 1)).join('');
       sectionCount++;
       total += top.length;

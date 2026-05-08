@@ -194,6 +194,10 @@
       return;
     }
 
+    // Expose the full feed so render-tables.js can use _bySet to enumerate
+    // every code in a given set (not just the curated ones in PRICE_DB).
+    window.LIVE_PRICES = data;
+
     let merged = 0;
     for (const code of Object.keys(data)) {
       if (code.startsWith('_')) continue;        // metadata: _updated, _cardCount, etc.
