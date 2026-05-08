@@ -160,6 +160,57 @@
     return n;
   }
 
+  // ── Tournament guide: refresh the master prize table ──────────────────────
+  // tournament-guide.html has a 9-column master table (#promo-full-table) where
+  // each row is hand-authored with rich event metadata (placement, copies, pop)
+  // that doesn't exist in PRICE_DB. We can't render those rows from data — but
+  // we CAN keep the EN-raw and PSA-10 columns fresh by walking the rows and
+  // overwriting cells from PRICE_DB whenever we have an entry for the code.
+  //
+  // Column layout in #promo-full-table:
+  //   1 # · 2 Card · 3 Event Type · 4 Region · 5 Placement · 6 ~Copies
+  //   7 EN Raw · 8 PSA 10 · 9 Population
+  //
+  // Codes not in PRICE_DB are skipped (preserves hand-written values for the
+  // ~30 tournament codes that haven't been entered into prices.js yet).
+  function refreshTournamentDom() {
+    const table = document.getElementById('promo-full-table');
+    if (!table) return 0;
+    if (!window.priceHeadline) return 0;
+    let n = 0;
+    table.querySelectorAll('tbody tr[onclick*="openCardFromTG"]').forEach(tr => {
+      const m = tr.getAttribute('onclick').match(/openCardFromTG\(\s*'([^']+)'/);
+      if (!m) return;
+      const code = m[1];
+      const head = window.priceHeadline(code);
+      if (!head) return;       // no PRICE_DB entry — leave hand-written values
+
+      const cells = tr.children;
+      if (cells.length < 8) return;     // unexpected row shape, skip
+      const enCell  = cells[6];          // col 7 (0-indexed)
+      const psaCell = cells[7];          // col 8
+
+      if (head.en && enCell) {
+        const cur = enCell.textContent.trim();
+        if (cur !== head.en) {
+          enCell.textContent = head.en;
+          enCell.dataset.live = '1';
+          n++;
+        }
+      }
+      if (head.psa && psaCell) {
+        const cur = psaCell.textContent.trim();
+        if (cur !== head.psa) {
+          psaCell.textContent = head.psa;
+          psaCell.dataset.live = '1';
+          n++;
+        }
+      }
+    });
+    if (n > 0) console.log('[live-prices] tournament master: ' + n + ' cells refreshed');
+    return n;
+  }
+
   // Render the small status line near the refresh button (if present).
   function setStatus(text) {
     const el = document.getElementById('refresh-status');
@@ -212,7 +263,8 @@
       rendered = window.renderAllTopN() || 0;
     }
 
-    const domUpdates = refreshDom();
+    const domUpdates  = refreshDom();
+    const tgUpdates   = refreshTournamentDom();
 
     let when = 'unknown';
     if (data._updated) {
@@ -222,15 +274,18 @@
            : minsAgo < 1440 ? Math.round(minsAgo / 60) + ' hr ago'
            : Math.round(minsAgo / 1440) + ' day(s) ago';
     }
-    setStatus('✅ Live prices: ' + merged + ' merged · ' + rendered + ' rows rendered · ' + domUpdates + ' cells refreshed · last scrape ' + when);
+    setStatus('✅ Live prices: ' + merged + ' merged · ' + rendered + ' rows rendered · ' + (domUpdates + tgUpdates) + ' cells refreshed · last scrape ' + when);
   }
 
   // Make the 🔄 button on index.html work (was previously calling an undefined function).
   window.refreshPrices = refresh;
 
   // Auto-run once on page load: variant-image fix first, then price refresh.
+  // Also do a synchronous tournament-table refresh from static PRICE_DB so the
+  // master prize table updates immediately even if /api/prices is unreachable.
   function init() {
     fixVariantImages();
+    refreshTournamentDom();
     refresh();
   }
   if (document.readyState === 'loading') {
