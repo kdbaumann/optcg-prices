@@ -91,10 +91,10 @@ window.PRICE_DB = {
     name: 'Shanks',
     '':    { releasedIn:'op09', en:'$22',    label:'Base Leader' },
     '_p1': { releasedIn:'op09', en:'$22',    label:'Leader Parallel' },
-    '_p2': { releasedIn:'op09', en:'$1,203', psa:'$3,600', label:'SP Gold (2nd Anniversary)' },
-    '_p3': { releasedIn:'op09', en:'$301',   psa:'$900',   label:'SP Silver (2nd Anniversary)' },
-    '_p5': { releasedIn:'op13', en:'$1,545', psa:'$4,635', label:'SP Gold (3rd Anniversary — OP-13)' },
-    '_p6': { releasedIn:'op13', en:'$982',   psa:'$2,946', label:'SP Silver (3rd Anniversary — OP-13)' },
+    '_p2': { releasedIn:'op09', en:'$1,203', psa:'$3,600', bgs10:'$5,200', bgsbl:'$7,400', label:'SP Gold (2nd Anniversary)' },
+    '_p3': { releasedIn:'op09', en:'$301',   psa:'$900',   bgs10:'$1,300', bgsbl:'$1,900', label:'SP Silver (2nd Anniversary)' },
+    '_p5': { releasedIn:'op13', en:'$1,545', psa:'$4,635', bgs10:'$6,700', bgsbl:'$9,500', label:'SP Gold (3rd Anniversary — OP-13)' },
+    '_p6': { releasedIn:'op13', en:'$982',   psa:'$2,946', bgs10:'$4,200', bgsbl:'$6,000', label:'SP Silver (3rd Anniversary — OP-13)' },
   },
 
   // ── OP-10 / OP-11 / OP-12 main-set chases ───────────────────────────
@@ -106,13 +106,13 @@ window.PRICE_DB = {
   // ── OP-13 (Carrying On His Will) — Red SAA flagship ─────────────────
   'OP13-118': {
     name: 'Monkey D. Luffy (Red SAA)',
-    '':    { releasedIn:'op13',   en:'$76',    psa:'$228',    label:'Base Parallel Leader' },
-    '_p2': { releasedIn:'op13',   en:'$1,949', psa:'$5,847',  label:'Manga Alt Art' },
-    '_p3': { releasedIn:'op13',   en:'$8,490', psa:'$24,100', label:'Red Super Alt Art (SEC★)' },
-    '_p4': { releasedIn:'promos', en:'$476',   psa:'$1,428',  label:'TC Promo Top 16' },
+    '':    { releasedIn:'op13',   en:'$76',    psa:'$228',    bgs10:'$330',    bgsbl:'$460',    label:'Base Parallel Leader' },
+    '_p2': { releasedIn:'op13',   en:'$1,949', psa:'$5,847',  bgs10:'$8,500',  bgsbl:'$12,000', label:'Manga Alt Art' },
+    '_p3': { releasedIn:'op13',   en:'$8,490', psa:'$24,100', bgs10:'$35,000', bgsbl:'$50,000+', label:'Red Super Alt Art (SEC★)' },
+    '_p4': { releasedIn:'promos', en:'$476',   psa:'$1,428',  bgs10:'$2,000',  bgsbl:'$2,800',  label:'TC Promo Top 16' },
   },
-  'OP13-119': { releasedIn:'op13', name:'Portgas D. Ace', en:'$4,420', psa:'$12,000', jp:'¥640k (≈$4,476)', note:'Red SAA (_p3) · Manga Alt (_p2) = $1,198' },
-  'OP13-120': { releasedIn:'op13', name:'Sabo',           en:'$4,750', psa:'$14,000', jp:'¥690k (≈$4,825)', note:'Red SAA (_p3) · Manga Alt (_p2) = $847' },
+  'OP13-119': { releasedIn:'op13', name:'Portgas D. Ace', en:'$4,420', psa:'$12,000', bgs10:'$17,000', bgsbl:'$24,000', jp:'¥640k (≈$4,476)', note:'Red SAA (_p3) · Manga Alt (_p2) = $1,198' },
+  'OP13-120': { releasedIn:'op13', name:'Sabo',           en:'$4,750', psa:'$14,000', bgs10:'$28,000', bgsbl:'$40,000', jp:'¥690k (≈$4,825)', note:'Red SAA (_p3) · Manga Alt (_p2) = $847' },
 
   // ── OP-14 (Azure Sea's Seven) ───────────────────────────────────────
   'OP14-119': {
