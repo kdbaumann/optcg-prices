@@ -135,11 +135,17 @@ async function fetchSetPrices(setCode, silent404 = false) {
       if (!code || seen.has(code)) continue;
       const name  = hasName ? (m[2] || '') : '';
       const price = parseFloat(hasName ? m[3] : m[2]);
-      if (!Number.isFinite(price) || price < 10) continue;
+      // Keep everything with a real positive price. Was filtered to >= $10
+      // (chase-variants only), but historical analysis + fluid top-10 needs
+      // every code OPCardlist publishes — bulk commons rotate into chase
+      // status sometimes (meta shifts, character popularity), and either way
+      // we want a continuous time series. ~3000 codes total at ~400KB/day.
+      if (!Number.isFinite(price) || price <= 0) continue;
       seen.add(code);
       results.push({ code, price, name });
-      // Cap is per-page, not per-set: /promo carries 300+ codes today.
-      if (results.length >= 600) return true;
+      // Per-page safety cap. With the filter dropped, OP-set pages return
+      // ~150 codes each and /promo returns ~340; total per page ≤ 600.
+      if (results.length >= 1000) return true;
     }
     return false;
   }
