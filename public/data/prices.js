@@ -320,26 +320,34 @@ window.cardsForSet = function (setId) {
   for (const [code, entry] of Object.entries(window.PRICE_DB)) {
     if (!entry) continue;
 
-    // Flat entry — entry.releasedIn applies to the whole record
-    const isFlat = !Object.keys(entry).some(k => k === '' || k.startsWith('_'));
-    if (isFlat) {
-      if (entry.releasedIn === setId) {
-        out.push({
-          code,
-          suffix:  '',
-          name:    entry.name,
-          variant: entry,
-          price:   window.priceNum(entry.en),
-        });
-      }
-      continue;
+    // An entry is "nested" if any key is '' or starts with '_' (variant slot).
+    // Many entries are HYBRID — they have BOTH top-level base-card fields
+    // (releasedIn / en / psa / etc.) AND nested variant slots. The renderer
+    // needs both: the base card belongs in the set's top-N at its base price,
+    // and each variant belongs at its own price.
+    const variantKeys = Object.keys(entry).filter(k => k === '' || k.startsWith('_'));
+
+    // (a) Top-level "base card" — applies whenever the entry has its own
+    //     releasedIn directly (regardless of whether nested variants exist).
+    if (entry.releasedIn === setId) {
+      out.push({
+        code,
+        suffix:  '',
+        name:    entry.name,
+        variant: entry,
+        price:   window.priceNum(entry.en),
+      });
     }
 
-    // Nested — each variant has its own releasedIn
-    for (const [suffix, v] of Object.entries(entry)) {
-      if (!(suffix === '' || suffix.startsWith('_'))) continue;
+    // (b) Nested variant slots — each can have its own releasedIn.
+    for (const suffix of variantKeys) {
+      const v = entry[suffix];
       if (!v || typeof v !== 'object') continue;
       if (v.releasedIn !== setId) continue;
+      // Skip an empty-string slot if the top-level base was already added
+      // for the same setId (the empty-string slot is a synonym for the
+      // base card on entries that use the strict-nested shape).
+      if (suffix === '' && entry.releasedIn === setId) continue;
       out.push({
         code,
         suffix,
