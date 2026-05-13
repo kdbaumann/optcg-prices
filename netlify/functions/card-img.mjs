@@ -5,37 +5,58 @@
 
 import { getStore } from '@netlify/blobs';
 
-const LIM    = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece';
-const BANDAI = 'https://en.onepiece-cardgame.com/images/cardlist/card';
+const LIM       = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece';
+const BANDAI_EN = 'https://en.onepiece-cardgame.com/images/cardlist/card';
+const BANDAI_JP = 'https://www.onepiece-cardgame.com/images/cardlist/card';
 
+// Build the CDN URL list to try, in priority order. Strategy:
+//   1) Try the EXACT variant on EN CDNs first (matches the EN print user
+//      expects 95% of the time)
+//   2) Then the EXACT variant on JP CDNs — many high-tier tournament cards
+//      (CS finals, Worlds, Treasure Cup top placements, store-tournament
+//      winners) were physically distributed as JP-frame cards even at EN
+//      events. When the EN variant 404s, the JP variant is almost always
+//      what the player actually owns.
+//   3) Then fall back to the BASE code (no _pN/_rN) on EN, then JP. The
+//      base art is never the right alt-art frame, but it's at least the
+//      right CHARACTER — far better UX than a faded blank tile.
 function srcUrls(code) {
-  const setM   = code.match(/^([A-Z]+\d+)/);
-  const folder = setM ? setM[1] : (code.startsWith('P-') ? 'P' : 'OP01');
+  const setM    = code.match(/^([A-Z]+\d+)/);
+  const folder  = setM ? setM[1] : (code.startsWith('P-') ? 'P' : 'OP01');
   const unusual = /_p[6-9]|_p1\d|_r\d/.test(code);
   const isPromo = code.startsWith('P-');
 
-  // Tournament alt-art variants (mostly _p4) frequently aren't published on
-  // either Bandai or Limitless — neither CDN has the file. Fall back to the
-  // base-code art so the row at least shows the right CHARACTER (the user
-  // sees "Luffy" instead of a faded blank). The base art is never the right
-  // alt-art frame, but it's far better UX than a missing image.
-  const baseM = code.match(/^(.+?)(_p\d+|_r\d+)$/);
-  const baseCode = baseM ? baseM[1] : null;
+  // Parse base code (e.g. OP01-002_p4 → OP01-002) for the final fallback tier.
+  const baseM      = code.match(/^(.+?)(_p\d+|_r\d+)$/);
+  const baseCode   = baseM ? baseM[1] : null;
   const baseFolder = baseCode && baseCode.match(/^([A-Z]+\d+)/)
     ? baseCode.match(/^([A-Z]+\d+)/)[1]
     : (baseCode && baseCode.startsWith('P-') ? 'P' : null);
 
+  // Variant-level fallback tier (EN before JP — most users want EN frames).
+  const variantEN = isPromo
+    ? [`${LIM}/P/${code}_EN.webp`, `${BANDAI_EN}/${code}.png`]
+    : (unusual || code.endsWith('_p4'))
+      ? [`${BANDAI_EN}/${code}.png`, `${LIM}/${folder}/${code}_EN.webp`]
+      : [`${LIM}/${folder}/${code}_EN.webp`, `${BANDAI_EN}/${code}.png`];
+
+  // JP variant: same code with _JP suffix on Limitless and the unprefixed
+  // Bandai JP domain. Many tournament cards exist ONLY in JP-frame form.
+  const variantJP = isPromo
+    ? [`${LIM}/P/${code}_JP.webp`, `${BANDAI_JP}/${code}.png`]
+    : [`${LIM}/${folder}/${code}_JP.webp`, `${BANDAI_JP}/${code}.png`];
+
+  // Base-code fallback tier — best-effort "right character at least".
   const baseFallbacks = baseCode
-    ? [`${LIM}/${baseFolder}/${baseCode}_EN.webp`, `${BANDAI}/${baseCode}.png`]
+    ? [
+        `${LIM}/${baseFolder}/${baseCode}_EN.webp`,
+        `${BANDAI_EN}/${baseCode}.png`,
+        `${LIM}/${baseFolder}/${baseCode}_JP.webp`,
+        `${BANDAI_JP}/${baseCode}.png`,
+      ]
     : [];
 
-  if (isPromo) {
-    return [`${LIM}/P/${code}_EN.webp`, `${BANDAI}/${code}.png`, ...baseFallbacks];
-  }
-  if (unusual || code.endsWith('_p4')) {
-    return [`${BANDAI}/${code}.png`, `${LIM}/${folder}/${code}_EN.webp`, ...baseFallbacks];
-  }
-  return [`${LIM}/${folder}/${code}_EN.webp`, `${BANDAI}/${code}.png`, ...baseFallbacks];
+  return [...variantEN, ...variantJP, ...baseFallbacks];
 }
 
 function isRealImage(buf, contentType) {
