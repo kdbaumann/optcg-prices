@@ -4875,6 +4875,26 @@ function openCardFromTG(code) {
   }
 }
 
+// Deep-link support: pack-reference.html sends users here with #card=CODE
+// to trigger the lookup modal. Run on load and on hashchange.
+function handleCardHash() {
+  const hm = (location.hash || '').match(/#card=([^&]+)/);
+  if (!hm) return;
+  const code = decodeURIComponent(hm[1]);
+  // Wait until openCardSearch is defined (deferred-loaded scripts)
+  if (typeof openCardSearch === 'function') {
+    openCardSearch(code);
+  } else {
+    setTimeout(handleCardHash, 200);
+  }
+}
+window.addEventListener('hashchange', handleCardHash);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', handleCardHash);
+} else {
+  handleCardHash();
+}
+
 function toggleTierBox(el) {
   el.classList.toggle('expanded');
 }

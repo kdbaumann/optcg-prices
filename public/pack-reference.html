@@ -4836,5 +4836,21 @@
   <p style="margin-top:6px">This guide covers all three tiers of competitive play: <strong>Store Tournament Packs (TP-01–14)</strong>, <strong>Regional Participation &amp; Event Packs</strong>, and <strong>Championship Finals / Worlds packs</strong>. Judge Packs, Pirates Party packs, and other non-competitive promos not included.</p>
 </div>
 
+<!-- ── Data scripts: load static PRICE_DB → merge live /api/prices →
+     refresh the .price-val cells in every card-item panel. ──────────── -->
+<script src="data/prices.js"></script>
+<script src="data/live-prices.js"></script>
+<script src="data/refresh-pack-prices.js"></script>
+
+<!-- openCardFromTG is defined on tournament-guide.html for the lookup modal.
+     On this standalone page we just need a stub that sends the user there. -->
+<script>
+function openCardFromTG(code) {
+  if (!code) return;
+  // Tournament guide knows how to open its own modal — deep-link via #card=
+  window.location.href = '/tournament-guide.html#card=' + encodeURIComponent(code);
+}
+</script>
+
 </body>
 </html>
