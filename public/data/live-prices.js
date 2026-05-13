@@ -52,6 +52,19 @@
     return Number.isFinite(n) ? n : NaN;
   }
 
+  // OPCG variant suffix → readable default label. Mirrors the fallback used
+  // by render-tables.js so generic "Variant P3" never lands in PRICE_DB.
+  function defaultLabelForSuffix(suffix) {
+    if (!suffix)            return 'Base';
+    if (suffix === '_p1')   return 'SR Parallel';
+    if (suffix === '_p2')   return 'Manga Alt';
+    if (suffix === '_p3')   return 'Red SAA';
+    if (suffix === '_p4')   return 'TC Stamped';
+    if (/^_p\d+$/.test(suffix))  return 'Special Promo';
+    if (/^_r\d+$/.test(suffix))  return 'PRB Reprint';
+    return 'Variant ' + suffix.slice(1).toUpperCase();
+  }
+
   // Refuse to overwrite an existing curated price if the live value is much
   // lower (default >3×). The most common cause of a big drop is that the
   // live source is reporting a different variant than the static prices.js
@@ -87,7 +100,7 @@
         return false;
       }
       if (!entry[suffix] || typeof entry[suffix] !== 'object') {
-        entry[suffix] = { label: 'Variant ' + suffix.slice(1).toUpperCase() };
+        entry[suffix] = { label: defaultLabelForSuffix(suffix) };
       }
       entry[suffix].en = livePrice;
       return true;
