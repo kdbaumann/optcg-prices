@@ -44,6 +44,44 @@
     return (label || '').toUpperCase().slice(0, 18);
   }
 
+  // ── Default rarity label by variant suffix ───────────────────────────────
+  // OPCG variant suffixes follow a standard convention:
+  //   _p1  → SR Parallel Foil (the most common premium variant)
+  //   _p2  → Manga Alt Art
+  //   _p3  → Red Super Alt Art (SAA) — top-tier chase
+  //   _p4  → Tournament/Treasure Cup stamped variant
+  //   _p5+ → Special promotional variants (3rd/4th anniversary, etc.)
+  //   _r1+ → PRB reprint variants
+  // When PRICE_DB doesn't have a curated label, fall through to these.
+  function defaultLabelForSuffix(suffix) {
+    if (!suffix)            return 'Base';
+    if (suffix === '_p1')   return 'SR Parallel';
+    if (suffix === '_p2')   return 'Manga Alt';
+    if (suffix === '_p3')   return 'Red SAA';
+    if (suffix === '_p4')   return 'TC Stamped';
+    if (/^_p\d+$/.test(suffix))  return 'Special Promo';
+    if (/^_r\d+$/.test(suffix))  return 'PRB Reprint';
+    return 'Variant ' + suffix.slice(1).toUpperCase();
+  }
+
+  // ── Label derivation for ANY rendered row ────────────────────────────────
+  // Some hybrid PRICE_DB entries store a chase variant's price under the
+  // base code (suffix '') with no explicit `label`. Their `note` usually
+  // hints at which variant — parse it to recover a sensible badge.
+  function deriveLabel(variant, suffix) {
+    if (variant && variant.label) return variant.label;
+    if (variant && variant.note) {
+      const n = String(variant.note).toLowerCase();
+      if (n.includes('red saa') || n.includes('red super')) return 'Red SAA';
+      if (n.includes('manga'))                              return 'Manga Alt';
+      if (n.includes('parallel'))                           return 'SR Parallel';
+      if (n.includes('reprint'))                            return 'PRB Reprint';
+      if (n.includes('sp gold'))                            return 'SP Gold';
+      if (n.includes('sp silver'))                          return 'SP Silver';
+    }
+    return defaultLabelForSuffix(suffix);
+  }
+
   // ── HTML escaping (defensive — labels and names come from data we control,
   //   but safer to escape than not) ────────────────────────────────────────
   function esc(s) {
@@ -86,7 +124,7 @@
     const psa      = v.psa   || '—';
     const bgs10    = v.bgs10 || '—';
     const bgsbl    = v.bgsbl || '—';
-    const label    = v.label || '';
+    const label    = deriveLabel(v, item.suffix || '');
     const name     = item.name || label || item.code;
     const display  = label ? `${name} — ${label}` : name;
     const top3     = rank <= 3 ? ' top3' : '';
@@ -107,7 +145,7 @@
           `<div class="card-sub-text">${esc(fullCode)}</div></div>` +
         `</div></td>` +
         `<td class="card-num">${esc(fullCode)}</td>` +
-        `<td><span class="rarity-badge ${rarityClass(label)}">${esc(rarityShort(label))}</span></td>` +
+        `<td>${rarityShort(label) ? `<span class="rarity-badge ${rarityClass(label)}">${esc(rarityShort(label))}</span>` : ''}</td>` +
         `<td class="price-cell">${esc(en)}</td>` +
         `<td class="grade-cell g-psa">${esc(psa)}</td>` +
         `<td class="grade-cell g-bgs">${esc(bgs10)}</td>` +
@@ -202,7 +240,7 @@
             psa:        (pdVar && pdVar.psa)   || '',
             bgs10:      (pdVar && pdVar.bgs10) || '',
             bgsbl:      (pdVar && pdVar.bgsbl) || '',
-            label:      (pdVar && pdVar.label) || (suffix ? 'Variant ' + suffix.slice(1).toUpperCase() : 'Base'),
+            label:      (pdVar && pdVar.label) || defaultLabelForSuffix(suffix),
           },
           price:   window.priceNum ? window.priceNum(apiData.en) : 0,
         });
