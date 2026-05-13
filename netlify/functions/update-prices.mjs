@@ -30,7 +30,27 @@ const SETS = [
   'op-09','op-10','op-11','op-12','op-13',
   'eb-01','eb-02','eb-03','prb-01',
 ];
-const SETS_EXPERIMENTAL = ['op-14','op-15','eb-04','prb-02'];
+const SETS_EXPERIMENTAL = ['op-15','prb-02'];
+
+// OPCardlist groups some content under combined URLs that don't follow the
+// `/set-code` pattern. Each entry maps a URL slug to a shard function — the
+// shard decides which `_bySet[...]` bucket each scraped code belongs in.
+//
+//   /op14-eb04        : OP-14 and EB-04 cards live here together. Shard by
+//                       prefix so the renderer's per-set lookups work.
+//   /promo            : 300+ EN promo / tournament variants (P-XXX, ST-XX_p1,
+//                       OP01-021_p1 etc.). Lands in _bySet['promo'].
+//   /other-product    : Special products (Pirates Party, etc.). Also 'promo'.
+const COMBINED_PAGES = [
+  {
+    slug: 'op14-eb04',
+    shard: (code) => code.startsWith('OP14-') ? 'op-14'
+                   : code.startsWith('EB04-') ? 'eb-04'
+                   : 'promo',
+  },
+  { slug: 'promo',         shard: () => 'promo' },
+  { slug: 'other-product', shard: () => 'promo' },
+];
 const OPCARDLIST_BASE = 'https://www.opcardlist.com';
 
 // Doubly-escaped Next.js streaming form. Captures e.g. OP01-120 base, plus
@@ -118,7 +138,8 @@ async function fetchSetPrices(setCode, silent404 = false) {
       if (!Number.isFinite(price) || price < 10) continue;
       seen.add(code);
       results.push({ code, price, name });
-      if (results.length >= 50) return true;
+      // Cap is per-page, not per-set: /promo carries 300+ codes today.
+      if (results.length >= 600) return true;
     }
     return false;
   }
@@ -224,6 +245,43 @@ export default async () => {
       }
     }
     console.log(`[update-prices] ${setCode}: ${r.value.cards.length} cards`);
+  }
+
+  // ── 1b. EXTRAS: combined-set pages (/op14-eb04, /promo, /other-product) ──
+  // OPCardlist serves these under non-standard slugs. Each scraped code is
+  // sharded into the proper _bySet bucket by its prefix, so the front-end's
+  // per-set renderer finds them transparently (e.g. OP14-051_p1 lands in
+  // _bySet['op-14'] just as if /op-14 had returned it).
+  const extraSettled = await Promise.allSettled(
+    COMBINED_PAGES.map(({ slug }) =>
+      fetchSetPrices(slug, false).then(cards => ({ slug, cards }))
+    )
+  );
+  for (let i = 0; i < extraSettled.length; i++) {
+    const { slug, shard } = COMBINED_PAGES[i];
+    const r = extraSettled[i];
+    if (r.status === 'rejected') {
+      errors.push({ set: slug, error: (r.reason && r.reason.message) || String(r.reason) });
+      console.error(`[update-prices] ERROR ${slug}: ${errors[errors.length - 1].error}`);
+      continue;
+    }
+    let sharded = 0;
+    for (const { code, price, name } of r.value.cards) {
+      const bucket = shard(code);
+      if (!bySet[bucket]) bySet[bucket] = [];
+      // Avoid duplicate entries in the bucket (a code may legitimately appear
+      // in both /promo and /other-product, or in /op14-eb04 alongside being
+      // shared as a promo).
+      if (!bySet[bucket].includes(code)) bySet[bucket].push(code);
+      if (!allPrices[code]) {
+        allPrices[code] = { en: fmtUsd(price), updated: started, source: 'opcardlist' };
+        if (name) allPrices[code].name = name;
+        sharded++;
+      } else if (name && !allPrices[code].name) {
+        allPrices[code].name = name;
+      }
+    }
+    console.log(`[update-prices] /${slug}: ${r.value.cards.length} cards (${sharded} new)`);
   }
 
   // ── 2a. SECONDARY (gap-fill): Limitless for sets OPCardlist doesn't have ──
