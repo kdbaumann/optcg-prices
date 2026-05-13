@@ -133,14 +133,24 @@ async function fetchSetPrices(setCode, silent404 = false) {
     for (const m of html.matchAll(pattern)) {
       const code  = m[1] && m[1].trim();
       if (!code || seen.has(code)) continue;
-      const name  = hasName ? (m[2] || '') : '';
-      const price = parseFloat(hasName ? m[3] : m[2]);
+      const rawName = hasName ? (m[2] || '') : '';
+      const price   = parseFloat(hasName ? m[3] : m[2]);
       // Keep everything with a real positive price. Was filtered to >= $10
       // (chase-variants only), but historical analysis + fluid top-10 needs
       // every code OPCardlist publishes — bulk commons rotate into chase
-      // status sometimes (meta shifts, character popularity), and either way
-      // we want a continuous time series. ~3000 codes total at ~400KB/day.
+      // status sometimes. ~3000 codes total at ~400KB/day.
       if (!Number.isFinite(price) || price <= 0) continue;
+
+      // ── OPCardlist name validation ──
+      // OPCardlist's stream sometimes has wrong `name` fields for the older
+      // sets (OP-01, OP-02, OP-05, OP-09 etc. — names are systematically
+      // misaligned by one to several positions). OP-13 onwards is reliable.
+      // Until we have a trusted name source per set, ONLY accept names from
+      // a known-good set list. Everything else falls back to PRICE_DB at
+      // render time, or shows the code.
+      const safePrefix = code.match(/^(OP1[3-9]|OP2[0-9]|EB0[2-9]|PRB0[2-9])-/);
+      const name = safePrefix ? rawName : '';
+
       seen.add(code);
       results.push({ code, price, name });
       // Per-page safety cap. With the filter dropped, OP-set pages return
