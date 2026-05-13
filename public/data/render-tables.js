@@ -167,6 +167,25 @@
         if (pdVar && pdVar.releasedIn === 'promos') continue;
         if (!pdVar && pdEntry && pdEntry.releasedIn === 'promos') continue;
 
+        // ── De-duplication guard ─────────────────────────────────────────
+        // PRICE_DB stores chase prices at the BASE code (e.g. OP01-003 holds
+        // the $833 price for the OP01-003_p1 Parallel Foil chase). The live
+        // scrape returns the same physical card under its variant code. When
+        // we already have a PRICE_DB base-card row in this setId AND its
+        // price is within ±15% of the incoming live variant, skip the live
+        // row — it's the same card from a different angle and showing both
+        // creates confusing duplicates with no extra info (live row has no
+        // PSA/BGS data either).
+        if (pdEntry && pdEntry.releasedIn === setId && byKey.has(baseCode)) {
+          const baseItem  = byKey.get(baseCode);
+          const livePrice = window.priceNum ? window.priceNum(apiData.en) : 0;
+          const basePrice = baseItem.price || 0;
+          if (basePrice > 0 && livePrice > 0) {
+            const ratio = livePrice / basePrice;
+            if (ratio >= 0.85 && ratio <= 1.15) continue;
+          }
+        }
+
         // Name preference: PRICE_DB > scraper-provided name > base code as last resort.
         // The scraper now captures `name` from OPCardlist's RSC stream so codes
         // that aren't in PRICE_DB (e.g. OP13-080 Imu / Demon Pack) still display

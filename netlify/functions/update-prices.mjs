@@ -129,11 +129,26 @@ async function fetchSetPrices(setCode, silent404 = false) {
   const seen = new Set();
   const results = [];
 
+  // Names captured from OPCardlist's RSC stream are doubly-escaped (raw text
+  // contains literal "\\", "\\'", "\\u2606", etc.). Unescape so the renderer
+  // gets readable text — otherwise we'd ship "Eustass\\\\" to the client.
+  function unescapeRsc(s) {
+    if (!s) return s;
+    return s
+      .replace(/\\"/g, '"')
+      .replace(/\\\\/g, '\\')
+      .replace(/\\'/g, "'")
+      .replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
+      .replace(/\.([A-Z])/g, ' $1')      // "Monkey.D.Luffy" → "Monkey D Luffy"
+      .replace(/\\$/, '')                // strip a trailing lone backslash ("Eustass\\")
+      .trim();
+  }
+
   function consume(pattern, hasName) {
     for (const m of html.matchAll(pattern)) {
       const code  = m[1] && m[1].trim();
       if (!code || seen.has(code)) continue;
-      const name  = hasName ? (m[2] || '') : '';
+      const name  = hasName ? unescapeRsc(m[2] || '') : '';
       const price = parseFloat(hasName ? m[3] : m[2]);
       // Keep everything with a real positive price. Was filtered to >= $10
       // (chase-variants only), but historical analysis + fluid top-10 needs
