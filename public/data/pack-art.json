@@ -1,0 +1,252 @@
+[
+  {
+    "code": "TP-01",
+    "name": "Tournament Pack Vol. 1",
+    "event": "https://en.onepiece-cardgame.com/events/2022/officialevents/store_tournament_vol1.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/tournament_pack_vol1/pkg.png",
+    "alt": "Participation prize Promotion Pack",
+    "slug": "tournament_pack_vol1",
+    "reason": "matched(0.45)"
+  },
+  {
+    "code": "TP-02",
+    "name": "Tournament Pack Vol. 2",
+    "event": "https://en.onepiece-cardgame.com/events/2023/officialevents/store_tournament_vol2.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/tournament_pack_vol2/pkg.png",
+    "alt": "Tournament Pack",
+    "slug": "tournament_pack_vol2",
+    "reason": "matched(1.01)"
+  },
+  {
+    "code": "TP-03",
+    "name": "Tournament Pack Vol. 3",
+    "event": "https://en.onepiece-cardgame.com/events/2023/officialevents/store_tournament_vol3.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/tournament_pack_vol3/pkg.png",
+    "reason": "direct-guess",
+    "slug": "tournament_pack_vol3"
+  },
+  {
+    "code": "TP-04",
+    "name": "Tournament Pack Vol. 4",
+    "event": "https://en.onepiece-cardgame.com/events/2023/officialevents/store_tournament_vol4.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/tournament_pack_vol4/pkg.png",
+    "reason": "direct-guess",
+    "slug": "tournament_pack_vol4"
+  },
+  {
+    "code": "TP-05",
+    "name": "Tournament Pack Vol. 5",
+    "event": "https://en.onepiece-cardgame.com/events/2023/officialevents/store_tournament_vol5.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/tournament_pack_vol5/pkg.png",
+    "reason": "direct-guess",
+    "slug": "tournament_pack_vol5"
+  },
+  {
+    "code": "TP-06",
+    "name": "Tournament Pack Vol. 6",
+    "event": "https://en.onepiece-cardgame.com/events/2024/officialevents/store_tournament_vol6.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/tournament_pack_vol6/pkg.png",
+    "reason": "direct-guess",
+    "slug": "tournament_pack_vol6"
+  },
+  {
+    "code": "TP-07",
+    "name": "Tournament Pack Vol. 7",
+    "event": "https://en.onepiece-cardgame.com/events/2024/officialevents/store_tournament_vol7.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/tournament_pack_vol7/pkg.png",
+    "reason": "direct-guess",
+    "slug": "tournament_pack_vol7"
+  },
+  {
+    "code": "TP-08",
+    "name": "Tournament Pack 2024 Oct.\u2013Dec.",
+    "event": "https://en.onepiece-cardgame.com/events/2024/store_tournament_oct_dec/",
+    "url": "https://en.onepiece-cardgame.com/images/prize/tournament_pack_2024_oct-dec/pkg.png",
+    "reason": "direct-guess",
+    "slug": "tournament_pack_2024_oct-dec"
+  },
+  {
+    "code": "TP-09",
+    "name": "Tournament Pack 2025 Vol. 1",
+    "event": "https://en.onepiece-cardgame.com/events/2025/store_tournament_vol1/",
+    "url": "https://en.onepiece-cardgame.com/images/prize/tournament_pack_2025_vol1/pkg.png",
+    "alt": "package",
+    "slug": "tournament_pack_2025_vol1",
+    "reason": "matched(0.44)"
+  },
+  {
+    "code": "TP-10",
+    "name": "Tournament Pack 2025 Vol. 2",
+    "event": "https://en.onepiece-cardgame.com/events/2025/store_tournament_vol2/",
+    "url": "https://en.onepiece-cardgame.com/images/prize/tournament_pack_2025_vol2/pkg.png",
+    "alt": "package",
+    "slug": "tournament_pack_2025_vol2",
+    "reason": "matched(0.44)"
+  },
+  {
+    "code": "TP-11",
+    "name": "Tournament Pack 2025 Vol. 3",
+    "event": "https://en.onepiece-cardgame.com/events/2025/store_tournament_vol3/",
+    "url": "https://en.onepiece-cardgame.com/images/prize/tournament_pack_2025_vol3/pkg.png",
+    "alt": "package",
+    "slug": "tournament_pack_2025_vol3",
+    "reason": "matched(0.44)"
+  },
+  {
+    "code": "TP-12",
+    "name": "Tournament Pack 2025 Vol. 4",
+    "event": "https://en.onepiece-cardgame.com/events/2025/store_tournament_vol4/",
+    "url": "https://en.onepiece-cardgame.com/images/prize/tournament_pack_2025_vol4/pkg.png",
+    "alt": "package",
+    "slug": "tournament_pack_2025_vol4",
+    "reason": "matched(0.44)"
+  },
+  {
+    "code": "TP-13",
+    "name": "Tournament Pack 2026 Vol. 1",
+    "event": "https://en.onepiece-cardgame.com/events/2026/store_tournament_vol1/",
+    "url": "https://en.onepiece-cardgame.com/images/prize/tournament_pack_2026_vol1/pkg.png",
+    "alt": "package",
+    "slug": "tournament_pack_2026_vol1",
+    "reason": "matched(0.44)"
+  },
+  {
+    "code": "RPP 2024-3",
+    "name": "Regional Participation Pack 2024 Vol. 3",
+    "event": "https://en.onepiece-cardgame.com/events/2024/championship/offline_regional_wave3.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/offline_regional_participation_pack_2024_vol3/pkg.png",
+    "alt": "Offline Regional Participation Pack 2024 Vol. 3",
+    "slug": "offline_regional_participation_pack_2024_vol3",
+    "reason": "matched(1.11)"
+  },
+  {
+    "code": "RPP 2025-1",
+    "name": "Regional Participation Pack 2025 Vol. 1",
+    "event": "https://en.onepiece-cardgame.com/events/2025/championship/offline_regional_season1.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/offline_regional_participation_pack_25-26_season1/pkg.png",
+    "alt": "Offline Regional Participation Pack 2024 Vol. 3",
+    "slug": "offline_regional_participation_pack_25-26_season1",
+    "reason": "matched(1.06)"
+  },
+  {
+    "code": "RPP 2025-2",
+    "name": "Regional Participation Pack 2025 Vol. 2",
+    "event": "https://en.onepiece-cardgame.com/events/2025/championship/offline_regional_season2.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/offline_regional_participation_pack_25-26_season2/pkg.png",
+    "alt": "package",
+    "slug": "offline_regional_participation_pack_25-26_season2",
+    "reason": "matched(0.37)"
+  },
+  {
+    "code": "EP-05",
+    "name": "Event Pack Vol. 5",
+    "event": "https://en.onepiece-cardgame.com/events/2024/championship/offline_regional_wave3.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/event_pack_vol5/pkg.png",
+    "alt": "Judge Pack Vol.4",
+    "slug": "event_pack_vol5",
+    "reason": "direct-guess"
+  },
+  {
+    "code": "EP-06",
+    "name": "Event Pack Vol. 6",
+    "event": "https://en.onepiece-cardgame.com/events/2025/championship/offline_regional_season1.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/event_pack_vol6/pkg.png",
+    "alt": "Judge Pack Vol.5",
+    "slug": "event_pack_vol6",
+    "reason": "direct-guess"
+  },
+  {
+    "code": "EP-07",
+    "name": "Event Pack Vol. 7",
+    "event": "https://en.onepiece-cardgame.com/events/2025/championship/offline_regional_season2.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/event_pack_vol7/pkg.png",
+    "alt": "package",
+    "slug": "event_pack_vol7",
+    "reason": "matched(0.53)"
+  },
+  {
+    "code": "CS 2024 TP-2",
+    "name": "Championship 2024 Top Players Pack Vol. 2",
+    "event": "https://en.onepiece-cardgame.com/events/2024/championship/finals_wave2.php",
+    "url": null,
+    "reason": "no-packs-on-page"
+  },
+  {
+    "code": "CS 25-26 CEL",
+    "name": "CS 25\u201326 Celebration Pack",
+    "event": "https://en.onepiece-cardgame.com/events/2025/championship/finals_season1.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/cs25-26_celebration_pack/pkg.png",
+    "alt": "CS 25-26 Event Pack Finalist Ver.",
+    "slug": "cs25-26_celebration_pack",
+    "reason": "only-one"
+  },
+  {
+    "code": "CS 25-26 EP",
+    "name": "CS 25\u201326 Event Pack",
+    "event": "https://en.onepiece-cardgame.com/events/2025/championship/finals_season1.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/cs25-26_event_pack/pkg.png",
+    "alt": "CS 25-26 Event Pack Finalist Ver.",
+    "slug": "cs25-26_event_pack",
+    "reason": "only-one"
+  },
+  {
+    "code": "CS 25-26 TPP-1",
+    "name": "CS 25\u201326 Top Player Pack",
+    "event": "https://en.onepiece-cardgame.com/events/2025/championship/finals_season1.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/cs25-26_top_players_pack/pkg.png",
+    "alt": "CS 25-26 Event Pack Finalist Ver.",
+    "slug": "cs25-26_top_players_pack",
+    "reason": "only-one"
+  },
+  {
+    "code": "CS 25-26 TPP-2",
+    "name": "CS 25\u201326 Top Player Pack Vol. 2",
+    "event": "https://en.onepiece-cardgame.com/events/2025/championship/finals_season2.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/cs25-26_top_players_pack_2/pkg.png",
+    "alt": "CS 25-26 Event Pack Finalist Ver.",
+    "slug": "cs25-26_top_players_pack_2",
+    "reason": "matched(0.73)"
+  },
+  {
+    "code": "CS 2024 TPP-1",
+    "name": "Championship 2024 Top Players Pack",
+    "event": "https://en.onepiece-cardgame.com/events/2024/championship/finals.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/cs2024_top_players_pack/pkg.png",
+    "reason": "direct-guess",
+    "slug": "cs2024_top_players_pack"
+  },
+  {
+    "code": "CS 2024 EP",
+    "name": "Championship 2024 Event Pack",
+    "event": "https://en.onepiece-cardgame.com/events/2024/championship/finals.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/cs2024_event_pack/pkg.png",
+    "reason": "direct-guess",
+    "slug": "cs2024_event_pack"
+  },
+  {
+    "code": "CS 2024 CEL",
+    "name": "Championship 2024 Celebration Pack",
+    "event": "https://en.onepiece-cardgame.com/events/2024/championship/finals.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/cs2024_celebration_pack/pkg.png",
+    "reason": "direct-guess",
+    "slug": "cs2024_celebration_pack"
+  },
+  {
+    "code": "RPP 2024-2",
+    "name": "Regional Participation Pack 2024 Vol. 2",
+    "event": "https://en.onepiece-cardgame.com/events/2024/championship/offline_regional_wave2.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/offline_regional_participation_cardset_2024_vol2/pkg.png",
+    "alt": "Offline Regional Participations Pack 2024 Vol. 2",
+    "slug": "offline_regional_participation_cardset_2024_vol2",
+    "reason": "matched(1.10)"
+  },
+  {
+    "code": "EP-04",
+    "name": "Event Pack Vol. 4",
+    "event": "https://en.onepiece-cardgame.com/events/2024/championship/offline_regional_wave2.php",
+    "url": "https://en.onepiece-cardgame.com/images/prize/event_pack_vol4/pkg.png",
+    "alt": "Event Pack Vol. 4",
+    "slug": "event_pack_vol4",
+    "reason": "matched(1.20)"
+  }
+]
