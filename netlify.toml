@@ -8,8 +8,15 @@
   node_bundler = "esbuild"
 
 # ── Scheduled functions ───────────────────────────────────────────────────────
-# update-prices: daily 6 AM UTC — fetches card prices from OPCardlist
-# warm-card-images: weekly Sunday 3 AM UTC — pre-caches card images to Blobs
+# update-prices:      daily      06:00 UTC — scrape OPCardlist
+# refresh-slabs:      daily      09:00 UTC — refresh PSA/BGS slab data
+# warm-card-images:   weekly Sun 03:00 UTC — pre-cache card images
+# compact-snapshots:  weekly Mon 07:00 UTC — prune old price snapshots
+#
+# IMPORTANT: scheduled functions must export ONLY `{ schedule }` in their
+# config — adding `path` fails the build with "Scheduled functions must
+# not specify a custom path". They're always invokable manually at
+# /.netlify/functions/{name}.
 
 # ── Security headers ──────────────────────────────────────────────────────────
 [[headers]]
