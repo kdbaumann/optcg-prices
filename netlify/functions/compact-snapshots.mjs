@@ -95,7 +95,6 @@ export default async (req) => {
 };
 
 // Run every Monday at 07:00 UTC (one hour after the daily price scrape).
-export const config = {
-  schedule: '0 7 * * 1',
-  path: '/.netlify/functions/compact-snapshots',
-};
+// Scheduled functions cannot declare a custom `path`; they're always reachable
+// at `/.netlify/functions/compact-snapshots` for manual ?dry=1 invocation.
+export const config = { schedule: '0 7 * * 1' };
