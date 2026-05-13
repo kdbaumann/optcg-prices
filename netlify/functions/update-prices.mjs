@@ -346,7 +346,20 @@ export default async () => {
     ...allPrices,
   };
   await store.setJSON('prices', payload);
-  console.log(`[update-prices] Done. ${Object.keys(allPrices).length} prices stored, ${priceCheck.length} cards price-checked.`);
+
+  // ── 4. Historical snapshot (for week-over-week mover analysis) ──
+  // Keyed by ISO date — `prices-YYYY-MM-DD`. The buy-analysis tab queries
+  // /api/movers which diffs today against a snapshot ~7 days old. We store
+  // a stripped-down version (just code → en) to keep each snapshot compact;
+  // ~70KB compressed × 30 days = ~2MB total, well within Blob limits.
+  const snapDate = started.slice(0, 10);       // '2026-05-13'
+  const snapshot = { _updated: started };
+  for (const [code, entry] of Object.entries(allPrices)) {
+    if (entry && entry.en) snapshot[code] = entry.en;
+  }
+  await store.setJSON(`prices-${snapDate}`, snapshot);
+
+  console.log(`[update-prices] Done. ${Object.keys(allPrices).length} prices stored, ${priceCheck.length} cards price-checked, snapshot prices-${snapDate} saved.`);
 
   return new Response(
     JSON.stringify({
