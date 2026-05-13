@@ -57,7 +57,29 @@
   // Produces an 8-column row matching the OP-13 / OP-09 / etc. table layout:
   //   #  ·  Card  ·  Card #  ·  Rarity  ·  EN  ·  PSA 10  ·  BGS 10  ·  BGS BL
   // BGS 10 and BGS BL show '—' when prices.js doesn't have those values yet.
-  function renderRow(item, rank) {
+  // ── Rank-movement indicator ───────────────────────────────────────────────
+  // window.PREV_RANKS, when populated, is { setKey: { fullCode: prevRank } }
+  // built from a historical snapshot (default ~7 days ago). renderRow checks
+  // each card's prior rank in its set and renders a small badge:
+  //   NEW : wasn't in the historical top-N for this set
+  //   ↑3  : moved up 3 spots
+  //   ↓2  : moved down 2 spots
+  //   —   : same rank (no badge)
+  function rankDelta(setId, fullCode, currentRank) {
+    const setMap = window.PREV_RANKS && window.PREV_RANKS[apiSetKey(setId)];
+    if (!setMap) return '';
+    const prev = setMap[fullCode];
+    if (prev === undefined) {
+      return ' <span class="rank-delta new" title="New to top-N">NEW</span>';
+    }
+    const delta = prev - currentRank;
+    if (delta === 0) return '';
+    const arrow = delta > 0 ? '↑' : '↓';
+    const cls   = delta > 0 ? 'up' : 'down';
+    return ` <span class="rank-delta ${cls}" title="Was #${prev}">${arrow}${Math.abs(delta)}</span>`;
+  }
+
+  function renderRow(item, rank, setId) {
     const fullCode = item.code + (item.suffix || '');
     const v        = item.variant;
     const en       = v.en    || '—';
@@ -69,11 +91,12 @@
     const display  = label ? `${name} — ${label}` : name;
     const top3     = rank <= 3 ? ' top3' : '';
     const fb       = `https://en.onepiece-cardgame.com/images/cardlist/card/${fullCode}.png`;
+    const delta    = setId ? rankDelta(setId, fullCode, rank) : '';
 
     return (
       `<tr style="cursor:pointer" onclick="openCardLookup('${esc(item.code)}')" ` +
         `data-bandai="${esc(fullCode)}" data-rendered="1">` +
-        `<td class="rank-num${top3}">${rank}</td>` +
+        `<td class="rank-num${top3}">${rank}${delta}</td>` +
         `<td><div class="card-cell-inner">` +
           `<img class="card-thumb" src="/card-img/${esc(fullCode)}" alt="${esc(name)}" ` +
             `style="width:36px;height:50px;object-fit:cover;border-radius:4px;` +
@@ -187,7 +210,7 @@
         return;
       }
       const top = cands.slice(0, n);
-      target.innerHTML = top.map((item, i) => renderRow(item, i + 1)).join('');
+      target.innerHTML = top.map((item, i) => renderRow(item, i + 1, setId)).join('');
       sectionCount++;
       total += top.length;
     });
@@ -197,6 +220,65 @@
     return total;
   }
 
+  // ── Load a historical snapshot, derive per-set ranks, re-render ─────────
+  // Powers the ↑/↓/NEW indicators in renderRow. Pulls one snapshot from ~N
+  // days ago (default 7), groups its codes by set via _bySet (or by prefix
+  // when _bySet is absent in compact snapshots), sorts each bucket by
+  // numeric price, and stores the ranks in window.PREV_RANKS for renderRow
+  // to consult. Fails gracefully when snapshots haven't accumulated yet
+  // (renderRow just renders without indicators).
+  function daysAgoISO(n) {
+    const d = new Date();
+    d.setUTCDate(d.getUTCDate() - n);
+    return d.toISOString().slice(0, 10);
+  }
+  async function loadPrevRanks(daysBack) {
+    const days = (typeof daysBack === 'number' && daysBack > 0) ? daysBack : 7;
+    try {
+      const r = await fetch('/api/snapshot?date=' + daysAgoISO(days), { cache: 'force-cache' });
+      if (!r.ok) return false;
+      const snap = await r.json();
+      if (!snap || snap._status === 'not_found') return false;
+
+      // Group codes by set bucket, then sort by parsed price desc.
+      const bucketCodes = {};
+      if (snap._bySet) {
+        for (const [bucket, codes] of Object.entries(snap._bySet)) {
+          bucketCodes[bucket] = codes.slice();
+        }
+      } else {
+        // Compact snapshot — derive buckets from code prefix.
+        for (const code of Object.keys(snap)) {
+          if (code.startsWith('_')) continue;
+          const m = code.match(/^([A-Z]+)(\d+)/);
+          if (!m) continue;
+          const bucket = (m[1] + '-' + m[2]).toLowerCase();
+          if (!bucketCodes[bucket]) bucketCodes[bucket] = [];
+          bucketCodes[bucket].push(code);
+        }
+      }
+
+      const prev = {};
+      for (const [bucket, codes] of Object.entries(bucketCodes)) {
+        const enriched = codes.map(c => {
+          const v = snap[c];
+          const enStr = typeof v === 'string' ? v : (v && v.en);
+          return { code: c, price: window.priceNum ? window.priceNum(enStr) : 0 };
+        }).filter(x => x.price > 0);
+        enriched.sort((a, b) => b.price - a.price);
+        prev[bucket] = {};
+        enriched.forEach((x, i) => { prev[bucket][x.code] = i + 1; });
+      }
+
+      window.PREV_RANKS = prev;
+      renderAllTopN();   // re-render to surface the indicators
+      return true;
+    } catch (e) {
+      console.warn('[render-tables] previous-rank load failed:', e.message || e);
+      return false;
+    }
+  }
+
   // Expose the API
   window.renderTopN     = function (setId, n) {
     if (!window.cardsForSet) return [];
@@ -204,12 +286,18 @@
   };
   window.renderRow      = renderRow;
   window.renderAllTopN  = renderAllTopN;
+  window.loadPrevRanks  = loadPrevRanks;
 
   // Auto-run once on page load. live-prices.js will trigger another pass
-  // after it merges /api/prices.
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { renderAllTopN(); });
-  } else {
+  // after it merges /api/prices. We also kick off an async historical-rank
+  // fetch — when it returns, the table re-renders with movement indicators.
+  function init() {
     renderAllTopN();
+    loadPrevRanks(7);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 })();

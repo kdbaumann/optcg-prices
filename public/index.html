@@ -207,8 +207,27 @@
     font-size: 1.1rem;
     color: var(--muted);
     width: 28px;
+    white-space: nowrap;
   }
   .rank-num.top3 { color: var(--gold); }
+
+  /* Rank-movement indicator next to the rank number (rendered by
+     render-tables.js when window.PREV_RANKS is populated from a 7-day-ago
+     snapshot). Stays inline+small so it doesn't widen the column. */
+  .rank-delta {
+    display: inline-block;
+    margin-left: 4px;
+    font-family: 'JetBrains Mono', 'Barlow Condensed', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 3px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+  }
+  .rank-delta.up   { color: #22c55e; background: rgba(34,197,94,0.12);  border: 1px solid rgba(34,197,94,0.35); }
+  .rank-delta.down { color: #ef4444; background: rgba(239,68,68,0.12);  border: 1px solid rgba(239,68,68,0.35); }
+  .rank-delta.new  { color: #f0b429; background: rgba(240,180,41,0.12); border: 1px solid rgba(240,180,41,0.35); }
 
   .card-name {
     font-family: 'Barlow Condensed', sans-serif;
