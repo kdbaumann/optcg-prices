@@ -315,5 +315,9 @@ export default async () => {
   );
 };
 
-// Daily 9 AM UTC, offset 1 hour after update-prices (8 AM) to spread load.
-export const config = { schedule: '0 9 * * *' };
+// Weekly Sundays 9 AM UTC. Was daily — at the expanded 150-card target list
+// each run costs ~$5–15 (Claude Sonnet 4.6 + web_search), so weekly keeps
+// the annual spend ~$250–800 instead of ~$1.8k–5.4k. Slab prices move slowly
+// enough that weekly resolution is fine. Trigger manually any time via
+// `curl -X POST https://grailcardz.com/.netlify/functions/refresh-slabs-background`.
+export const config = { schedule: '0 9 * * 0' };
