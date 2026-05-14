@@ -117,13 +117,27 @@
     return ` <span class="rank-delta ${cls}" title="Was #${prev}">${arrow}${Math.abs(delta)}</span>`;
   }
 
+  // ── Grade fallback: PRICE_DB → SLAB_PRICES → '—' ─────────────────────────
+  // PRICE_DB carries hand-curated grade data for ~30 chase variants.
+  // SLAB_PRICES (from /api/slabs, populated by refresh-slabs-background.mjs)
+  // covers 100+ codes with median sold-price data from eBay/TCGPlayer/
+  // alt.xyz/fanaticscollect/PSA pop. Use the curated value when present;
+  // fall back to slab data when not.
+  function gradeFallback(curated, fullCode, gradeKey) {
+    if (curated) return curated;
+    const slab = window.SLAB_PRICES && window.SLAB_PRICES[fullCode];
+    if (!slab) return '—';
+    const slot = slab[gradeKey];
+    return (slot && slot.price) || '—';
+  }
+
   function renderRow(item, rank, setId) {
     const fullCode = item.code + (item.suffix || '');
     const v        = item.variant;
-    const en       = v.en    || '—';
-    const psa      = v.psa   || '—';
-    const bgs10    = v.bgs10 || '—';
-    const bgsbl    = v.bgsbl || '—';
+    const en       = v.en || '—';
+    const psa      = gradeFallback(v.psa,   fullCode, 'psa10');
+    const bgs10    = gradeFallback(v.bgs10, fullCode, 'bgs10');
+    const bgsbl    = gradeFallback(v.bgsbl, fullCode, 'bgsbl');
     const label    = deriveLabel(v, item.suffix || '');
     const name     = item.name || label || item.code;
     const display  = label ? `${name} — ${label}` : name;

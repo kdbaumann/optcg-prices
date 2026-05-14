@@ -211,10 +211,16 @@
           n++;
         }
       }
-      if (head.psa && psaCell) {
+      // Prefer curated PRICE_DB.psa; fall back to SLAB_PRICES median if we have it.
+      let psaVal = head.psa;
+      if (!psaVal && window.SLAB_PRICES) {
+        const slab = window.SLAB_PRICES[code] || window.SLAB_PRICES[code + (head.suffix || '')];
+        if (slab && slab.psa10 && slab.psa10.price) psaVal = slab.psa10.price;
+      }
+      if (psaVal && psaCell) {
         const cur = psaCell.textContent.trim();
-        if (cur !== head.psa) {
-          psaCell.textContent = head.psa;
+        if (cur !== psaVal) {
+          psaCell.textContent = psaVal;
           psaCell.dataset.live = '1';
           n++;
         }
