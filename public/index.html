@@ -483,11 +483,18 @@
     color: var(--gold);
     text-align: center;
   }
+    .set-hero { padding: 14px 14px 12px; }
+  }
+
+  /* Hide the 3rd column (🇺🇸 EN Raw) ONLY on narrow mobile screens — was
+     previously hiding it at every width because it was missing its @media
+     wrapper. On desktop the column must be visible: the entire Grading
+     Arbitrage page is about EN vs JP price comparison. */
+  @media (max-width: 540px) {
     .card-table th:nth-child(3),
     .card-table td:nth-child(3) { display: none; }
     .arb-table th:nth-child(3),
     .arb-table td:nth-child(3) { display: none; }
-    .set-hero { padding: 14px 14px 12px; }
   }
 
 .grade-cell {
