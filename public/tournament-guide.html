@@ -5169,6 +5169,9 @@ if (document.readyState === 'loading') {
 .csm-links{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
 .csm-link{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:1px solid #2a2a4a;color:#6b6b8a;text-decoration:none;background:#121225;transition:all .12s}
 .csm-link:hover{border-color:#f0b429;color:#f0b429}
+/* Promoted Buy link — same shape, gold accent so it's obvious */
+.csm-buy-link{background:linear-gradient(135deg,#f0b429 0%,#d49a17 100%);color:#0a0e1a !important;border-color:#d49a17;font-weight:900}
+.csm-buy-link:hover{background:linear-gradient(135deg,#ffc943 0%,#e0a52b 100%);border-color:#ffc943;color:#000 !important;transform:translateY(-1px);box-shadow:0 2px 8px rgba(240,180,41,.4)}
 .csm-var-bar{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0}
 .csm-var-btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.65rem;letter-spacing:.07em;padding:3px 10px;border-radius:20px;border:1px solid #2a2a4a;color:#6b6b8a;cursor:pointer;background:#0d0d1a;transition:all .12s}
 .csm-var-btn:hover,.csm-var-btn.active{border-color:#f0b429;color:#f0b429;background:rgba(240,180,41,.07)}
@@ -5250,8 +5253,9 @@ if (document.readyState === 'loading') {
 // CARD LOOKUP MODAL — all functions global (no IIFE) so onclick works
 // ══════════════════════════════════════════════════════════════════════════
 
-const EN_CDN = 'https://en.onepiece-cardgame.com/images/cardlist/card';
-const JP_CDN = 'https://www.onepiece-cardgame.com/images/cardlist/card';
+const EN_CDN  = 'https://en.onepiece-cardgame.com/images/cardlist/card';
+const JP_CDN  = 'https://www.onepiece-cardgame.com/images/cardlist/card';
+const LIM_CDN = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece';
 
 // ── PRICE DATABASE ────────────────────────────────────────────────────────
 // Build flat-shape PRICE_DB from canonical (multi-variant) data in data/prices.js
@@ -5517,19 +5521,25 @@ function csmRender(code, suffix) {
     priceEl.innerHTML = html;
   }
 
-  // External links
+  // External links — TCGPlayer search includes variant suffix + label so the
+  // result page shows the SPECIFIC variant the user clicked on, not just any
+  // print of the base code.
   const linksEl = document.getElementById('csm-links');
   if (linksEl) {
-    const enc = encodeURIComponent(code);
+    const enc       = encodeURIComponent(code);
+    const cardName  = displayName || '';
+    const variantLabel = (suffix && (VARIANT_LABELS[suffix] || '')) || '';
+    const tcgQuery  = (cardName ? cardName + ' ' : '') + (variantLabel ? variantLabel + ' ' : '') + code + (suffix || '');
+    const tcgHref   = tcgUrl(code + (suffix || ''), (cardName + ' ' + variantLabel).trim());
     linksEl.innerHTML = [
-      ['TCGPlayer',     `https://www.tcgplayer.com/search/one-piece-card-game/product?q=${enc}`],
+      ['🛒 Buy on TCGPlayer', tcgHref, 'csm-link csm-buy-link'],
       ['OPCardlist',    `https://www.opcardlist.com`],
-      ['Limitless',     `https://onepiece.limitlesstcg.com/cards/${code.toLowerCase()}`],
+      ['Limitless',     `https://onepiece.limitlesstcg.com/cards/${(code+(suffix||'')).toLowerCase()}`],
       ['PSA Pop',       `https://www.psacard.com/pop/trading-card-games/one-piece-card-game/149549`],
-      ['eBay Sold',     `https://www.ebay.com/sch/i.html?_nkw=one+piece+${enc}&LH_Sold=1&LH_Complete=1`],
+      ['eBay Sold',     `https://www.ebay.com/sch/i.html?_nkw=one+piece+${enc}${suffix?'+'+suffix.replace('_',''):''}&LH_Sold=1&LH_Complete=1`],
       ['Snkrdunk',      `https://snkrdunk.com/en/`],
       ['Bandai EN',     `https://en.onepiece-cardgame.com/cardlist/?search=true&keyword_type=contains&keyword_name=${enc}`],
-    ].map(([l,h]) => `<a class="csm-link" href="${h}" target="_blank" rel="noopener">${l} ↗</a>`).join('');
+    ].map(([l,h,cls]) => `<a class="${cls || 'csm-link'}" href="${h}" target="_blank" rel="noopener sponsored">${l} ↗</a>`).join('');
   }
 
   // Images — render directly into DOM, no Image() probing
@@ -5559,21 +5569,53 @@ function csmImgPanel(lang, badgeCls, src, code) {
 }
 
 // ── Probe variants (background, non-blocking) ─────────────────────────────
+//
+// Try EN-Limitless → Bandai-EN → JP-Limitless for each variant. If every
+// source 404s, the variant doesn't exist for this card and we don't render
+// a tile for it. Bandai-EN-only would miss variants that exist only on
+// Limitless or only as JP-frame prints.
 function csmProbeVariants(code) {
-  const suffixes = ['_p1','_p2','_p3','_p4','_p5','_r1','_r2'];
-  const found = [];
-  let pending = suffixes.length;
+  const suffixes = ['_p1','_p2','_p3','_p4','_p5','_p6','_p7','_p8','_r1','_r2'];
+  const found   = [];
+  let pending   = suffixes.length;
+
+  const setM   = code.match(/^([A-Z]+\d+)/);
+  const folder = setM ? setM[1] : (code.startsWith('P-') ? 'P' : 'OP01');
+
+  function buildProbeChain(suf) {
+    const full = code + suf;
+    return [
+      code.startsWith('P-')
+        ? `${LIM_CDN}/P/${full}_EN.webp`
+        : `${LIM_CDN}/${folder}/${full}_EN.webp`,
+      `${EN_CDN}/${full}.png`,
+      code.startsWith('P-')
+        ? `${LIM_CDN}/P/${full}_JP.webp`
+        : `${LIM_CDN}/${folder}/${full}_JP.webp`,
+    ];
+  }
 
   suffixes.forEach(suf => {
-    const img = new Image();
-    img.onload = () => {
-      found.push(suf);
-      if (--pending === 0) csmShowVariants(code, found);
-    };
-    img.onerror = () => {
-      if (--pending === 0) csmShowVariants(code, found);
-    };
-    img.src = `${EN_CDN}/${code}${suf}.png`;
+    const urls = buildProbeChain(suf);
+    let i = 0;
+    function tryNext() {
+      if (i >= urls.length) {
+        if (--pending === 0) csmShowVariants(code, found);
+        return;
+      }
+      const img = new Image();
+      img.onload = () => {
+        if (img.naturalWidth > 0) {
+          found.push(suf);
+          if (--pending === 0) csmShowVariants(code, found);
+        } else {
+          i++; tryNext();
+        }
+      };
+      img.onerror = () => { i++; tryNext(); };
+      img.src = urls[i];
+    }
+    tryNext();
   });
 }
 
@@ -5592,23 +5634,21 @@ function csmShowVariants(code, found) {
 
 function csmSwitchVar(suffix) {
   if (!csmCurrentCode) return;
-  csmCurrentVar = suffix;
-  // Update button states
-  document.querySelectorAll('.csm-var-btn').forEach(b => {
-    const onclick = b.getAttribute('onclick') || '';
-    b.classList.toggle('active', onclick.includes(`'${suffix}'`));
-  });
-  // Update images
-  document.querySelectorAll('.csm-card-img').forEach(img => {
-    const isEN = img.closest('.csm-img-panel')?.querySelector('.csm-lang-en');
-    const cdn  = isEN ? EN_CDN : JP_CDN;
-    img.style.display = 'block';
-    const missing = img.parentElement?.querySelector('.csm-img-missing');
-    if (missing) missing.style.display = 'none';
-    img.src = `${cdn}/${csmCurrentCode}${suffix}.png`;
-  });
-  const codeEl = document.getElementById('csm-code');
-  if (codeEl) codeEl.textContent = csmCurrentCode + (suffix || '');
+  // Re-render the entire detail panel for the new variant. Cheaper than
+  // hand-patching individual elements (image, code label, TCGPlayer link)
+  // and keeps everything consistent — including the variant-specific
+  // TCGPlayer search that uses the new suffix's label.
+  csmRender(csmCurrentCode, suffix);
+  // Re-show variant button row with the new active state
+  const varBar = document.getElementById('csm-var-bar');
+  if (varBar) {
+    varBar.querySelectorAll('.csm-var-btn').forEach(b => {
+      const oc = b.getAttribute('onclick') || '';
+      b.classList.toggle('active', oc.includes(`'${suffix}'`));
+    });
+    const varSec = document.getElementById('csm-var-section');
+    if (varSec) varSec.style.display = 'block';
+  }
 }
 
 // ── Zoom ───────────────────────────────────────────────────────────────────

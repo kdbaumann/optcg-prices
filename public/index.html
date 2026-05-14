@@ -6008,21 +6008,59 @@ function csmImgPanel(lang, badgeCls, src, fb, code) {
 }
 
 // ── Probe variants (background, non-blocking) ─────────────────────────────
+//
+// IMPORTANT: probe DIRECTLY against the real CDN (Limitless EN, then Bandai
+// EN, then JP), not through /card-img/. Our proxy has a base-art fallback —
+// it returns the BASE card art when a variant doesn't exist on any CDN, so
+// every probe through /card-img/ would falsely succeed for missing variants
+// and we'd render duplicate base-art tiles labeled "Manga Alt", "SP Gold",
+// etc. that don't actually exist for this card.
+//
+// We try EN-Limitless first, then Bandai-EN, then Limitless-JP. If all
+// three fail, the variant genuinely doesn't exist anywhere — skip it.
 function csmProbeVariants(code) {
   const suffixes = ['_p1','_p2','_p3','_p4','_p5','_p6','_p7','_p8','_r1','_r2'];
   const found = [];
   let pending = suffixes.length;
 
+  const setM   = code.match(/^([A-Z]+\d+)/);
+  const folder = setM ? setM[1] : (code.startsWith('P-') ? 'P' : 'OP01');
+
+  function buildProbeChain(suf) {
+    const full = code + suf;
+    return [
+      code.startsWith('P-')
+        ? `${LIM_CDN}/P/${full}_EN.webp`
+        : `${LIM_CDN}/${folder}/${full}_EN.webp`,
+      `${EN_CDN}/${full}.png`,
+      code.startsWith('P-')
+        ? `${LIM_CDN}/P/${full}_JP.webp`
+        : `${LIM_CDN}/${folder}/${full}_JP.webp`,
+    ];
+  }
+
   suffixes.forEach(suf => {
-    const img = new Image();
-    img.onload = () => {
-      found.push(suf);
-      if (--pending === 0) csmShowVariants(code, found);
-    };
-    img.onerror = () => {
-      if (--pending === 0) csmShowVariants(code, found);
-    };
-    img.src = limUrl(code, suf);  // Limitless CDN — actually allows hotlinking
+    const urls = buildProbeChain(suf);
+    let i = 0;
+    function tryNext() {
+      if (i >= urls.length) {
+        if (--pending === 0) csmShowVariants(code, found);
+        return;
+      }
+      const img = new Image();
+      img.onload = () => {
+        // Image() only fires onload on a successfully decoded image
+        if (img.naturalWidth > 0) {
+          found.push(suf);
+          if (--pending === 0) csmShowVariants(code, found);
+        } else {
+          i++; tryNext();
+        }
+      };
+      img.onerror = () => { i++; tryNext(); };
+      img.src = urls[i];
+    }
+    tryNext();
   });
 }
 
