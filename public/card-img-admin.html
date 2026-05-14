@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Card-img Admin · Grailcardz</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  body { font-family: ui-monospace, 'SF Mono', Menlo, monospace; background:#0a0e1a; color:#e8e8f0;
+         margin:0; padding:32px; font-size:13px; line-height:1.5 }
+  h1 { font-size:18px; margin:0 0 4px; color:#f0b429 }
+  .sub { color:#6b6b8a; margin-bottom:24px; font-size:11px }
+  .panel { background:#141929; border:1px solid #1e2a42; border-radius:6px; padding:16px;
+           margin-bottom:18px }
+  .panel h2 { font-size:13px; margin:0 0 10px; color:#86efac; letter-spacing:.05em }
+  input[type=text], input[type=password] { background:#0a0e1a; color:#e8e8f0; border:1px solid #2a2a4a;
+         padding:6px 10px; border-radius:4px; font-family:inherit; font-size:12px; width:100% }
+  input[type=text]:focus, input[type=password]:focus { outline:none; border-color:#f0b429 }
+  .row { display:grid; grid-template-columns:120px 1fr; gap:10px; margin-bottom:8px; align-items:center }
+  .row label { color:#9090b0; font-size:11px; text-transform:uppercase; letter-spacing:.06em }
+  button { background:#f0b429; color:#0a0e1a; border:none; padding:6px 14px; font-family:inherit;
+           font-weight:700; cursor:pointer; border-radius:4px; font-size:12px }
+  button.danger { background:#ef4444; color:#fff }
+  button.ghost { background:transparent; color:#9090b0; border:1px solid #2a2a4a }
+  button:hover { filter:brightness(1.1) }
+  pre { background:#0a0e1a; padding:10px; border-radius:4px; overflow:auto; font-size:11px;
+        color:#86efac; max-height:300px }
+  table { width:100%; border-collapse:collapse; margin-top:10px; font-size:11px }
+  th { text-align:left; padding:6px 8px; color:#f0b429; border-bottom:1px solid #2a2a4a }
+  td { padding:6px 8px; border-bottom:1px solid #1e2a42; vertical-align:middle }
+  td a { color:#60a5fa; text-decoration:none }
+  .preview { display:flex; align-items:center; gap:14px }
+  .preview img { width:80px; height:112px; object-fit:cover; border-radius:4px;
+                 border:1px solid #2a2a4a; background:#1e2035 }
+  .small { font-size:10px; color:#6b6b8a }
+</style>
+</head>
+<body>
+
+<h1>🎴 Card-img Admin</h1>
+<div class="sub">Manage manual /card-img/ overrides for variants the public CDNs don't have.</div>
+
+<div class="panel">
+  <h2>🔑 Auth</h2>
+  <div class="row">
+    <label>Admin token</label>
+    <input id="token" type="password" placeholder="ADMIN_TOKEN env var value" autocomplete="off">
+  </div>
+  <button onclick="loadList()">Load overrides</button>
+  <span class="small" id="auth-status" style="margin-left:14px"></span>
+</div>
+
+<div class="panel">
+  <h2>➕ Add / replace override</h2>
+  <div class="row">
+    <label>Card code</label>
+    <input id="add-code" type="text" placeholder="OP01-002_p4 (case-insensitive)">
+  </div>
+  <div class="row">
+    <label>Image URL</label>
+    <input id="add-url" type="text" placeholder="https://i.ebayimg.com/.../s-l1600.jpg">
+  </div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <button onclick="addOverride()">Fetch &amp; store</button>
+    <button class="ghost" onclick="previewUrl()">Preview without storing</button>
+    <span id="add-status" class="small"></span>
+  </div>
+  <div id="add-preview" class="preview" style="margin-top:14px;display:none"></div>
+</div>
+
+<div class="panel">
+  <h2>📋 Current overrides</h2>
+  <div id="list-status" class="small">Click "Load overrides" above.</div>
+  <table id="list-table" style="display:none">
+    <thead>
+      <tr><th>Code</th><th>Preview</th><th>Source</th><th>Stored</th><th></th></tr>
+    </thead>
+    <tbody id="list-body"></tbody>
+  </table>
+</div>
+
+<script>
+const TOKEN_KEY = 'card_img_admin_token';
+
+// Restore saved token
+const savedToken = sessionStorage.getItem(TOKEN_KEY);
+if (savedToken) document.getElementById('token').value = savedToken;
+
+function tok() {
+  const t = document.getElementById('token').value.trim();
+  if (t) sessionStorage.setItem(TOKEN_KEY, t);
+  return t;
+}
+
+async function api(method, params = {}) {
+  const url = new URL('/card-img-admin', window.location.origin);
+  url.searchParams.set('token', tok());
+  for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+  const r = await fetch(url, { method });
+  return await r.json();
+}
+
+async function loadList() {
+  const status = document.getElementById('list-status');
+  const tbody  = document.getElementById('list-body');
+  const table  = document.getElementById('list-table');
+  status.textContent = 'Loading…';
+  table.style.display = 'none';
+  const data = await api('GET');
+  if (data.error) {
+    status.textContent = 'Error: ' + data.error + (data.message ? ' — ' + data.message : '');
+    document.getElementById('auth-status').textContent = '❌ ' + data.error;
+    document.getElementById('auth-status').style.color = '#ef4444';
+    return;
+  }
+  document.getElementById('auth-status').textContent = '✓ authenticated';
+  document.getElementById('auth-status').style.color = '#22c55e';
+  status.textContent = data.count + ' overrides total.';
+  tbody.innerHTML = data.items.map(it => `
+    <tr>
+      <td><code>${it.code}</code></td>
+      <td><img src="/card-img/${it.code}?t=${Date.now()}" style="width:48px;height:67px;object-fit:cover;border-radius:3px;border:1px solid #2a2a4a"></td>
+      <td>${it.source || '?'} ${it.srcUrl ? `<br><a href="${it.srcUrl}" target="_blank">src ↗</a>` : ''}</td>
+      <td class="small">${(it.storedAt || '').slice(0,10)}</td>
+      <td>
+        <button class="ghost" onclick="document.getElementById('add-code').value='${it.code}';document.getElementById('add-url').focus()">edit</button>
+        <button class="danger" onclick="removeOverride('${it.code}')">delete</button>
+      </td>
+    </tr>
+  `).join('');
+  table.style.display = '';
+}
+
+async function addOverride() {
+  const code = document.getElementById('add-code').value.trim();
+  const url  = document.getElementById('add-url').value.trim();
+  const status = document.getElementById('add-status');
+  status.textContent = 'Storing…'; status.style.color = '#9090b0';
+  const data = await api('POST', { code, url });
+  if (data.ok) {
+    status.textContent = `✓ stored ${data.code} (${(data.size/1024).toFixed(1)} KB)`;
+    status.style.color = '#22c55e';
+    document.getElementById('add-preview').style.display = 'flex';
+    document.getElementById('add-preview').innerHTML =
+      `<img src="/card-img/${data.code}?t=${Date.now()}"><div>Live preview ↑<br><span class="small">it can take ~5s for the CDN edge to refresh</span></div>`;
+    loadList();
+  } else {
+    status.textContent = '❌ ' + (data.error || 'failed') + (data.message ? ': ' + data.message : '');
+    status.style.color = '#ef4444';
+  }
+}
+
+function previewUrl() {
+  const url = document.getElementById('add-url').value.trim();
+  if (!url) return;
+  document.getElementById('add-preview').style.display = 'flex';
+  document.getElementById('add-preview').innerHTML =
+    `<img src="${url}"><div>Direct preview from URL<br><span class="small">click "Fetch &amp; store" to keep</span></div>`;
+}
+
+async function removeOverride(code) {
+  if (!confirm(`Remove override for ${code}? (proxy will fall back to CDN chain again)`)) return;
+  const data = await api('DELETE', { code });
+  if (data.ok) loadList();
+  else alert('Failed: ' + (data.error || 'unknown'));
+}
+</script>
+
+</body>
+</html>

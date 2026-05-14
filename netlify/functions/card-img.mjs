@@ -102,7 +102,25 @@ export default async (req) => {
     return new Response('Invalid code', { status: 400 });
   }
 
-  const store = getStore('card-images');
+  const store       = getStore('card-images');
+  const manualStore = getStore('card-images-manual');
+
+  // 0. MANUAL OVERRIDE — admin-curated images for variants that don't exist
+  // on any public CDN (tournament stamps, championship trophies, regional
+  // alts that Bandai never published). Sourced from eBay listings or hand-
+  // uploaded via /card-img-admin. Always wins over the CDN chain.
+  try {
+    const manual = await manualStore.get(code, { type: 'arrayBuffer' });
+    if (manual && manual.byteLength > 512) {
+      return new Response(manual, {
+        headers: {
+          'Content-Type':  'image/webp',
+          'Cache-Control': 'public, max-age=86400',     // shorter — admin can update
+          'X-Source':      'manual',
+        },
+      });
+    }
+  } catch { /* no manual override */ }
 
   // 1. Serve from Blob cache (already validated at store time)
   try {
