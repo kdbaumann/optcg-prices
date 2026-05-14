@@ -2025,6 +2025,20 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
     <strong>How Target Buy Price works:</strong> Target Buy = (PSA 10 midpoint ÷ 3) − $75 grading fee. This is the maximum you should pay raw to still land a 3× return after grading costs and before selling fees (~13% eBay+PayPal). Cards showing <strong style="color:#4ade80">🟢 UNDER MARKET</strong> are currently trading below their target buy — the math works today. <strong style="color:#f87171">🔴 ABOVE TARGET</strong> means you need to wait for a dip or accept a lower return. <strong style="color:#f5d87a">🟡 CLOSE</strong> means within 15% of target — watch and act on any dip.
   </div>
 
+  <!-- MARKET TOGGLE — switch between EN and JP arbitrage views ───────── -->
+  <div id="arb-market-toggle" style="display:flex;gap:8px;margin-bottom:14px">
+    <button onclick="arbShowMarket('en')" id="arb-btn-en" class="arb-tab-btn arb-tab-active"
+            style="flex:1;padding:10px 14px;border-radius:6px;border:1px solid #2ecc71;background:rgba(46,204,113,0.12);color:#86efac;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">
+      🇺🇸 English Market — Buy in USD, grade, flip
+    </button>
+    <button onclick="arbShowMarket('jp')" id="arb-btn-jp" class="arb-tab-btn"
+            style="flex:1;padding:10px 14px;border-radius:6px;border:1px solid #2a2a4a;background:rgba(20,20,40,0.4);color:#9090b0;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">
+      🇯🇵 Japanese Market — Buy JP, grade EN, flip
+    </button>
+  </div>
+
+  <div id="arb-en-section">
+
   <!-- MANGA RARES TABLE -->
   <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:0.78rem;letter-spacing:0.15em;color:#f5d87a;text-transform:uppercase;padding:8px 10px;background:#0c0c1e;border:1px solid #1e1e38;border-radius:6px;margin-bottom:8px">
     ★ MANGA RARES — All 38 Cards · Ranked by Raw Price
@@ -4247,6 +4261,177 @@ th.grade-hdr { font-size:.65rem; letter-spacing:.08em; text-align:right; padding
         <td class="col-signal" style="color:#ef4444"></td>
         </tr><tr style="cursor:pointer" onclick="openCardLookup('EB02-061')"><td class="col-set">EB-02</td><td class="col-card"><div class="card-cell-inner"><img src="/card-img/EB02-061_p2" alt="Monkey D. Luffy" style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0;cursor:pointer" onerror="if(this.src!=='https://en.onepiece-cardgame.com/images/cardlist/card/EB02-061_p2.png'){this.src='https://en.onepiece-cardgame.com/images/cardlist/card/EB02-061_p2.png'}else{this.style.opacity='.2'}" onclick="openCardSearch('EB02-061')"><div><div class="card-name-text">Monkey D. Luffy — Manga Alt Art</div><div class="card-sub-text">EB02-061</div></div></div></td><td class="col-price">≈$1,607</td><td class="col-jp">🇯🇵 ¥85k (≈$594)</td><td class="col-psa">~3–4×</td><td class="col-mult">GRADE IMMEDIATELY</td><td class="col-signal" style="color:#ef4444"></td></tr>
 </tbody></table>
+
+  </div><!-- end #arb-en-section -->
+
+  <!-- ═══════════════════════════════ JAPANESE MARKET ═══════════════════ -->
+  <div id="arb-jp-section" style="display:none">
+    <div style="background:#1a0f1a;border:1px solid #3a1a3a;border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:0.74rem;color:#f5b8e0;line-height:1.7">
+      <strong>🇯🇵 Japan→US Arbitrage:</strong> Buy raw on Yahoo Auctions / Snkrdunk / Mercari Japan, ship to US,
+      grade with PSA, sell on TCGPlayer/eBay. <strong>Target Buy</strong> = (PSA 10 midpoint ÷ 3) − $75 grading − $25 international ship.
+      Many chase cards trade meaningfully cheaper in their home market — the math often works when EN signals 🔴 ABOVE.
+      Cards below show only when we have <em>real JP yen pricing</em> sourced in PRICE_DB (not just USD estimates).
+    </div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:0.78rem;letter-spacing:0.15em;color:#f5d87a;text-transform:uppercase;padding:8px 10px;background:#0c0c1e;border:1px solid #1e1e38;border-radius:6px;margin-bottom:8px">
+      🇯🇵 Japan Market Top Buys · Ranked by JP→US PSA 10 multiplier
+    </div>
+    <div style="overflow-x:auto;margin-bottom:24px">
+      <table class="list-table arb-table" style="min-width:780px">
+        <colgroup>
+          <col class="col-set"><col class="col-card"><col class="col-jp"><col class="col-price">
+          <col class="col-psa"><col class="col-mult"><col class="col-price"><col class="col-signal"><col class="col-notes">
+        </colgroup>
+        <thead><tr style="border-bottom:2px solid #f472b6">
+          <th class="col-set">Set</th>
+          <th class="col-card">Card</th>
+          <th class="col-jp">🇯🇵 JP Raw (¥)</th>
+          <th class="col-price">JP→USD</th>
+          <th class="col-psa">PSA 10 EN</th>
+          <th class="col-mult">×</th>
+          <th class="col-price">Target Buy (JP)</th>
+          <th class="col-signal">Signal</th>
+          <th class="col-notes">vs EN</th>
+        </tr></thead>
+        <tbody id="arb-jp-tbody">
+          <tr><td colspan="9" style="padding:14px;color:var(--muted);font-style:italic;text-align:center">Loading from PRICE_DB…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+  // ── Arbitrage Market Toggle ─────────────────────────────────────────────
+  // The EN section is the existing hand-curated table (102 rows of manga
+  // rares + chase variants). The JP section is data-driven from PRICE_DB
+  // entries that carry a `jp` field (yen + USD parens) plus a `psa`
+  // estimate — currently ~35 cards.
+  function arbShowMarket(which) {
+    const en = document.getElementById('arb-en-section');
+    const jp = document.getElementById('arb-jp-section');
+    const btnEn = document.getElementById('arb-btn-en');
+    const btnJp = document.getElementById('arb-btn-jp');
+    if (!en || !jp || !btnEn || !btnJp) return;
+    if (which === 'jp') {
+      en.style.display = 'none'; jp.style.display = '';
+      btnJp.style.borderColor = '#f472b6'; btnJp.style.background = 'rgba(244,114,182,0.12)'; btnJp.style.color = '#f5b8e0';
+      btnEn.style.borderColor = '#2a2a4a'; btnEn.style.background = 'rgba(20,20,40,0.4)'; btnEn.style.color = '#9090b0';
+      arbBuildJpTable();
+    } else {
+      en.style.display = ''; jp.style.display = 'none';
+      btnEn.style.borderColor = '#2ecc71'; btnEn.style.background = 'rgba(46,204,113,0.12)'; btnEn.style.color = '#86efac';
+      btnJp.style.borderColor = '#2a2a4a'; btnJp.style.background = 'rgba(20,20,40,0.4)'; btnJp.style.color = '#9090b0';
+    }
+  }
+
+  // Parse a JP string like "¥120k (≈$839)" or "¥150,000 (≈$1,050)" → numeric Yen + USD parts.
+  function parseJpString(s) {
+    if (!s) return null;
+    const yenM = String(s).match(/¥\s*([\d,]+)\s*([kK])?/);
+    const usdM = String(s).match(/≈\s*\$\s*([\d,]+(?:\.\d+)?)/);
+    let yen = null;
+    if (yenM) {
+      let raw = parseFloat(yenM[1].replace(/,/g, ''));
+      if (yenM[2]) raw *= 1000;
+      yen = raw;
+    }
+    const usd = usdM ? parseFloat(usdM[1].replace(/,/g, '')) : null;
+    return (yen || usd) ? { yen, usd } : null;
+  }
+
+  function parseUsd(s) {
+    if (!s) return null;
+    const m = String(s).match(/\$\s*([\d,]+(?:\.\d+)?)/);
+    return m ? parseFloat(m[1].replace(/,/g, '')) : null;
+  }
+
+  function buildArbJpRows() {
+    if (!window.PRICE_DB) return [];
+    const rows = [];
+    const seen = new Set();
+    function consider(code, suffix, entry) {
+      if (!entry) return;
+      const jp = parseJpString(entry.jp);
+      const psa = parseUsd(entry.psa);
+      const en = parseUsd(entry.en);
+      if (!jp || !psa) return;
+      const key = code + (suffix || '');
+      if (seen.has(key)) return;
+      seen.add(key);
+      const jpUsd = jp.usd || (jp.yen ? jp.yen / 143 : null);   // fallback at ~143¥/$
+      if (!jpUsd) return;
+      const targetBuy = (psa / 3) - 100;                       // -$75 grade -$25 ship
+      const multiplier = psa / jpUsd;
+      let signal;
+      if (jpUsd <= targetBuy * 0.85)       signal = { txt:'🟢 STRONG BUY', col:'#22c55e' };
+      else if (jpUsd <= targetBuy)         signal = { txt:'🟢 BUY',        col:'#22c55e' };
+      else if (jpUsd <= targetBuy * 1.15)  signal = { txt:'🟡 CLOSE',      col:'#f59e0b' };
+      else                                  signal = { txt:'🔴 ABOVE',     col:'#ef4444' };
+      const vsEn = (en && jpUsd < en * 0.85) ? '↓ ' + Math.round((1 - jpUsd/en)*100) + '% vs EN'
+                 : (en && jpUsd > en * 1.15) ? '↑ ' + Math.round((jpUsd/en - 1)*100) + '% vs EN'
+                 : 'parity';
+      rows.push({
+        code, suffix: suffix || '', fullCode: key,
+        name: (window.PRICE_DB[code] && window.PRICE_DB[code].name) || code,
+        setLabel: (entry.releasedIn || '').toUpperCase().replace(/^(OP|EB|PRB|ST)/, '$1-'),
+        jpYen: jp.yen, jpUsd, psa, en, targetBuy, multiplier, signal, vsEn,
+      });
+    }
+    for (const [code, entry] of Object.entries(window.PRICE_DB)) {
+      if (!entry || typeof entry !== 'object') continue;
+      // top-level
+      if (entry.en || entry.psa || entry.jp) consider(code, '', entry);
+      // nested variants
+      for (const [k, v] of Object.entries(entry)) {
+        if ((k === '' || k.startsWith('_')) && v && typeof v === 'object') consider(code, k, v);
+      }
+    }
+    rows.sort((a, b) => b.multiplier - a.multiplier);
+    return rows;
+  }
+
+  function arbBuildJpTable() {
+    const tbody = document.getElementById('arb-jp-tbody');
+    if (!tbody) return;
+    const rows = buildArbJpRows();
+    if (rows.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="9" style="padding:14px;color:var(--muted);font-style:italic;text-align:center">No PRICE_DB entries with both JP yen + PSA estimate yet. Add `jp: \'¥XXk (≈$XXX)\'` and `psa: \'$XXX\'` to entries in data/prices.js to populate.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows.map(r => {
+      const code = r.code, suffix = r.suffix, fullCode = r.fullCode;
+      const yenDisplay = r.jpYen >= 1000 ? '¥' + Math.round(r.jpYen/1000) + 'k' : '¥' + r.jpYen;
+      return `<tr style="cursor:pointer" onclick="openCardLookup('${code}')">
+        <td class="col-set">${r.setLabel}</td>
+        <td class="col-card">
+          <div class="card-cell-inner">
+            <img class="card-thumb" src="/card-img/${fullCode}" alt="${r.name}"
+              style="width:36px;height:50px;object-fit:cover;border-radius:4px;border:1px solid #2a2a4a;background:#1e2035;flex-shrink:0;cursor:pointer"
+              onerror="this.style.opacity='.2';this.onerror=null"
+              onclick="event.stopPropagation();openCardSearch('${code}')">
+            <div>
+              <div class="card-name-text">${r.name}</div>
+              <div class="card-sub-text">${fullCode}</div>
+            </div>
+          </div>
+        </td>
+        <td class="col-jp" style="font-weight:700">${yenDisplay}</td>
+        <td class="col-price">≈$${r.jpUsd.toLocaleString('en-US',{maximumFractionDigits:0})}</td>
+        <td class="col-psa"><div style="font-weight:700;color:#f59e0b;font-size:.82rem">$${r.psa.toLocaleString('en-US',{maximumFractionDigits:0})}</div></td>
+        <td class="col-mult" style="font-weight:700;color:${r.multiplier >= 4 ? '#22c55e' : r.multiplier >= 3 ? '#f59e0b' : '#9090b0'}">${r.multiplier.toFixed(1)}×</td>
+        <td class="col-price" style="color:#60a5fa">$${Math.round(r.targetBuy).toLocaleString('en-US')}</td>
+        <td class="col-signal" style="color:${r.signal.col};font-weight:700">${r.signal.txt}</td>
+        <td class="col-notes" style="color:#9090b0;font-size:.72rem">${r.vsEn}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // Auto-build the JP table on first load so it's instant on toggle.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => { setTimeout(arbBuildJpTable, 500); });
+  } else {
+    setTimeout(arbBuildJpTable, 500);
+  }
+  </script>
 
   <!-- end grading section -->
 </div>
